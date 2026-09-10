@@ -95,11 +95,6 @@
     letter-spacing: 1px;
   }
 
-  .diff-btn:hover {
-    color: #fff;
-    border-color: #ff9900;
-  }
-
   .diff-btn.active-normal {
     background: #7c2d12;
     color: #fb923c;
@@ -188,8 +183,8 @@
     display: none;
     position: fixed;
     top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 5, 5, 0.96);
-    backdrop-filter: blur(8px);
+    background: rgba(3, 3, 3, 0.97);
+    backdrop-filter: blur(10px);
     z-index: 1000;
     flex-direction: column;
     align-items: center;
@@ -255,95 +250,69 @@
 
   .wheels-grid-layout {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(3, 330px);
+    justify-content: center;
+    gap: 20px;
     max-width: 1100px;
     width: 100%;
     margin: auto 0;
     padding: 40px 0;
-    position: relative;
   }
 
-  .wheel-box {
+  .wheel-box, .master-combo-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #111113;
-    padding: 12px;
+    padding: 14px;
     border: 2px solid #ff9900;
     border-radius: 8px;
     box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
-    position: relative;
     box-sizing: border-box;
-    transition: transform 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 1.0s ease, border-color 0.4s ease, opacity 0.4s ease, position 1.0s ease;
+    width: 330px;
+    height: 220px;
+    transition: opacity 0.3s ease;
+    z-index: 1;
   }
 
-  .wheel-box.inactive-box {
-    opacity: 0.35;
+  .wheel-box.inactive-box, .master-combo-box.inactive-box {
+    opacity: 0.3;
     filter: grayscale(40%);
   }
 
-  .wheel-box.active-spinning {
+  .master-combo-box.active-spinning, .wheel-box.active-spinning {
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(2.2) !important;
-    border-color: #ff9900;
-    box-shadow: 0 0 90px rgba(255, 153, 0, 0.98);
-    background: #16161a;
+    transform: translate(-50%, -50%) scale(3) !important;
+    z-index: 9999 !important;
     opacity: 1 !important;
-    z-index: 9999;
+    border-color: #ff9900 !important;
+    box-shadow: 0 0 60px rgba(255, 153, 0, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+    background: #121216 !important;
   }
 
-  .wheel-box.special-box {
+  .master-combo-box.special-box.active-spinning, .wheel-box.special-box.active-spinning {
+    border-color: #ff3333 !important;
+    box-shadow: 0 0 60px rgba(255, 51, 51, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+  }
+
+  .master-combo-box.community-box.active-spinning, .wheel-box.community-box.active-spinning {
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 60px rgba(168, 85, 247, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+  }
+
+  .wheel-box.special-box, .master-combo-box.special-box {
     border: 2px solid #ff3333;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
   }
-  .wheel-box.special-box.active-spinning {
-    border-color: #ff3333;
-    box-shadow: 0 0 90px rgba(255, 51, 51, 0.98);
-  }
 
-  .wheel-box.community-box {
+  .wheel-box.community-box, .master-combo-box.community-box {
     border: 2px solid #a855f7;
     box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
   }
-  .wheel-box.community-box.active-spinning {
-    border-color: #a855f7;
-    box-shadow: 0 0 90px rgba(168, 85, 247, 0.98);
-  }
 
-  .master-combo-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #111113;
-    padding: 12px;
-    border: 2px solid #ff9900;
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
-    position: relative;
-    box-sizing: border-box;
-    transition: transform 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 1.0s ease, border-color 0.4s ease, opacity 0.4s ease, position 1.0s ease;
-  }
-  .master-combo-box.inactive-box {
-    opacity: 0.35;
-    filter: grayscale(40%);
-  }
-  
-  .master-combo-box.active-spinning {
-    position: fixed !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) scale(2.2) !important;
-    border-color: #ff9900;
-    box-shadow: 0 0 90px rgba(255, 153, 0, 0.98);
-    background: #16161a;
-    opacity: 1 !important;
-    z-index: 9999;
-  }
-
-  .master-combo-box h2 {
+  .master-combo-box h2, .wheel-box h2 {
     font-size: 13px;
     color: #ff9900;
     margin-top: 0;
@@ -355,6 +324,8 @@
     padding-bottom: 5px;
     letter-spacing: 0.5px;
   }
+  .wheel-box.special-box h2, .master-combo-box.special-box h2 { color: #ff3333; }
+  .wheel-box.community-box h2, .master-combo-box.community-box h2 { color: #a855f7; }
 
   .wheels-container-row {
     display: flex;
@@ -367,6 +338,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 130px;
   }
 
   .wheel-label-sub {
@@ -376,21 +348,6 @@
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-
-  .wheel-box h2 {
-    font-size: 13px;
-    color: #ff9900;
-    margin-top: 0;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-    border-bottom: 1px dashed #444;
-    width: 100%;
-    text-align: center;
-    padding-bottom: 5px;
-    letter-spacing: 0.5px;
-  }
-  .wheel-box.special-box h2 { color: #ff3333; }
-  .wheel-box.community-box h2 { color: #a855f7; }
 
   .wheel-wrapper {
     position: relative;
@@ -538,14 +495,14 @@
     box-shadow: 0 0 15px #fff;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 1050px) {
     .wheels-grid-layout {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 330px);
     }
   }
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     .wheels-grid-layout {
-      grid-template-columns: 1fr;
+      grid-template-columns: 330px;
     }
   }
 </style>
@@ -605,10 +562,10 @@
     
     <!-- 1. REIHE -->
     <div class="master-combo-box inactive-box" id="box-master-combo">
-      <h2>1. Beweis & Stufe</h2>
+      <h2>1. Beweismittel & Stufe</h2>
       <div class="wheels-container-row">
         <div class="single-wheel-container">
-          <div class="wheel-label-sub">Beweis</div>
+          <div class="wheel-label-sub">Beweismittel</div>
           <div class="wheel-wrapper">
             <div class="pointer"></div>
             <canvas id="itemCanvas" width="220" height="220"></canvas>
@@ -714,67 +671,95 @@
       <div id="candleResult" class="result">Bereit...</div>
     </div>
 
-    <div class="wheel-box inactive-box" id="box-sanity">
+    <div class="master-combo-box inactive-box" id="box-sanity">
       <h2>6. Sanity</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="sanityCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="sanityCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="sanityResult" class="result">Bereit...</div>
     </div>
 
     <!-- 3. REIHE -->
-    <div class="wheel-box inactive-box" id="box-breaker">
+    <div class="master-combo-box inactive-box" id="box-breaker">
       <h2>7. Breaker</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="breakerCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="breakerCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="breakerResult" class="result">Bereit...</div>
     </div>
 
-    <div class="wheel-box inactive-box" id="box-light">
+    <div class="master-combo-box inactive-box" id="box-light">
       <h2>8. Taschenlampe</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="lightCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="lightCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="lightResult" class="result">Bereit...</div>
     </div>
 
-    <div class="wheel-box inactive-box" id="box-map">
+    <div class="master-combo-box inactive-box" id="box-map">
       <h2>9. Einsatzort</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="mapCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="mapCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="mapResult" class="result">Bereit...</div>
     </div>
 
     <!-- 4. REIHE -->
-    <div class="wheel-box special-box inactive-box" id="box-cursed">
+    <div class="master-combo-box special-box inactive-box" id="box-cursed">
       <h2>10. Fluch-Objekt</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="cursedCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="cursedCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="cursedResult" class="result">Bereit...</div>
     </div>
 
-    <div class="wheel-box special-box inactive-box" id="box-modifier">
+    <div class="master-combo-box special-box inactive-box" id="box-modifier">
       <h2>11. Modifier</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="modifierCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="modifierCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="modifierResult" class="result">Bereit...</div>
     </div>
 
-    <div class="wheel-box community-box inactive-box" id="box-community">
+    <div class="master-combo-box community-box inactive-box" id="box-community">
       <h2>12. Community</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="communityCanvas" width="220" height="220"></canvas>
+      <div class="wheels-container-row">
+        <div class="single-wheel-container" style="width: 100%;">
+          <div class="wheel-wrapper" style="margin: 0 auto;">
+            <div class="pointer"></div>
+            <canvas id="communityCanvas" width="220" height="220"></canvas>
+          </div>
+        </div>
       </div>
       <div id="communityResult" class="result">Bereit...</div>
     </div>
@@ -1048,8 +1033,9 @@ async function startFullChallenge() {
   document.querySelectorAll('.result').forEach(el => el.innerText = "Bereit...");
 
   stepsList.forEach(s => {
-    document.getElementById(s.id).classList.add("inactive-box");
-    document.getElementById(s.id).classList.remove("active-spinning");
+    const el = document.getElementById(s.id);
+    el.classList.add("inactive-box");
+    el.classList.remove("active-spinning");
   });
 
   document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNGS-RAD DREHT SICH...";
@@ -1069,7 +1055,18 @@ async function executeSingleStep() {
   const boxEl = document.getElementById(currentStepObj.id);
 
   boxEl.classList.remove("inactive-box");
+  
+  // Dynamischen Platzhalter erzeugen, damit das Grid absolut stabil bleibt
+  const placeholder = document.createElement('div');
+  placeholder.className = 'grid-placeholder';
+  placeholder.style.width = '330px';
+  placeholder.style.height = '220px';
+  placeholder.style.visibility = 'hidden';
+  boxEl.parentNode.insertBefore(placeholder, boxEl);
+
+  // Box in die Bildschirmmitte holen und skalieren
   boxEl.classList.add("active-spinning");
+  
   document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
 
   await new Promise(r => setTimeout(r, 1000));
@@ -1187,7 +1184,10 @@ async function executeSingleStep() {
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
   await new Promise(r => setTimeout(r, 400));
 
+  // Fixierte Klassen entfernen und Platzhalter wieder löschen
   boxEl.classList.remove("active-spinning");
+  placeholder.remove();
+  
   await new Promise(r => setTimeout(r, 1000));
   
   currentStepIndex++;
@@ -1220,7 +1220,7 @@ function showFinalReportModal() {
     • <b>Beweis-Items:</b> <span>${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span><br>
     • <b>Kruzifix:</b> <span>${resultsStore.crucifix}</span><br>
     • <b>Räucherwerk:</b> <span>${resultsStore.smudge}</span><br>
-    • <b>Salz:</b> <span>${resultsStore.salt}</span><br>
+    • <span>Salz:</span> <span>${resultsStore.salt}</span><br>
     • <b>Kerzen:</b> <span>${resultsStore.candle}</span><br>
     • <b>Start-Sanity:</b> <span>${resultsStore.sanity}</span><br>
     • <b>Sicherung:</b> <span>${resultsStore.breaker}</span><br>
