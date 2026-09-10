@@ -116,11 +116,25 @@
     letter-spacing: 1px;
   }
 
+  .diff-btn.active-easy {
+    background: #14532d;
+    color: #4ade80;
+    border-color: #22c55e;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+  }
+
   .diff-btn.active-normal {
     background: #7c2d12;
     color: #fb923c;
     border-color: #f97316;
     box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  }
+
+  .diff-btn.active-hardcore {
+    background: #450a0a;
+    color: #f87171;
+    border-color: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
   }
 
   .rules-wrapper {
@@ -323,7 +337,6 @@
     box-shadow: 0 0 60px rgba(168, 85, 247, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
   }
 
-  /* Spezieller Style für den Einsatzort-Kasten (Map) */
   .master-combo-box.map-box {
     border: 2px solid #3b82f6;
     box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
@@ -635,9 +648,9 @@
 <div class="subtitle">Official Phasmophobia Contract & Wheel Tool</div>
 
 <div class="difficulty-container">
-  <button id="btnEasy" class="diff-btn">🟢 Comming Soon</button>
+  <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
   <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
-  <button id="btnHardcore" class="diff-btn">🔴 Comming Soon</button>
+  <button id="btnHardcore" class="diff-btn" onclick="setDifficulty('hardcore')">🔴 Schwer</button>
 </div>
 
 <div class="rules-wrapper">
@@ -849,7 +862,6 @@
       <div id="lightResult" class="result">Bereit...</div>
     </div>
 
-
     <!-- REIHE 3 -->
     <!-- 9. Einsatzort -->
     <div class="master-combo-box map-box inactive-box" id="box-map">
@@ -920,11 +932,10 @@
     <li><b>MD3:</b> Nur Geduckt</li>
     <li><b>MD4:</b> Keine Türen öffnen</li>
     <li><b>MD5:</b> Keine Pillen</li>
-    <li><b>MD6:</b> Kein Item-Drop</li>
+    <li><b>MD6:</b> Kein Item-Drop (Jagd)</li>
     <li><b>MD7:</b> Ohne Licht</li>
     <li><b>MD8:</b> Nur Vorwärts laufen</li>
     <li><b>MD9:</b> Kein Journal</li>
-    <li><b>MD10:</b> Kein Item-Drop (Jagd)</li>
   </ul>
 </div>
 
@@ -1031,33 +1042,70 @@ let resultsStore = {
 
 function setDifficulty(diff) {
   currentDifficulty = diff;
+  document.getElementById("btnEasy").className = "diff-btn" + (diff === 'easy' ? " active-easy" : "");
   document.getElementById("btnNormal").className = "diff-btn" + (diff === 'normal' ? " active-normal" : "");
+  document.getElementById("btnHardcore").className = "diff-btn" + (diff === 'hardcore' ? " active-hardcore" : "");
 }
 
 function resetPools() {
   itemTypesData = ["EMF", "Thermo", "Box", "Buch", "Video", "DOTS", "UV"];
-  itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
 
-  crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-  crucifixCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x"];
+  if (currentDifficulty === 'easy') {
+    itemTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    crucifixTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    saltTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    smudgeTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    candleTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    
+    crucifixCountData = ["1x", "1x", "1x", "2x", "2x", "2x"];
+    saltCountData = ["1x", "2x", "3x", "1x", "2x", "3x"];
 
-  saltTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-  saltCountData = ["0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x"];
+    smudgeCountData = ["2x", "3x", "3x", "3x", "4x", "4x"];
+    candleCountData = ["2x", "3x", "3x", "3x", "4x", "4x"];
 
-  smudgeTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-  smudgeCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
+    sanityData = ["50%", "50%", "75%", "75%", "75%", "100%", "100%"];
+    breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS"];
 
-  candleTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-  candleCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
+    let rawMaps = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+    mapData = rawMaps.filter(m => m !== "PH" && !m.includes("(R)"));
+  } else if (currentDifficulty === 'hardcore') {
+    itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
+    crucifixTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
+    saltTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
+    smudgeTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
+    candleTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
 
-  sanityData = ["0%", "0%", "25%", "25%", "50%", "50%", "75%", "75%", "100%", "100%"];
-  breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
+    crucifixCountData = ["0x", "0x", "0x", "1x", "1x", "1x"];
+    saltCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
+    smudgeCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
+    candleCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
+
+    sanityData = ["0%", "25%", "50%", "0%", "25%", "50%"];
+    breakerData = ["AUS", "DEFEKT", "AUS", "DEFEKT", "AUS", "DEFEKT"];
+
+    mapData = ["PH", "PH (R)", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+  } else {
+    itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
+    crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
+    saltTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
+    smudgeTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
+    candleTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
+    
+    crucifixCountData = ["0x", "1x", "2x","0x", "1x", "2x"];
+    saltCountData = ["0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x"];
+    smudgeCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
+    candleCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
+    
+    sanityData = ["0%", "25%", "50%", "75%", "100%", "0%", "25%", "50%", "75%", "100%"];
+    breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
+
+    mapData = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+  }
+  
   lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
 
   cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
-  
-  modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9", "MD10"];
-  mapData = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+  modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9"];
   communityData = ["Chat1", "Chat1", "Chat2", "Chat3", "Chat3"];
 
   shuffle(itemTypesData); shuffle(itemTierData);
@@ -1188,10 +1236,6 @@ function spinSingleWheel(type, items) {
   });
 }
 
-// Angepasste Reihenfolge entsprechend deiner neuen Zeilen-Struktur:
-// Reihe 1: Beweis, Kruzifix, Räucherwerk, Salz
-// Reihe 2: Kerzen, Sanity, Breaker, Taschenlampe
-// Reihe 3: Einsatzort, Fluch-Objekt, Modifier, Community
 const stepsList = [
   { id: 'box-master-combo', title: '1. BeweisItem & Stufe (3x)' },
   { id: 'box-crucifix-combo', title: '2. Kruzifix (Anzahl & Stufe)' },
@@ -1307,13 +1351,8 @@ async function executeSingleStep() {
   } 
   else if (currentStepIndex === 1) {
     let chosenCount = await spinIndependentWheel('crucifixCount', crucifixCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Kein Kruzifix";
-    } else {
-      let chosenTier = await spinIndependentWheel('crucifixTier', crucifixTierData);
-      resText = chosenTier === "Kein" ? "Kein Kruzifix" : `${chosenCount} Kruzifix ${chosenTier}`;
-    }
+    let chosenTier = await spinIndependentWheel('crucifixTier', crucifixTierData);
+    let resText = `${chosenCount} Kruzifix ${chosenTier}`;
     document.getElementById("crucifixResult").innerText = resText;
     resultsStore.crucifix = resText;
   } 
@@ -1331,13 +1370,8 @@ async function executeSingleStep() {
   }
   else if (currentStepIndex === 3) {
     let chosenCount = await spinIndependentWheel('saltCount', saltCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Kein Salz";
-    } else {
-      let chosenTier = await spinIndependentWheel('saltTier', saltTierData);
-      resText = chosenTier === "Kein" ? "Kein Salz" : `${chosenCount} Salz ${chosenTier}`;
-    }
+    let chosenTier = await spinIndependentWheel('saltTier', saltTierData);
+    let resText = `${chosenCount} Salz ${chosenTier}`;
     document.getElementById("saltResult").innerText = resText;
     resultsStore.salt = resText;
   } 
@@ -1490,6 +1524,5 @@ function closeModal() {
   document.getElementById("resultModal").style.display = "none";
 }
 </script>
-
 </body>
 </html>
