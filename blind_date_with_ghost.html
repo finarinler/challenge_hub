@@ -218,30 +218,6 @@
     flex-wrap: wrap;
   }
 
-  .auto-toggle-btn {
-    background: #181512;
-    color: #ccc;
-    border: 1px solid #443322;
-    padding: 8px 16px;
-    font-family: 'Special Elite', monospace;
-    font-size: 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-  }
-
-  .auto-toggle-btn:hover {
-    border-color: #ff9900;
-    color: #fff;
-  }
-
-  .auto-toggle-btn.active {
-    background: #7c2d12;
-    color: #fb923c;
-    border-color: #f97316;
-    box-shadow: 0 0 10px rgba(249, 115, 22, 0.4);
-  }
-
   .next-wheel-btn {
     padding: 12px 35px;
     font-family: 'Special Elite', monospace;
@@ -294,12 +270,12 @@
     align-items: center;
     background: #111113;
     padding: 12px;
-    border: 1px solid #2a2a2e;
+    border: 2px solid #ff9900;
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.9);
+    box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
     position: relative;
     box-sizing: border-box;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease, border-color 0.6s ease, opacity 0.6s ease, position 0.6s ease;
+    transition: transform 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 1.0s ease, border-color 0.4s ease, opacity 0.4s ease, position 1.0s ease;
   }
 
   .wheel-box.inactive-box {
@@ -311,30 +287,30 @@
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(3) !important;
+    transform: translate(-50%, -50%) scale(2.2) !important;
     border-color: #ff9900;
-    box-shadow: 0 0 80px rgba(255, 153, 0, 0.95);
+    box-shadow: 0 0 90px rgba(255, 153, 0, 0.98);
     background: #16161a;
     opacity: 1 !important;
     z-index: 9999;
   }
 
   .wheel-box.special-box {
-    border: 1px solid #ff3333;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    border: 2px solid #ff3333;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
   }
   .wheel-box.special-box.active-spinning {
     border-color: #ff3333;
-    box-shadow: 0 0 80px rgba(255, 51, 51, 0.95);
+    box-shadow: 0 0 90px rgba(255, 51, 51, 0.98);
   }
 
   .wheel-box.community-box {
-    border: 1px solid #a855f7;
-    box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+    border: 2px solid #a855f7;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
   }
   .wheel-box.community-box.active-spinning {
     border-color: #a855f7;
-    box-shadow: 0 0 80px rgba(168, 85, 247, 0.95);
+    box-shadow: 0 0 90px rgba(168, 85, 247, 0.98);
   }
 
   .master-combo-box {
@@ -348,7 +324,7 @@
     box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
     position: relative;
     box-sizing: border-box;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.6s ease, border-color 0.6s ease, opacity 0.6s ease, position 0.6s ease;
+    transition: transform 1.0s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 1.0s ease, border-color 0.4s ease, opacity 0.4s ease, position 1.0s ease;
   }
   .master-combo-box.inactive-box {
     opacity: 0.35;
@@ -359,7 +335,7 @@
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(3) !important;
+    transform: translate(-50%, -50%) scale(2.2) !important;
     border-color: #ff9900;
     box-shadow: 0 0 90px rgba(255, 153, 0, 0.98);
     background: #16161a;
@@ -421,11 +397,13 @@
     width: 110px;
     height: 110px;
   }
+  
   .pointer {
     position: absolute;
-    top: -6px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 50%;
+    right: -6px;
+    left: auto;
+    transform: translateY(-50%) rotate(90deg);
     width: 0; 
     height: 0; 
     border-left: 5px solid transparent;
@@ -434,6 +412,7 @@
     filter: drop-shadow(0 0 4px #ff0000);
     z-index: 10;
   }
+
   canvas {
     border-radius: 50%;
     border: 2px solid #222;
@@ -605,7 +584,7 @@
           <li><b>Sicht-Beschränkung:</b> Kopflampen NUR bei Freigabe!</li>
           <li><b>Start-Sanity:</b> Exakt auf Rad-Ergebnis einstellen.</li>
           <li><b>Sicherungskasten:</b> Vorab laut Breaker-Rad einstellen.</li>
-          <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmemodus.</li>
+          <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmodus.</li>
         </ul>
       </div>
     </div>
@@ -619,10 +598,7 @@
   
   <div class="modal-control-bar">
     <div class="step-counter" id="stepCounterText">Schritt 1 von 12</div>
-    
-    <button id="autoToggleBtn" class="auto-toggle-btn" onclick="toggleAutoMode()">Automatisches Drehen: Aus</button>
-
-    <button id="nextStepBtn" class="next-wheel-btn" onclick="handleNextStep()" disabled>Nächstes Rad ➔</button>
+    <button id="nextStepBtn" class="next-wheel-btn" disabled>Räder laufen...</button>
   </div>
 
   <div class="wheels-grid-layout">
@@ -832,16 +808,13 @@ let crucifixTierData = [], crucifixCountData = [];
 let saltTierData = [], saltCountData = [];
 let smudgeTierData = [], smudgeCountData = [];
 let candleTierData = [], candleCountData = [];
-let sanityData = [], sanityLabels = [];
-let breakerData = [], breakerLabels = [];
-let lightData = [], lightLabels = [];
+let sanityData = [];
+let breakerData = [];
+let lightData = [];
 let mapData = [], cursedData = [], modifierData = [], communityData = [];
 
 let currentDifficulty = 'normal';
 let currentStepIndex = 0;
-let isSpinningStep = false;
-let autoPlayTimeout = null;
-let isAutoModeActive = false;
 
 let resultsStore = {
   item1: '', item2: '', item3: '',
@@ -855,24 +828,12 @@ function setDifficulty(diff) {
   document.getElementById("btnNormal").className = "diff-btn" + (diff === 'normal' ? " active-normal" : "");
 }
 
-function toggleAutoMode() {
-  isAutoModeActive = !isAutoModeActive;
-  const btn = document.getElementById("autoToggleBtn");
-  if (isAutoModeActive) {
-    btn.textContent = "Automatisches Drehen: An";
-    btn.classList.add("active");
-  } else {
-    btn.textContent = "Automatisches Drehen: Aus";
-    btn.classList.remove("active");
-  }
-}
-
 function resetPools() {
   itemTypesData = ["EMF", "Thermo", "Box", "Buch", "Video", "DOTS", "UV"];
   itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
 
-  crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3",];
-  crucifixCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x",];
+  crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
+  crucifixCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x"];
 
   saltTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
   saltCountData = ["0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x"];
@@ -884,13 +845,8 @@ function resetPools() {
   candleCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
 
   sanityData = ["0%", "0%", "25%", "25%", "50%", "50%", "75%", "75%", "100%", "100%"];
-  sanityLabels = ["0% Sanity", "0% Sanity", "25% Sanity", "25% Sanity", "50% Sanity", "50% Sanity", "75% Sanity", "75% Sanity", "100% Sanity", "100% Sanity"];
-
   breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
-  breakerLabels = ["Breaker AN", "Breaker AN", "Breaker AN", "Breaker AUS", "Breaker AUS", "Breaker AUS", "Breaker DEFEKT", "Breaker DEFEKT", "Breaker DEFEKT"];
-
   lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
-  lightLabels = ["Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS"];
 
   cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote", "Zufall", "Zufall", "Kein Fluch-Objekt", "Kein Fluch-Objekt"];
   modifierData = ["Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", "Keine Türen Öffnen", "Kein Modifier"];
@@ -1003,8 +959,7 @@ function updateItemUI() {
 function calculateWinnerIndex(finalAngle, numItems) {
   const normalizedAngle = (360 - (finalAngle % 360)) % 360;
   const sliceSize = 360 / numItems;
-  const adjustedAngle = (normalizedAngle + 270) % 360;
-  return Math.floor(adjustedAngle / sliceSize);
+  return Math.floor(normalizedAngle / sliceSize);
 }
 
 function spinIndependentWheel(type, items) {
@@ -1026,7 +981,7 @@ function spinIndependentWheel(type, items) {
   });
 }
 
-function spinSingleWheel(type, items, labelMap = null) {
+function spinSingleWheel(type, items) {
   return new Promise((resolve) => {
     const canvasEl = document.getElementById(type + "Canvas");
     const spins = 4 + Math.floor(Math.random() * 3);
@@ -1040,9 +995,6 @@ function spinSingleWheel(type, items, labelMap = null) {
     setTimeout(() => {
       let winnerIdx = calculateWinnerIndex(angles[type], items.length);
       let res = items[winnerIdx];
-      if (labelMap) res = labelMap[winnerIdx];
-
-      document.getElementById(type + "Result").innerText = res;
       resolve(res);
     }, 2000);
   });
@@ -1063,9 +1015,8 @@ const stepsList = [
   { id: 'box-community', title: '12. Community' }
 ];
 
-function startFullChallenge() {
+async function startFullChallenge() {
   document.getElementById("wheelsModal").style.display = "flex";
-  if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
   resetPools();
   currentItemsPicked = [];
   currentTiersPicked = [];
@@ -1101,13 +1052,16 @@ function startFullChallenge() {
     document.getElementById(s.id).classList.remove("active-spinning");
   });
 
-  document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNGS-RÄDER BEREIT";
+  document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNGS-RAD DREHT SICH...";
   document.getElementById("stepCounterText").innerText = `Schritt 1 von ${stepsList.length}`;
   
   const nextBtn = document.getElementById("nextStepBtn");
-  nextBtn.disabled = false;
-  nextBtn.innerText = "Erstes Rad Drehen ➔";
-  nextBtn.onclick = handleNextStep;
+  nextBtn.disabled = true;
+  nextBtn.innerText = "Räder laufen...";
+
+  await new Promise(r => setTimeout(r, 2000));
+
+  runAutoSequence();
 }
 
 async function executeSingleStep() {
@@ -1116,15 +1070,12 @@ async function executeSingleStep() {
 
   boxEl.classList.remove("inactive-box");
   boxEl.classList.add("active-spinning");
-  document.getElementById("modalHeaderTitle").innerText = `FOKUS: ${currentStepObj.title}`;
+  document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
 
-  // 2 Sekunden Timer einbauen, bevor das eigentliche Drehen startet
-  for (let i = 2; i > 0; i--) {
-    document.getElementById("modalHeaderTitle").innerText = `BEREIT IN ${i}s...`;
-    await new Promise(r => setTimeout(r, 1000));
-  }
+  await new Promise(r => setTimeout(r, 1000));
 
   document.getElementById("modalHeaderTitle").innerText = `DREHE: ${currentStepObj.title}`;
+  await new Promise(r => setTimeout(r, 1000));
 
   if (currentStepIndex === 0) {
     document.getElementById("itemResult").innerText = "Ermittle 3 Beweise...";
@@ -1140,7 +1091,7 @@ async function executeSingleStep() {
       createWheel("itemCanvas", itemTypesData);
       updateItemUI();
 
-      if (round < 2) await new Promise(r => setTimeout(r, 400));
+      if (round < 2) await new Promise(r => setTimeout(r, 200));
     }
     resultsStore.item1 = `${currentItemsPicked[0]} (${currentTiersPicked[0]})`;
     resultsStore.item2 = `${currentItemsPicked[1]} (${currentTiersPicked[1]})`;
@@ -1195,76 +1146,69 @@ async function executeSingleStep() {
     resultsStore.candle = resText;
   } 
   else if (currentStepIndex === 5) {
-    resultsStore.sanity = await spinSingleWheel('sanity', sanityData, sanityLabels);
+    let rawVal = await spinSingleWheel('sanity', sanityData);
+    let fullText = rawVal + " Sanity";
+    document.getElementById("sanityResult").innerText = fullText;
+    resultsStore.sanity = fullText;
   } 
   else if (currentStepIndex === 6) {
-    resultsStore.breaker = await spinSingleWheel('breaker', breakerData, breakerLabels);
+    let rawVal = await spinSingleWheel('breaker', breakerData);
+    let fullText = "Breaker " + rawVal;
+    document.getElementById("breakerResult").innerText = fullText;
+    resultsStore.breaker = fullText;
   } 
   else if (currentStepIndex === 7) {
-    resultsStore.light = await spinSingleWheel('light', lightData, lightLabels);
+    let rawVal = await spinSingleWheel('light', lightData);
+    let fullText = "Taschenlampe " + rawVal;
+    document.getElementById("lightResult").innerText = fullText;
+    resultsStore.light = fullText;
   } 
   else if (currentStepIndex === 8) {
-    resultsStore.map = await spinSingleWheel('map', mapData);
+    let res = await spinSingleWheel('map', mapData);
+    document.getElementById("mapResult").innerText = res;
+    resultsStore.map = res;
   } 
   else if (currentStepIndex === 9) {
-    resultsStore.cursed = await spinSingleWheel('cursed', cursedData);
+    let res = await spinSingleWheel('cursed', cursedData);
+    document.getElementById("cursedResult").innerText = res;
+    resultsStore.cursed = res;
   } 
   else if (currentStepIndex === 10) {
-    resultsStore.modifier = await spinSingleWheel('modifier', modifierData);
+    let res = await spinSingleWheel('modifier', modifierData);
+    document.getElementById("modifierResult").innerText = res;
+    resultsStore.modifier = res;
   } 
   else if (currentStepIndex === 11) {
-    resultsStore.community = await spinSingleWheel('community', communityData);
+    let res = await spinSingleWheel('community', communityData);
+    document.getElementById("communityResult").innerText = res;
+    resultsStore.community = res;
   }
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 400));
 
   boxEl.classList.remove("active-spinning");
-  await new Promise(r => setTimeout(r, 400));
+  await new Promise(r => setTimeout(r, 1000));
   
   currentStepIndex++;
 }
 
-async function handleNextStep() {
-  if (isSpinningStep) return;
-  isSpinningStep = true;
-  const nextBtn = document.getElementById("nextStepBtn");
-  nextBtn.disabled = true;
-
-  if (!isAutoModeActive) {
+async function runAutoSequence() {
+  while (currentStepIndex < stepsList.length) {
+    document.getElementById("stepCounterText").innerText = `Schritt ${currentStepIndex + 1} von ${stepsList.length}`;
     await executeSingleStep();
-    isSpinningStep = false;
-
     if (currentStepIndex < stepsList.length) {
-      document.getElementById("stepCounterText").innerText = `Schritt ${currentStepIndex + 1} von ${stepsList.length}`;
-      document.getElementById("modalHeaderTitle").innerText = `BEREIT FÜR NÄCHTES RAD`;
-      nextBtn.disabled = false;
-      nextBtn.innerText = "Nächstes Rad ➔";
-    } else {
-      document.getElementById("stepCounterText").innerText = "Alle Räder gedreht!";
-      document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNG ABGESCHLOSSEN!";
-      nextBtn.disabled = false;
-      nextBtn.innerText = "Einsatzbericht anzeigen ➔";
-      nextBtn.onclick = showFinalReportModal;
+      await new Promise(r => setTimeout(r, 1000));
     }
-  } else {
-    while (currentStepIndex < stepsList.length) {
-      document.getElementById("stepCounterText").innerText = `Schritt ${currentStepIndex + 1} von ${stepsList.length} (Auto)`;
-      await executeSingleStep();
-      if (currentStepIndex < stepsList.length) {
-        await new Promise(r => {
-          autoPlayTimeout = setTimeout(r, 2000);
-        });
-      }
-    }
-
-    document.getElementById("stepCounterText").innerText = "Alle Räder gedreht!";
-    document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNG ABGESCHLOSSEN!";
-    isSpinningStep = false;
-    nextBtn.disabled = false;
-    nextBtn.innerText = "Einsatzbericht anzeigen ➔";
-    nextBtn.onclick = showFinalReportModal;
   }
+
+  document.getElementById("stepCounterText").innerText = "Alle Räder gedreht!";
+  document.getElementById("modalHeaderTitle").innerText = "ERMITTLUNG ABGESCHLOSSEN!";
+  
+  const nextBtn = document.getElementById("nextStepBtn");
+  nextBtn.disabled = false;
+  nextBtn.innerText = "Ergebnisbericht Senden";
+  nextBtn.onclick = showFinalReportModal;
 }
 
 function showFinalReportModal() {
@@ -1282,12 +1226,11 @@ function showFinalReportModal() {
     • <b>Sicherung:</b> <span>${resultsStore.breaker}</span><br>
     • <b>Taschenlampen:</b> <span>${resultsStore.light}</span><br>
     • <b>Einsatzort:</b> <span>${resultsStore.map}</span><br>
-    • <b>Fluch-Objekt:</b> <span class="highlight-red">${resultsStore.cursz}</span><br>
+    • <b>Fluch-Objekt:</b> <span class="highlight-red">${resultsStore.cursed}</span><br>
     • <b>Modifier:</b> <span class="highlight-red">${resultsStore.modifier}</span><br>
     • <b>Community:</b> <span class="highlight-purple">${resultsStore.community}</span>
   `;
   document.getElementById("resultModal").style.display = "flex";
-  document.getElementById("nextStepBtn").onclick = handleNextStep;
 }
 
 function closeModal() {
