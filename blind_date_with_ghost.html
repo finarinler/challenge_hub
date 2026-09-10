@@ -23,7 +23,6 @@
     position: relative;
   }
 
-  /* --- Zurück Button zur index.html --- */
   .back-btn {
     position: absolute;
     top: 20px;
@@ -69,7 +68,6 @@
     letter-spacing: 2px;
   }
 
-  /* --- Schalter / Difficulty Selector --- */
   .difficulty-container {
     display: flex;
     justify-content: center;
@@ -123,7 +121,6 @@
     box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
   }
 
-  /* --- Permanente Regel-Box --- */
   .rules-wrapper {
     max-width: 900px;
     width: 100%;
@@ -180,7 +177,6 @@
     margin-bottom: 8px;
   }
 
-  /* Main Action Button */
   .start-btn {
     padding: 22px 60px;
     font-family: 'Special Elite', monospace;
@@ -202,7 +198,6 @@
     transform: scale(1.05);
   }
 
-  /* --- Fullscreen Popup Modal für die Räder --- */
   .wheels-modal-overlay {
     display: none;
     position: fixed;
@@ -212,9 +207,9 @@
     z-index: 1000;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     overflow-y: auto;
-    padding: 20px;
+    padding: 30px 20px;
     box-sizing: border-box;
   }
 
@@ -226,25 +221,34 @@
     text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
   }
 
-  /* 3x3 Grid Layout im Popup */
+  /* Grid Layout sortiert: 1. Reihe (3), 2. Reihe (3), 3. Reihe (4), 4. Reihe (3) */
   .container {
-    display: grid;
-    grid-template-columns: repeat(3, 230px);
-    gap: 15px;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
     max-width: 800px;
+    width: 100%;
   }
+
+  .wheel-row {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+  }
+
   .wheel-box {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #111113;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #2a2a2e;
     border-radius: 6px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.9);
     position: relative;
-    width: 230px;
+    width: 160px;
     box-sizing: border-box;
   }
   .wheel-box.special-box {
@@ -256,10 +260,10 @@
     box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
   }
   .wheel-box h2 {
-    font-size: 12px;
+    font-size: 9px;
     color: #ff9900;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     text-transform: uppercase;
     border-bottom: 1px dashed #444;
     width: 100%;
@@ -271,19 +275,19 @@
 
   .wheel-wrapper {
     position: relative;
-    width: 170px;
-    height: 170px;
+    width: 110px;
+    height: 110px;
   }
   .pointer {
     position: absolute;
-    top: -10px;
+    top: -6px;
     left: 50%;
     transform: translateX(-50%);
     width: 0; 
     height: 0; 
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 18px solid #ff0000;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 10px solid #ff0000;
     filter: drop-shadow(0 0 4px #ff0000);
     z-index: 10;
   }
@@ -293,10 +297,10 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.9);
   }
   .result {
-    margin-top: 10px;
-    font-size: 11px;
+    margin-top: 6px;
+    font-size: 9px;
     font-weight: bold;
-    min-height: 40px;
+    min-height: 28px;
     color: #00ffcc;
     text-align: center;
     text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
@@ -340,7 +344,6 @@
     text-shadow: 0 0 8px #ff9900;
   }
 
-  /* Finaler Einsatzbericht Modal */
   .result-modal-overlay {
     display: none;
     position: fixed;
@@ -356,7 +359,7 @@
     border: 2px solid #ff0000;
     border-radius: 4px;
     padding: 30px;
-    max-width: 520px;
+    max-width: 580px;
     width: 90%;
     box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
     text-align: center;
@@ -375,7 +378,7 @@
     border: 1px solid #333;
     padding: 20px;
     margin: 20px 0;
-    font-size: 15px;
+    font-size: 14px;
     line-height: 1.8;
   }
   .modal-list span { color: #ff9900; font-weight: bold; }
@@ -398,26 +401,24 @@
     box-shadow: 0 0 10px #fff;
   }
 
-  @media (max-width: 850px) {
+  @media (max-width: 700px) {
     .rules-grid { grid-template-columns: 1fr; }
-    .container { grid-template-columns: repeat(2, 220px); }
+    .wheel-row { flex-wrap: wrap; }
+    .wheel-box { width: 140px; }
   }
   @media (max-width: 500px) {
     .back-btn { position: static; margin-bottom: 15px; }
-    .container { grid-template-columns: 1fr; }
     .difficulty-container { flex-direction: column; width: 100%; max-width: 300px; }
   }
 </style>
 </head>
 <body>
 
-<!-- ZURÜCK ZUR INDEX BUTTON -->
 <a href="index.html" class="back-btn">❮ Zurück zum Hub</a>
 
 <h1>BLIND DATE MIT DEM GEIST</h1>
 <div class="subtitle">Official Phasmophobia Contract & Wheel Tool</div>
 
-<!-- DIFFICULTY PRESET SCHALTER -->
 <div class="difficulty-container">
   <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
   <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
@@ -433,19 +434,20 @@
       <div class="rule-block">
         <h3>1. Ausrüstungs-Protokoll</h3>
         <ul>
-          <li><b>3x Beweis-Items:</b> Nur die genau 3 gelosten Gegenstände sind erlaubt.</li>
+          <li><b>3x Beweis-Items:</b> Nur die gelosten Gegenstände sind erlaubt.</li>
           <li><b>Einfache Ausführung:</b> Jedes Beweis-Item darf exakt 1x ins Haus.</li>
-          <li><b>Räucherwerk-Regel:</b> Max. 4x Räucherwerk + 1x Feuerzeug (in der gezogenen Stufe).</li>
-          <li><b>Kerzen-Regel:</b> Kerzen sind nur erlaubt, wenn Taschenlampen erlaubt sind!</li>
+          <li><b>Schutzausrüstung:</b> Kruzifix & Salz laut den entsprechenden Rädern.</li>
+          <li><b>Räucherwerk:</b> Stufe (Tier) & Anzahl (1x - 4x) werden separat gelost.</li>
+          <li><b>Kerzen-Regel:</b> Kerzen sind NUR erlaubt, wenn Taschenlampen erlaubt sind!</li>
         </ul>
       </div>
 
       <div class="rule-block">
         <h3>2. Modifikatoren & Chat</h3>
         <ul>
-          <li><b>Sicht-Beschränkung:</b> Standard- / Kopflampen NUR bei Freigabe von Rad 5!</li>
-          <li><b>Start-Sanity:</b> Exakt auf das Ergebnis von Rad 3 einstellen.</li>
-          <li><b>Sicherungskasten:</b> Vorab laut Rad 4 einstellen (An / Aus / Defekt).</li>
+          <li><b>Sicht-Beschränkung:</b> Standard- / Kopflampen NUR bei Freigabe von Rad 9!</li>
+          <li><b>Start-Sanity:</b> Exakt auf das Ergebnis von Rad 7 einstellen.</li>
+          <li><b>Sicherungskasten:</b> Vorab laut Rad 8 einstellen (An / Aus / Defekt).</li>
           <li><b>Handicap & Fluch:</b> MÜSSEN im Einsatz konsequent beachtet werden!</li>
           <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmemodus (Video: Streamer wählt).</li>
         </ul>
@@ -456,91 +458,141 @@
 
 <button id="mainBtn" class="start-btn" onclick="startFullChallenge()">Einsatz Starten!</button>
 
-<!-- POPUP RÄDER MODAL -->
+<!-- POPUP RÄDER MODAL (IN REIHEN SORTIERT) -->
 <div id="wheelsModal" class="wheels-modal-overlay">
   <div class="wheels-modal-header">ERMITTLUNGS-RAD DREHT SICH...</div>
   
   <div class="container">
-    <div class="wheel-box">
-      <h2>1. Ausrüstung (3x)</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="itemCanvas" width="170" height="170"></canvas>
+    
+    <!-- 1. Reihe: Beweis-Items, Kruzi, Salz -->
+    <div class="wheel-row">
+      <div class="wheel-box">
+        <h2>1. Beweise (3x)</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="itemCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="itemResult" class="result">Bereit...</div>
       </div>
-      <div id="itemResult" class="result">Bereit...</div>
+
+      <div class="wheel-box">
+        <h2>2. Kruzifix</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="crucifixCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="crucifixResult" class="result">Bereit...</div>
+      </div>
+
+      <div class="wheel-box">
+        <h2>3. Salz</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="saltCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="saltResult" class="result">Bereit...</div>
+      </div>
     </div>
 
-    <div class="wheel-box">
-      <h2>2. Räucherwerk</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="smudgeCanvas" width="170" height="170"></canvas>
+    <!-- 2. Reihe: Räucherwerk Stufe, Räucherwerk Anzahl, Kerzen -->
+    <div class="wheel-row">
+      <div class="wheel-box">
+        <h2>4. Räucher-Tier</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="smudgeCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="smudgeResult" class="result">Bereit...</div>
       </div>
-      <div id="smudgeResult" class="result">Bereit...</div>
+
+      <div class="wheel-box">
+        <h2>5. Räucher-Anzahl</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="smudgeCountCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="smudgeCountResult" class="result">Bereit...</div>
+      </div>
+
+      <div class="wheel-box">
+        <h2>6. Kerzen</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="candleCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="candleResult" class="result">Bereit...</div>
+      </div>
     </div>
 
-    <div class="wheel-box">
-      <h2>3. Start-Sanity</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="sanityCanvas" width="170" height="170"></canvas>
+    <!-- 3. Reihe: Sanity, Breaker, Licht, Ort -->
+    <div class="wheel-row">
+      <div class="wheel-box">
+        <h2>7. Start-Sanity</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="sanityCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="sanityResult" class="result">Bereit...</div>
       </div>
-      <div id="sanityResult" class="result">Bereit...</div>
+
+      <div class="wheel-box">
+        <h2>8. Breaker-Status</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="breakerCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="breakerResult" class="result">Bereit...</div>
+      </div>
+
+      <div class="wheel-box">
+        <h2>9. Lichtquellen</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="lightCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="lightResult" class="result">Bereit...</div>
+      </div>
+
+      <div class="wheel-box">
+        <h2>10. Einsatzort</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="mapCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="mapResult" class="result">Bereit...</div>
+      </div>
     </div>
 
-    <div class="wheel-box">
-      <h2>4. Breaker-Status</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="breakerCanvas" width="170" height="170"></canvas>
+    <!-- 4. Reihe: Cursed Objects, Modifier, Communityrad -->
+    <div class="wheel-row">
+      <div class="wheel-box special-box">
+        <h2>11. Fluch-Objekt</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="cursedCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="cursedResult" class="result">Bereit...</div>
       </div>
-      <div id="breakerResult" class="result">Bereit...</div>
+
+      <div class="wheel-box special-box">
+        <h2>12. Modifier</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="modifierCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="modifierResult" class="result">Bereit...</div>
+      </div>
+
+      <div class="wheel-box community-box">
+        <h2>13. Community</h2>
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <canvas id="communityCanvas" width="110" height="110"></canvas>
+        </div>
+        <div id="communityResult" class="result">Bereit...</div>
+      </div>
     </div>
 
-    <div class="wheel-box">
-      <h2>5. Lichtquellen</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="lightCanvas" width="170" height="170"></canvas>
-      </div>
-      <div id="lightResult" class="result">Bereit...</div>
-    </div>
-
-    <div class="wheel-box">
-      <h2>6. Einsatzort</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="mapCanvas" width="170" height="170"></canvas>
-      </div>
-      <div id="mapResult" class="result">Bereit...</div>
-    </div>
-
-    <div class="wheel-box special-box">
-      <h2>7. Fluch-Objekt</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="cursedCanvas" width="170" height="170"></canvas>
-      </div>
-      <div id="cursedResult" class="result">Bereit...</div>
-    </div>
-
-    <div class="wheel-box special-box">
-      <h2>8. Handicap / Modifier</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="modifierCanvas" width="170" height="170"></canvas>
-      </div>
-      <div id="modifierResult" class="result">Bereit...</div>
-    </div>
-
-    <div class="wheel-box community-box">
-      <h2>9. Community-Regel</h2>
-      <div class="wheel-wrapper">
-        <div class="pointer"></div>
-        <canvas id="communityCanvas" width="170" height="170"></canvas>
-      </div>
-      <div id="communityResult" class="result">Bereit...</div>
-    </div>
   </div>
 </div>
 
@@ -556,7 +608,6 @@
   </div>
 </div>
 
-<!-- EINSATZBERICHT MODAL -->
 <div id="resultModal" class="result-modal-overlay">
   <div class="modal-content">
     <h2>EINSATZBERICHT</h2>
@@ -566,7 +617,7 @@
 </div>
 
 <script>
-let itemsData = [], smudgeData = [], sanityData = [], breakerData = [], lightData = [], mapData = [], cursedData = [], modifierData = [], communityData = [];
+let itemsData = [], crucifixData = [], saltData = [], smudgeData = [], smudgeCountData = [], candleData = [], sanityData = [], breakerData = [], lightData = [], mapData = [], cursedData = [], modifierData = [], communityData = [];
 
 let currentDifficulty = 'normal';
 
@@ -578,6 +629,41 @@ function setDifficulty(diff) {
 }
 
 function resetPools() {
+  crucifixData = [
+    "1x Kruzi T1", "2x Kruzi T1", "1x Kruzi T2", "2x Kruzi T2", "1x Kruzi T3", "2x Kruzi T3",
+    "1x Kruzi T1", "2x Kruzi T1", "1x Kruzi T2", "2x Kruzi T2", "1x Kruzi T3", "2x Kruzi T3",
+    "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi",
+    "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi", "Kein Kruzi"
+  ];
+
+  saltData = [
+    "1x Salz T1", "2x Salz T1", "3x Salz T1",
+    "1x Salz T2", "2x Salz T2", "3x Salz T2",
+    "1x Salz T3", "2x Salz T3", "3x Salz T3",
+    "Kein Salz", "Kein Salz", "Kein Salz",
+    "Kein Salz", "Kein Salz", "Kein Salz",
+    "Kein Salz", "Kein Salz", "Kein Salz"
+  ];
+
+  smudgeCountData = ["1x Räucherwerk", "2x Räucherwerk", "3x Räucherwerk", "4x Räucherwerk", "1x Räucherwerk", "2x Räucherwerk", "3x Räucherwerk", "4x Räucherwerk", "1x Räucherwerk", "2x Räucherwerk", "3x Räucherwerk", "4x Räucherwerk"];
+
+  candleData = [
+    "1x Kerze T1", "2x Kerze T1", "3x Kerze T1", "4x Kerze T1",
+    "1x Kerze T2", "2x Kerze T2", "3x Kerze T2", "4x Kerze T2",
+    "1x Kerze T3", "2x Kerze T3", "3x Kerze T3", "4x Kerze T3"
+  ];
+
+  cursedData = [
+    "Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", 
+    "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote",
+    "Zufall", "Kein Fluch-Objekt"
+  ];
+
+  modifierData = [
+    "Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", 
+    "Keine Türen Zu", "Kein Modifier"
+  ];
+
   if (currentDifficulty === 'easy') {
     itemsData = [
       "EMF T2","EMF T2","EMF T3","EMF T3",
@@ -588,12 +674,10 @@ function resetPools() {
       "DOTS T2","DOTS T2","DOTS T3","DOTS T3",
       "UV-Lampe T2","UV-Lampe T2","UV-Lampe T3","UV-Lampe T3"
     ];
-    smudgeData = ["Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T3", "Räucherwerk T3"];
-    sanityData = ["75% Sanity", "75% Sanity", "100% Sanity", "100% Sanity", "100% Sanity"];
-    breakerData = ["Breaker AN", "Breaker AN", "Breaker AN", "Breaker AUS"];
-    lightData = ["Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AUS"];
-    modifierData = ["Kein Modifier", "Kein Modifier", "Kein Modifier", "Sprinten Verboten"];
-    cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote", "Zufall", "Zufall"];
+    smudgeData = ["Räucherwerk T2", "Räucherwerk T3"];
+    sanityData = ["75% Sanity", "100% Sanity", "100% Sanity"];
+    breakerData = ["Breaker AN", "Breaker AN", "Breaker AUS"];
+    lightData = ["Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AUS"];
 
   } else if (currentDifficulty === 'hardcore') {
     itemsData = [
@@ -605,83 +689,61 @@ function resetPools() {
       "DOTS T1","DOTS T1","DOTS T1","DOTS T2",
       "UV-Lampe T1","UV-Lampe T1","UV-Lampe T1","UV-Lampe T2"
     ];
-    smudgeData = ["Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T2"];
-    sanityData = ["0% Sanity", "0% Sanity", "0% Sanity", "25% Sanity", "25% Sanity"];
-    breakerData = ["Breaker AUS", "Breaker AUS", "Breaker DEFEKT", "Breaker DEFEKT"];
-    lightData = ["Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AN"];
-    modifierData = ["Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", "Keine Türen Zu"];
-    cursedData = ["Keines", "Keines", "Keines", "Zufall", "Zufall"];
+    smudgeData = ["Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T2"];
+    sanityData = ["0% Sanity", "0% Sanity", "25% Sanity"];
+    breakerData = ["Breaker AUS", "Breaker DEFEKT"];
+    lightData = ["Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AN"];
 
   } else {
     itemsData = [
-      "EMF T1","EMF T1","EMF T1","EMF T2","EMF T2","EMF T3",
-      "Thermometer T1","Thermometer T1","Thermometer T1","Thermometer T2","Thermometer T2","Thermometer T3",
-      "Geisterbox T1","Geisterbox T1","Geisterbox T1","Geisterbox T2","Geisterbox T2","Geisterbox T3",
-      "Geisterbuch T1","Geisterbuch T1","Geisterbuch T1","Geisterbuch T2","Geisterbuch T2","Geisterbuch T3",
-      "Videokamera T1","Videokamera T1","Videokamera T1","Videokamera T2","Videokamera T2","Videokamera T3",
-      "DOTS T1","DOTS T1","DOTS T1","DOTS T2","DOTS T2","DOTS T3",
-      "UV-Lampe T1","UV-Lampe T1","UV-Lampe T1","UV-Lampe T2","UV-Lampe T2","UV-Lampe T3"
+      "EMF T1","EMF T1","EMF T2","EMF T2","EMF T3","EMF T3",
+      "Thermometer T1","Thermometer T1","Thermometer T2","Thermometer T2","Thermometer T3","Thermometer T3",
+      "Geisterbox T1","Geisterbox T1","Geisterbox T2","Geisterbox T2","Geisterbox T3","Geisterbox T3",
+      "Geisterbuch T1","Geisterbuch T1","Geisterbuch T2","Geisterbuch T2","Geisterbuch T3","Geisterbuch T3",
+      "Videokamera T1","Videokamera T1","Videokamera T2","Videokamera T2","Videokamera T3","Videokamera T3",
+      "DOTS T1","DOTS T1","DOTS T2","DOTS T2","DOTS T3", "DOTS T3",
+      "UV-Lampe T1","UV-Lampe T1","UV-Lampe T2","UV-Lampe T2","UV-Lampe T3","UV-Lampe T3"
     ];
-    smudgeData = [
-      "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1",
-      "Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T2",
-      "Räucherwerk T3", "Räucherwerk T3", "Räucherwerk T3", "Räucherwerk T3"
-    ];
-    sanityData = [
-      "0% Sanity","0% Sanity",
-      "25% Sanity","25% Sanity","25% Sanity",
-      "50% Sanity","50% Sanity","50% Sanity","50% Sanity",
-      "75% Sanity","75% Sanity","75% Sanity",
-      "100% Sanity","100% Sanity"
-    ];
-    breakerData = [
-      "Breaker AN", "Breaker AN", "Breaker AN", "Breaker AN",
-      "Breaker AUS", "Breaker AUS", "Breaker AUS", "Breaker AUS",
-      "Breaker DEFEKT", "Breaker DEFEKT", "Breaker DEFEKT", "Breaker DEFEKT"
-    ];
-    lightData = [
-      "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN",
-      "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS"
-    ];
-    modifierData = [
-      "Sprinten Verboten", 
-      "Keine Verstecke", 
-      "Nur Geduckt Gehen",  
-      "Keine Türen Zu", 
-      "Kein Modifier"
-    ];
-    cursedData = [
-      "Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", 
-      "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote",
-      "Zufall", "Zufall", "Zufall", "Keines", "Keines", "Keines"
-    ];
+    smudgeData = ["Räucherwerk T1", "Räucherwerk T2", "Räucherwerk T3", "Räucherwerk T1", "Räucherwerk T2", "Räucherwerk T3", "Räucherwerk T1", "Räucherwerk T2", "Räucherwerk T3",];
+    sanityData = ["0% Sanity", "25% Sanity", "50% Sanity", "75% Sanity", "100% Sanity", "0% Sanity", "25% Sanity", "50% Sanity", "75% Sanity", "100% Sanity", "0% Sanity", "25% Sanity", "50% Sanity", "75% Sanity", "100% Sanity"];
+    breakerData = ["Breaker AN", "Breaker AUS", "Breaker DEFEKT", "Breaker AN", "Breaker AUS", "Breaker DEFEKT", "Breaker AN", "Breaker AUS", "Breaker DEFEKT"];
+    lightData = ["Taschenlampe AN", "Taschenlampe AUS", "Taschenlampe AN", "Taschenlampe AUS", "Taschenlampe AN", "Taschenlampe AUS", "Taschenlampe AN", "Taschenlampe AUS"];
   }
 
   mapData = [
-    "Tanglewood Drive", "Tanglewood Drive", "Tanglewood Drive",
-    "Edgefield Road", "Edgefield Road", "Edgefield Road",
+    "Tanglewood Drive", "Tanglewood Drive", "Tanglewood Drive", 
+    "Edgefield Road",  "Edgefield Road", "Edgefield Road",
     "Ridgeview Court", "Ridgeview Court", "Ridgeview Court",
     "Willow Street", "Willow Street", "Willow Street",
     "Point Hope", "Point Hope",
-    "Camp Woodwind", "Camp Woodwind", 
-    "Maple Log Campside",
-    "Grafton Farmhouse", 
-    "Bleasdale Farmhouse",
-    "Point Hope (Restr.)", "Point Hope (Restr.)", "Sunny Meadows (Restr.)", "Prison (Restr)", "Brownstone High (Restr.)"
+    "Camp Woodwind", "Camp Woodwind",
+    "Maple Log Campside", "Maple Log Campside",
+    "Grafton Farmhouse", "Grafton Farmhouse",
+    "Bleasdale Farmhouse", "Bleasdale Farmhouse",
+    "Point Hope (Restr.)", "Point Hope (Restr.)",
+    "Sunny Meadows (Restr.)", 
+    "Prison (Restr)", 
+    "Brownstone High (Restr.)"
   ];
 
   communityData = [
-    "Lass die Zuschauer den Geist wählen!",
-    "Lass die Zuschauer den Geist wählen!",
-    "Lass die Zuschauer den Geist wählen!",
+    "Der Chat bestimmt den Geist",
     "Chat bestimmt 1 Zusatzitem (Nur T1!)",
     "Ruhe im Chat: Nicht mitraten!",
+    "Der Chat bestimmt den Geist",
+    "Chat bestimmt 1 Zusatzitem (Nur T1!)",
     "Ruhe im Chat: Nicht mitraten!",
+    "Der Chat bestimmt den Geist",
+    "Chat bestimmt 1 Zusatzitem (Nur T1!)",
     "Ruhe im Chat: Nicht mitraten!"
   ];
 
   shuffle(itemsData);
+  shuffle(crucifixData);
+  shuffle(saltData);
   shuffle(smudgeData);
+  shuffle(smudgeCountData);
+  shuffle(candleData);
   shuffle(sanityData);
   shuffle(breakerData);
   shuffle(lightData);
@@ -702,7 +764,7 @@ const colors = ["#2b2b2b", "#3d1e1e", "#1e303d", "#2e1e3d", "#3d381e", "#1e3d29"
 const cursedColors = ["#8b0000", "#4a0000", "#5c0909", "#330000", "#a81313"];
 const communityColors = ["#4c1d95", "#5b21b6", "#6d28d9", "#7c3aed", "#3b0764"];
 
-function truncateText(text, maxLength = 16) {
+function truncateText(text, maxLength = 12) {
   return text.length > maxLength ? text.substring(0, maxLength - 3) + "..." : text;
 }
 
@@ -722,33 +784,37 @@ function createWheel(canvasId, items, colorTheme = "normal") {
     const angle = i * sliceAngle;
     ctx.beginPath();
     ctx.fillStyle = palette[i % palette.length];
-    ctx.moveTo(85, 85);
-    ctx.arc(85, 85, 75, angle, angle + sliceAngle);
-    ctx.lineTo(85, 85);
+    ctx.moveTo(55, 55);
+    ctx.arc(55, 55, 45, angle, angle + sliceAngle);
+    ctx.lineTo(55, 55);
     ctx.fill();
     ctx.strokeStyle = "#111";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.save();
-    ctx.translate(85, 85);
+    ctx.translate(55, 55);
     ctx.rotate(angle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#dddddd";
-    ctx.font = "bold 7px 'Special Elite', monospace";
-    ctx.fillText(truncateText(items[i]), 70, 3);
+    ctx.font = "bold 5px 'Special Elite', monospace";
+    ctx.fillText(truncateText(items[i]), 43, 2);
     ctx.restore();
   }
 }
 
-let angles = { item: 0, smudge: 0, sanity: 0, breaker: 0, light: 0, map: 0, cursed: 0, modifier: 0, community: 0 };
+let angles = { item: 0, crucifix: 0, salt: 0, smudge: 0, smudgeCount: 0, candle: 0, sanity: 0, breaker: 0, light: 0, map: 0, cursed: 0, modifier: 0, community: 0 };
 
 function spinWheel(type) {
   return new Promise((resolve) => {
     const canvasId = type + "Canvas";
     let items;
     if (type === 'item') items = itemsData;
+    else if (type === 'crucifix') items = crucifixData;
+    else if (type === 'salt') items = saltData;
     else if (type === 'smudge') items = smudgeData;
+    else if (type === 'smudgeCount') items = smudgeCountData;
+    else if (type === 'candle') items = candleData;
     else if (type === 'sanity') items = sanityData;
     else if (type === 'breaker') items = breakerData;
     else if (type === 'light') items = lightData;
@@ -782,7 +848,11 @@ async function startFullChallenge() {
   resetPools();
   
   createWheel("itemCanvas", itemsData);
+  createWheel("crucifixCanvas", crucifixData);
+  createWheel("saltCanvas", saltData);
   createWheel("smudgeCanvas", smudgeData);
+  createWheel("smudgeCountCanvas", smudgeCountData);
+  createWheel("candleCanvas", candleData);
   createWheel("sanityCanvas", sanityData);
   createWheel("breakerCanvas", breakerData);
   createWheel("lightCanvas", lightData);
@@ -791,14 +861,18 @@ async function startFullChallenge() {
   createWheel("modifierCanvas", modifierData, "cursed");
   createWheel("communityCanvas", communityData, "community");
 
-  document.getElementById("itemResult").innerHTML = "Ziehe Ausrüstung...";
-  document.getElementById("smudgeResult").innerText = "Aktivator...";
-  document.getElementById("sanityResult").innerText = "Gehirnaktivität...";
+  document.getElementById("itemResult").innerHTML = "Ausrüstung...";
+  document.getElementById("crucifixResult").innerText = "Segen...";
+  document.getElementById("saltResult").innerText = "Salzkreis...";
+  document.getElementById("smudgeResult").innerText = "Qualität...";
+  document.getElementById("smudgeCountResult").innerText = "Vorrat...";
+  document.getElementById("candleResult").innerText = "Lichtspende...";
+  document.getElementById("sanityResult").innerText = "Gehirn...";
   document.getElementById("breakerResult").innerText = "Stromnetz...";
   document.getElementById("lightResult").innerText = "Sichtfeld...";
   document.getElementById("mapResult").innerText = "Koordinaten...";
-  document.getElementById("cursedResult").innerText = "Beschwörung...";
-  document.getElementById("modifierResult").innerText = "Erschwerung...";
+  document.getElementById("cursedResult").innerText = "Fluch-Objekt...";
+  document.getElementById("modifierResult").innerText = "Handicap...";
   document.getElementById("communityResult").innerText = "Interaktion...";
 
   let item1 = await spinWheel('item');
@@ -814,8 +888,20 @@ async function startFullChallenge() {
   let item3 = await spinWheel('item');
   document.getElementById("itemResult").innerHTML = `1. ${item1}<br>2. ${item2}<br>3. ${item3}`;
 
+  let crucifix = await spinWheel('crucifix');
+  document.getElementById("crucifixResult").innerText = crucifix;
+
+  let salt = await spinWheel('salt');
+  document.getElementById("saltResult").innerText = salt;
+
   let smudge = await spinWheel('smudge');
   document.getElementById("smudgeResult").innerText = smudge;
+
+  let smudgeCount = await spinWheel('smudgeCount');
+  document.getElementById("smudgeCountResult").innerText = smudgeCount;
+
+  let candle = await spinWheel('candle');
+  document.getElementById("candleResult").innerText = candle;
 
   let sanity = await spinWheel('sanity');
   document.getElementById("sanityResult").innerText = sanity;
@@ -840,7 +926,7 @@ async function startFullChallenge() {
 
   setTimeout(() => {
     document.getElementById("wheelsModal").style.display = "none";
-    showModal(item1, item2, item3, smudge, sanity, breaker, light, map, cursed, modifier, community);
+    showModal(item1, item2, item3, crucifix, salt, smudge, smudgeCount, candle, sanity, breaker, light, map, cursed, modifier, community);
   }, 1000);
 }
 
@@ -850,13 +936,17 @@ function filterOutBaseItem(selectedItem) {
   shuffle(itemsData);
 }
 
-function showModal(i1, i2, i3, smudge, sanity, breaker, light, map, cursed, modifier, community) {
+function showModal(i1, i2, i3, crucifix, salt, smudge, smudgeCount, candle, sanity, breaker, light, map, cursed, modifier, community) {
   const modalText = document.getElementById("modalText");
-  
+  const candleNote = light.includes("AUS") ? " (Verboten, da Taschenlampe AUS)" : "";
+
   modalText.innerHTML = `
     • <b>Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span><br>
     • <b>Beweis-Items:</b> <span>${i1}, ${i2}, ${i3}</span><br>
-    • <b>Räucherwerk:</b> <span>${smudge}</span><br>
+    • <b>Kruzifix:</b> <span>${crucifix}</span><br>
+    • <b>Salz:</b> <span>${salt}</span><br>
+    • <b>Räucherwerk:</b> <span>${smudgeCount} (${smudge})</span><br>
+    • <b>Kerzen:</b> <span>${candle}${candleNote}</span><br>
     • <b>Start-Sanity:</b> <span>${sanity}</span><br>
     • <b>Sicherung:</b> <span>${breaker}</span><br>
     • <b>Taschenlampen:</b> <span>${light}</span><br>
