@@ -271,13 +271,13 @@
 
   .wheels-grid-layout {
     display: grid;
-    grid-template-columns: repeat(3, 330px);
+    grid-template-columns: repeat(4, 280px);
     justify-content: center;
-    gap: 20px;
-    max-width: 1100px;
+    gap: 15px;
+    max-width: 1220px;
     width: 100%;
     margin: auto 0;
-    padding: 40px 0;
+    padding: 20px 0;
   }
 
   .wheel-box, .master-combo-box {
@@ -285,12 +285,12 @@
     flex-direction: column;
     align-items: center;
     background: #111113;
-    padding: 14px;
+    padding: 12px;
     border: 2px solid #ff9900;
     border-radius: 8px;
     box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
     box-sizing: border-box;
-    width: 330px;
+    width: 280px;
     height: 220px;
     transition: opacity 0.3s ease;
     z-index: 1;
@@ -305,7 +305,7 @@
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(2.2) !important;
+    transform: translate(-50%, -50%) scale(3) !important;
     z-index: 9999 !important;
     opacity: 1 !important;
     border-color: #ff9900 !important;
@@ -323,7 +323,24 @@
     box-shadow: 0 0 60px rgba(168, 85, 247, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
   }
 
-  .wheel-box.special-box, .master-combo-box.special-box {
+  /* Spezieller Style für den Einsatzort-Kasten (Map) */
+  .master-combo-box.map-box {
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+  }
+  .master-combo-box.map-box h2 {
+    color: #60a5fa;
+  }
+  .master-combo-box.map-box.active-spinning {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 60px rgba(59, 130, 246, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+  }
+  .map-box .result {
+    color: #60a5fa;
+    text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
+  }
+
+  .master-combo-box.special-box, .wheel-box.special-box {
     border: 2px solid #ff3333;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
   }
@@ -334,15 +351,15 @@
   }
 
   .master-combo-box h2, .wheel-box h2 {
-    font-size: 13px;
+    font-size: 12px;
     color: #ff9900;
     margin-top: 0;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     text-transform: uppercase;
     border-bottom: 1px dashed #444;
     width: 100%;
     text-align: center;
-    padding-bottom: 5px;
+    padding-bottom: 4px;
     letter-spacing: 0.5px;
   }
   .wheel-box.special-box h2, .master-combo-box.special-box h2 { color: #ff3333; }
@@ -351,7 +368,7 @@
   .wheels-container-row {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 10px;
     width: 100%;
   }
 
@@ -359,34 +376,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 130px;
+    width: 120px;
   }
 
   .wheel-label-sub {
-    font-size: 10px;
+    font-size: 9px;
     color: #aaa;
-    margin-bottom: 3px;
+    margin-bottom: 2px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
 
   .wheel-wrapper {
     position: relative;
-    width: 110px;
-    height: 110px;
+    width: 95px;
+    height: 95px;
   }
   
   .pointer {
     position: absolute;
     top: 50%;
-    right: -6px;
+    right: -5px;
     left: auto;
     transform: translateY(-50%) rotate(90deg);
     width: 0; 
     height: 0; 
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 10px solid #ff0000;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid #ff0000;
     filter: drop-shadow(0 0 4px #ff0000);
     z-index: 10;
   }
@@ -395,12 +412,12 @@
     border-radius: 50%;
     border: 2px solid #222;
     box-shadow: 0 0 10px rgba(0,0,0,0.9);
-    width: 110px;
-    height: 110px;
+    width: 95px;
+    height: 95px;
   }
 
   .result {
-    margin-top: 8px;
+    margin-top: 6px;
     font-size: 11px;
     font-weight: bold;
     min-height: 34px;
@@ -420,6 +437,43 @@
   }
   .special-box .result { color: #ff3333; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
   .community-box .result { color: #a855f7; text-shadow: 0 0 5px rgba(168, 85, 247, 0.5); }
+
+  #chatItemSelectionContainer {
+    display: none;
+    position: relative;
+    margin: 15px auto;
+    text-align: center;
+    max-width: 700px;
+    background: #111116;
+    border: 2px solid #a855f7;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    z-index: 10005;
+  }
+  .chat-item-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .chat-item-btn {
+    background: #1e1b4b;
+    color: #ffffff;
+    border: 1px solid #7e22ce;
+    padding: 14px 10px;
+    font-family: 'Special Elite', monospace;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .chat-item-btn:hover {
+    background: #7e22ce;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
+  }
 
   .wheel-legend-box {
     display: none;
@@ -557,17 +611,17 @@
     box-shadow: 0 0 15px #fff;
   }
 
-  @media (max-width: 1050px) {
+  @media (max-width: 1200px) {
     .wheels-grid-layout {
-      grid-template-columns: repeat(2, 330px);
+      grid-template-columns: repeat(2, 280px);
     }
     .wheel-legend-box {
       display: none !important;
     }
   }
-  @media (max-width: 700px) {
+  @media (max-width: 650px) {
     .wheels-grid-layout {
-      grid-template-columns: 330px;
+      grid-template-columns: 280px;
     }
   }
 </style>
@@ -595,18 +649,19 @@
       <div class="rule-block">
         <h3>1. Ausrüstungs-Protokoll</h3>
         <ul>
-          <li><b>3x Beweis-Items:</b> Nur geloste Gegenstände erlaubt.</li>
+          <li><b>Items:</b> Es dürfen nur die gelosten Items genutzt werden!</li>
+          <li><b>Hilfsmittel:</b> Keine weiteren Items erlaubt! Es sei denn das Glück ist auf deiner Seite!</li>
           <li><b>Einfache Ausführung:</b> Jedes Beweis-Item exakt 1x.</li>
-          <li><b>Kombis (Kruzi, Salz, Räucherwerk, Kerzen):</b> Anzahl & Stufe per Rad.</li>
+          <li><b>Schutz-Items:</b> Anzahl & Stufe per Rad.</li>
         </ul>
       </div>
 
       <div class="rule-block">
         <h3>2. Modifikatoren & Chat</h3>
         <ul>
-          <li><b>Sicht-Beschränkung:</b> Kopflampen NUR bei Freigabe!</li>
-          <li><b>Start-Sanity:</b> Exakt auf Rad-Ergebnis einstellen.</li>
-          <li><b>Sicherungskasten:</b> Vorab laut Breaker-Rad einstellen.</li>
+          <li><b>Beweise:</b> Stelle die Anzahl der Beweise nicht auf 2 oder 3</li>          
+          <li><b>Einstellungen:</b> Exakt auf Rad-Ergebnis einstellen.</li>
+          <li><b>Sonstiges:</b> Alles was nicht durch das Rad bestimmt wird, darf frei gewählt werden.</li>
           <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmodus.</li>
         </ul>
       </div>
@@ -625,15 +680,27 @@
     <button id="nextStepBtn" class="next-wheel-btn" disabled>Räder laufen...</button>
   </div>
 
+  <div id="chatItemSelectionContainer">
+    <p style="color: #c084fc; font-size: 13px; font-weight: bold; margin: 0 0 5px 0; text-transform: uppercase;">Chat2 aktiv: Welches T1-Item wählt der Chat?</p>
+    <div class="chat-item-grid">
+      <button class="chat-item-btn" onclick="selectChatItem('Stativ')">Stativ</button>
+      <button class="chat-item-btn" onclick="selectChatItem('Fotoapparat')">Fotoapparat</button>
+      <button class="chat-item-btn" onclick="selectChatItem('Bewegungssensor')">Bewegungssensor</button>
+      <button class="chat-item-btn" onclick="selectChatItem('Tonrekorder')">Tonrekorder</button>
+      <button class="chat-item-btn" onclick="selectChatItem('Parabolmikrofon')">Parabolmikrofon</button>
+      <button class="chat-item-btn" onclick="selectChatItem('Schallsensor')">Schallsensor</button>
+    </div>
+  </div>
+
   <div class="wheels-grid-layout">
     
-    <!-- 1. REIHE -->
-    <!-- Beweismittel -->
+    <!-- REIHE 1 -->
+    <!-- 1. Beweismittel & Stufe -->
     <div class="master-combo-box inactive-box" id="box-master-combo">
-      <h2>1. Beweismittel & Stufe</h2>
+      <h2>1. BeweisItem & Stufe</h2>
       <div class="wheels-container-row">
         <div class="single-wheel-container">
-          <div class="wheel-label-sub">Beweismittel</div>
+          <div class="wheel-label-sub">BeweisItem</div>
           <div class="wheel-wrapper">
             <div class="pointer"></div>
             <canvas id="itemCanvas" width="220" height="220"></canvas>
@@ -650,7 +717,7 @@
       <div id="itemResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Kruzifix -->
+    <!-- 2. Kruzifix -->
     <div class="master-combo-box inactive-box" id="box-crucifix-combo">
       <h2>2. Kruzifix</h2>
       <div class="wheels-container-row">
@@ -672,7 +739,7 @@
       <div id="crucifixResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Räucherwerk -->
+    <!-- 3. Räucherwerk -->
     <div class="master-combo-box inactive-box" id="box-smudge-combo">
       <h2>3. Räucherwerk</h2>
       <div class="wheels-container-row">
@@ -694,8 +761,7 @@
       <div id="smudgeResult" class="result">Bereit...</div>
     </div>
 
-    <!-- 2. REIHE -->
-    <!-- Salz -->
+    <!-- 4. Salz -->
     <div class="master-combo-box inactive-box" id="box-salt-combo">
       <h2>4. Salz</h2>
       <div class="wheels-container-row">
@@ -717,7 +783,9 @@
       <div id="saltResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Kerzen -->
+
+    <!-- REIHE 2 -->
+    <!-- 5. Kerzen -->
     <div class="master-combo-box inactive-box" id="box-candle-combo">
       <h2>5. Kerzen</h2>
       <div class="wheels-container-row">
@@ -739,7 +807,7 @@
       <div id="candleResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Sanity -->
+    <!-- 6. Sanity -->
     <div class="master-combo-box inactive-box" id="box-sanity">
       <h2>6. Sanity</h2>
       <div class="wheels-container-row">
@@ -753,7 +821,7 @@
       <div id="sanityResult" class="result">Bereit...</div>
     </div>
 
-    <!-- 3. REIHE -->
+    <!-- 7. Breaker -->
     <div class="master-combo-box inactive-box" id="box-breaker">
       <h2>7. Breaker</h2>
       <div class="wheels-container-row">
@@ -767,7 +835,7 @@
       <div id="breakerResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Taschenlampe -->
+    <!-- 8. Taschenlampe -->
     <div class="master-combo-box inactive-box" id="box-light">
       <h2>8. Taschenlampe</h2>
       <div class="wheels-container-row">
@@ -781,8 +849,10 @@
       <div id="lightResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Map -->
-    <div class="master-combo-box inactive-box" id="box-map">
+
+    <!-- REIHE 3 -->
+    <!-- 9. Einsatzort -->
+    <div class="master-combo-box map-box inactive-box" id="box-map">
       <h2>9. Einsatzort</h2>
       <div class="wheels-container-row">
         <div class="single-wheel-container" style="width: 100%;">
@@ -795,8 +865,7 @@
       <div id="mapResult" class="result">Bereit...</div>
     </div>
 
-    <!-- 4. REIHE -->
-    <!-- Verfluchte Objekte -->
+    <!-- 10. Fluch-Objekt -->
     <div class="master-combo-box special-box inactive-box" id="box-cursed">
       <h2>10. Fluch-Objekt</h2>
       <div class="wheels-container-row">
@@ -810,7 +879,7 @@
       <div id="cursedResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Modifier -->
+    <!-- 11. Modifier -->
     <div class="master-combo-box special-box inactive-box" id="box-modifier">
       <h2>11. Modifier</h2>
       <div class="wheels-container-row">
@@ -824,7 +893,7 @@
       <div id="modifierResult" class="result">Bereit...</div>
     </div>
 
-    <!-- Community -->
+    <!-- 12. Community -->
     <div class="master-combo-box community-box inactive-box" id="box-community">
       <h2>12. Community</h2>
       <div class="wheels-container-row">
@@ -864,7 +933,7 @@
   <h4>Community-Legende (ID-Check)</h4>
   <ul>
     <li><b>Chat1:</b> Chat errät den Geist</li>
-    <li><b>Chat2:</b> Zusatzitem (NUR T1!)</li>
+    <li><b>Chat2:</b> Chat bestimmt 1 Zusatzitem!</li>
     <li><b>Chat3:</b> Chat darf nicht mitraten</li>
   </ul>
 </div>
@@ -946,7 +1015,7 @@ const modifierNames = {
 
 const communityNames = {
   "Chat1": "Chat errät den Geist",
-  "Chat2": "Chat bestimmt Zusatzitem (NUR T1!)",
+  "Chat2": "Chat bestimmt 1 Zusatzitem!",
   "Chat3": "Chat darf nicht mitraten"
 };
 
@@ -1021,8 +1090,8 @@ function createWheel(canvasId, items, colorTheme = "normal") {
   const ctx = canvas.getContext("2d");
   
   const scale = 2;
-  canvas.width = 110 * scale;
-  canvas.height = 110 * scale;
+  canvas.width = 95 * scale;
+  canvas.height = 95 * scale;
   ctx.scale(scale, scale);
 
   const numItems = items.length;
@@ -1033,27 +1102,27 @@ function createWheel(canvasId, items, colorTheme = "normal") {
   if (colorTheme === "cursed") palette = cursedColors;
   if (colorTheme === "community") palette = communityColors;
 
-  ctx.clearRect(0, 0, 110, 110);
+  ctx.clearRect(0, 0, 95, 95);
 
   for (let i = 0; i < numItems; i++) {
     const angle = i * sliceAngle;
     ctx.beginPath();
     ctx.fillStyle = palette[i % palette.length];
-    ctx.moveTo(55, 55);
-    ctx.arc(55, 55, 47, angle, angle + sliceAngle);
-    ctx.lineTo(55, 55);
+    ctx.moveTo(47.5, 47.5);
+    ctx.arc(47.5, 47.5, 41, angle, angle + sliceAngle);
+    ctx.lineTo(47.5, 47.5);
     ctx.fill();
     ctx.strokeStyle = "#111";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.save();
-    ctx.translate(55, 55);
+    ctx.translate(47.5, 47.5);
     ctx.rotate(angle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "700 8.5px 'Montserrat', sans-serif";
-    ctx.fillText(truncateText(items[i], 10), 44, 3);
+    ctx.font = "700 8px 'Montserrat', sans-serif";
+    ctx.fillText(truncateText(items[i], 10), 38, 3);
     ctx.restore();
   }
 }
@@ -1119,8 +1188,12 @@ function spinSingleWheel(type, items) {
   });
 }
 
+// Angepasste Reihenfolge entsprechend deiner neuen Zeilen-Struktur:
+// Reihe 1: Beweis, Kruzifix, Räucherwerk, Salz
+// Reihe 2: Kerzen, Sanity, Breaker, Taschenlampe
+// Reihe 3: Einsatzort, Fluch-Objekt, Modifier, Community
 const stepsList = [
-  { id: 'box-master-combo', title: '1. Beweis & Stufe (3x)' },
+  { id: 'box-master-combo', title: '1. BeweisItem & Stufe (3x)' },
   { id: 'box-crucifix-combo', title: '2. Kruzifix (Anzahl & Stufe)' },
   { id: 'box-smudge-combo', title: '3. Räucherwerk (Anzahl & Stufe)' },
   { id: 'box-salt-combo', title: '4. Salz (Anzahl & Stufe)' },
@@ -1192,7 +1265,7 @@ async function executeSingleStep() {
   
   const placeholder = document.createElement('div');
   placeholder.className = 'grid-placeholder';
-  placeholder.style.width = '330px';
+  placeholder.style.width = '280px';
   placeholder.style.height = '220px';
   placeholder.style.visibility = 'hidden';
   boxEl.parentNode.insertBefore(placeholder, boxEl);
@@ -1213,7 +1286,7 @@ async function executeSingleStep() {
   await new Promise(r => setTimeout(r, 1000));
 
   if (currentStepIndex === 0) {
-    document.getElementById("itemResult").innerText = "Ermittle 3 Beweise...";
+    document.getElementById("itemResult").innerText = "Ermittle 3 BeweisItems...";
     for (let round = 0; round < 3; round++) {
       let chosenItem = await spinIndependentWheel('item', itemTypesData);
       let chosenTier = await spinIndependentWheel('tier', itemTierData);
@@ -1318,9 +1391,29 @@ async function executeSingleStep() {
   } 
   else if (currentStepIndex === 11) {
     let communityKey = await spinSingleWheel('community', communityData);
-    let fullCommunityName = communityNames[communityKey] || communityKey;
-    document.getElementById("communityResult").innerText = fullCommunityName;
-    resultsStore.community = fullCommunityName;
+    
+    if (communityKey === "Chat2") {
+      document.getElementById("modalHeaderTitle").innerText = "CHAT2: COMMUNITY WÄHLT ITEM!";
+      document.getElementById("communityResult").innerText = "Warte auf Item-Wahl...";
+      
+      const nextBtn = document.getElementById("nextStepBtn");
+      nextBtn.disabled = true;
+      nextBtn.innerText = "Warte auf Chat...";
+      
+      document.getElementById("chatItemSelectionContainer").style.display = "block";
+      
+      let chosenItem = await window.waitForChatItemSelection;
+      
+      let fullCommunityName = `Chat bestimmt 1 Zusatzitem! (${chosenItem} T1)`;
+      document.getElementById("communityResult").innerText = fullCommunityName;
+      resultsStore.community = fullCommunityName;
+      
+      document.getElementById("chatItemSelectionContainer").style.display = "none";
+    } else {
+      let fullCommunityName = communityNames[communityKey] || communityKey;
+      document.getElementById("communityResult").innerText = fullCommunityName;
+      resultsStore.community = fullCommunityName;
+    }
   }
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
@@ -1336,6 +1429,21 @@ async function executeSingleStep() {
   await new Promise(r => setTimeout(r, 1000));
   
   currentStepIndex++;
+}
+
+let resolveChatSelection = null;
+window.waitForChatItemSelection = new Promise((resolve) => {
+  resolveChatSelection = resolve;
+});
+
+function selectChatItem(itemName) {
+  if (resolveChatSelection) {
+    let currentResolver = resolveChatSelection;
+    window.waitForChatItemSelection = new Promise((resolve) => {
+      resolveChatSelection = resolve;
+    });
+    currentResolver(itemName);
+  }
 }
 
 async function runAutoSequence() {
