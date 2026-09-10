@@ -20,6 +20,35 @@
     margin: 0;
     min-height: 100vh;
     box-sizing: border-box;
+    position: relative;
+  }
+
+  /* --- Zurück Button zur index.html --- */
+  .back-btn {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-family: 'Special Elite', monospace;
+    font-size: 14px;
+    color: #a0a0a0;
+    background: #111113;
+    border: 1px solid #333;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+  }
+
+  .back-btn:hover {
+    color: #ff9900;
+    border-color: #ff9900;
+    background: #181512;
+    transform: translateX(-3px);
+    box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
   }
 
   h1 {
@@ -374,12 +403,16 @@
     .container { grid-template-columns: repeat(2, 220px); }
   }
   @media (max-width: 500px) {
+    .back-btn { position: static; margin-bottom: 15px; }
     .container { grid-template-columns: 1fr; }
     .difficulty-container { flex-direction: column; width: 100%; max-width: 300px; }
   }
 </style>
 </head>
 <body>
+
+<!-- ZURÜCK ZUR INDEX BUTTON -->
+<a href="index.html" class="back-btn">❮ Zurück zum Hub</a>
 
 <h1>BLIND DATE MIT DEM GEIST</h1>
 <div class="subtitle">Official Phasmophobia Contract & Wheel Tool</div>
@@ -546,7 +579,6 @@ function setDifficulty(diff) {
 
 function resetPools() {
   if (currentDifficulty === 'easy') {
-    // EINFACH: Hauptsächlich Tier 2/3, hohe Sanity, Breaker An, Taschenlampe An, kaum harte Handicaps
     itemsData = [
       "EMF T2","EMF T2","EMF T3","EMF T3",
       "Thermometer T2","Thermometer T2","Thermometer T3","Thermometer T3",
@@ -561,10 +593,9 @@ function resetPools() {
     breakerData = ["Breaker AN", "Breaker AN", "Breaker AN", "Breaker AUS"];
     lightData = ["Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AUS"];
     modifierData = ["Kein Modifier", "Kein Modifier", "Kein Modifier", "Sprinten Verboten"];
-    cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwör उत्सुक", "Affenpfote", "Zufall", "Zufall"];
+    cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote", "Zufall", "Zufall"];
 
   } else if (currentDifficulty === 'hardcore') {
-    // HARDCORE: Fast nur Tier 1, 0-25% Sanity, Breaker Aus/Defekt, Taschenlampe Aus, fiese Handicaps
     itemsData = [
       "EMF T1","EMF T1","EMF T1","EMF T2",
       "Thermometer T1","Thermometer T1","Thermometer T1","Thermometer T2",
@@ -582,7 +613,6 @@ function resetPools() {
     cursedData = ["Keines", "Keines", "Keines", "Zufall", "Zufall"];
 
   } else {
-    // NORMAL: Der ausgewogene Standard-Pool
     itemsData = [
       "EMF T1","EMF T1","EMF T1","EMF T2","EMF T2","EMF T3",
       "Thermometer T1","Thermometer T1","Thermometer T1","Thermometer T2","Thermometer T2","Thermometer T3",
@@ -627,7 +657,6 @@ function resetPools() {
     ];
   }
 
-  // Maps & Community bleiben bei allen Schwierigkeitsgraden gleich
   mapData = [
     "Tanglewood Drive", "Tanglewood Drive", "Tanglewood Drive",
     "Edgefield Road", "Edgefield Road", "Edgefield Road",
@@ -642,9 +671,9 @@ function resetPools() {
   ];
 
   communityData = [
-    "Chatabstimmung/Umfrage",
-    "Chatabstimmung/Umfrage",
-    "Chatabstimmung/Umfrage",
+    "Lass die Zuschauer den Geist wählen!",
+    "Lass die Zuschauer den Geist wählen!",
+    "Lass die Zuschauer den Geist wählen!",
     "Chat bestimmt 1 Zusatzitem (Nur T1!)",
     "Ruhe im Chat: Nicht mitraten!",
     "Ruhe im Chat: Nicht mitraten!",
