@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Blind Date mit dem Geist – Phasmo Challenge</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap');
+
+  body {
+    background-color: #080808;
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(20, 20, 20, 0.8), #030303),
+      repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 3px);
+    color: #d1d1d1;
+    font-family: 'Special Elite', 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px 100px 20px;
+    margin: 0;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    font-family: 'Creepster', cursive, sans-serif;
+    color: #ff9900;
+    font-size: 3.8rem;
+    letter-spacing: 3px;
+    margin: 10px 0 0 0;
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.6), 0 0 20px rgba(255, 0, 0, 0.4);
+    text-align: center;
+  }
+  .subtitle {
+    color: #777;
+    font-size: 16px;
+    margin-bottom: 25px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  /* --- Schalter / Difficulty Selector --- */
+  .difficulty-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    background: #111113;
+    padding: 12px 20px;
+    border: 1px solid #2a2a2e;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+  }
+
+  .diff-btn {
+    padding: 10px 22px;
+    font-family: 'Special Elite', monospace;
+    font-size: 15px;
+    font-weight: bold;
+    color: #888;
+    background: #18181b;
+    border: 1px solid #444;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .diff-btn:hover {
+    color: #fff;
+    border-color: #ff9900;
+  }
+
+  .diff-btn.active-easy {
+    background: #14532d;
+    color: #4ade80;
+    border-color: #22c55e;
+    box-shadow: 0 0 12px rgba(34, 197, 94, 0.4);
+  }
+
+  .diff-btn.active-normal {
+    background: #7c2d12;
+    color: #fb923c;
+    border-color: #f97316;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+  }
+
+  .diff-btn.active-hardcore {
+    background: #7f1d1d;
+    color: #f87171;
+    border-color: #ef4444;
+    box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+  }
+
+  /* --- Permanente Regel-Box --- */
+  .rules-wrapper {
+    max-width: 900px;
+    width: 100%;
+    margin-bottom: 35px;
+  }
+
+  .rules-header-title {
+    background: #181512;
+    border: 2px solid #ff9900;
+    border-bottom: none;
+    color: #ff9900;
+    padding: 16px 25px;
+    font-family: 'Special Elite', monospace;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 6px 6px 0 0;
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
+  }
+
+  .rules-content {
+    background: #181512;
+    border: 2px solid #ff9900;
+    border-radius: 0 0 6px 6px;
+    padding: 30px 35px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+    box-sizing: border-box;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 35px;
+  }
+  .rule-block h3 {
+    color: #ff3333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px dashed #443322;
+    padding-bottom: 6px;
+  }
+  .rule-block ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #d8d8d8;
+    line-height: 1.8;
+    font-size: 15px;
+  }
+  .rule-block li {
+    margin-bottom: 8px;
+  }
+
+  /* Main Action Button */
+  .start-btn {
+    padding: 22px 60px;
+    font-family: 'Special Elite', monospace;
+    font-size: 28px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(180deg, #8b0000 0%, #4a0000 100%);
+    border: 2px solid #ff3333;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(0,0,0,0.8);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.2s ease-in-out;
+  }
+  .start-btn:hover {
+    background: linear-gradient(180deg, #a30000 0%, #660000 100%);
+    box-shadow: 0 0 35px rgba(255, 0, 0, 0.9), inset 0 0 10px rgba(0,0,0,0.8);
+    transform: scale(1.05);
+  }
+
+  /* --- Fullscreen Popup Modal für die Räder --- */
+  .wheels-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .wheels-modal-header {
+    font-family: 'Creepster', cursive;
+    color: #ff9900;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+  }
+
+  /* 3x3 Grid Layout im Popup */
+  .container {
+    display: grid;
+    grid-template-columns: repeat(3, 230px);
+    gap: 15px;
+    justify-content: center;
+    max-width: 800px;
+  }
+  .wheel-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #111113;
+    padding: 10px;
+    border: 1px solid #2a2a2e;
+    border-radius: 6px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.9);
+    position: relative;
+    width: 230px;
+    box-sizing: border-box;
+  }
+  .wheel-box.special-box {
+    border: 1px solid #ff3333;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+  }
+  .wheel-box.community-box {
+    border: 1px solid #a855f7;
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+  }
+  .wheel-box h2 {
+    font-size: 12px;
+    color: #ff9900;
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    border-bottom: 1px dashed #444;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 4px;
+  }
+  .wheel-box.special-box h2 { color: #ff3333; }
+  .wheel-box.community-box h2 { color: #a855f7; }
+
+  .wheel-wrapper {
+    position: relative;
+    width: 170px;
+    height: 170px;
+  }
+  .pointer {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 18px solid #ff0000;
+    filter: drop-shadow(0 0 4px #ff0000);
+    z-index: 10;
+  }
+  canvas {
+    border-radius: 50%;
+    border: 2px solid #222;
+    box-shadow: 0 0 10px rgba(0,0,0,0.9);
+  }
+  .result {
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: bold;
+    min-height: 40px;
+    color: #00ffcc;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(0, 255, 204, 0.5);
+  }
+  .special-box .result { color: #ff3333; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  .community-box .result { color: #a855f7; text-shadow: 0 0 5px rgba(168, 85, 247, 0.5); }
+
+  .sticky-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(12, 12, 14, 0.95);
+    border-top: 2px solid #ff9900;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    padding: 12px 20px;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.9);
+    z-index: 999;
+    box-sizing: border-box;
+  }
+  .sticky-footer .creator-info {
+    color: #ddd;
+    margin-bottom: 5px;
+  }
+  .sticky-footer .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  .sticky-footer .social-links a {
+    color: #ff9900;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+  .sticky-footer .social-links a:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #ff9900;
+  }
+
+  /* Finaler Einsatzbericht Modal */
+  .result-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    backdrop-filter: blur(6px);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: #111;
+    border: 2px solid #ff0000;
+    border-radius: 4px;
+    padding: 30px;
+    max-width: 520px;
+    width: 90%;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.5);
+    text-align: center;
+    position: relative;
+  }
+  .modal-content h2 {
+    color: #ff0000;
+    margin-top: 0;
+    font-family: 'Creepster', cursive;
+    font-size: 2.2rem;
+    letter-spacing: 2px;
+  }
+  .modal-list {
+    text-align: left;
+    background: #080808;
+    border: 1px solid #333;
+    padding: 20px;
+    margin: 20px 0;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .modal-list span { color: #ff9900; font-weight: bold; }
+  .modal-list span.highlight-red { color: #ff3333; font-weight: bold; }
+  .modal-list span.highlight-purple { color: #a855f7; font-weight: bold; }
+  
+  .close-btn {
+    background: #ff9900;
+    color: #000;
+    border: none;
+    padding: 12px 30px;
+    font-family: 'Special Elite', monospace;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+  .close-btn:hover {
+    background: #fff;
+    box-shadow: 0 0 10px #fff;
+  }
+
+  @media (max-width: 850px) {
+    .rules-grid { grid-template-columns: 1fr; }
+    .container { grid-template-columns: repeat(2, 220px); }
+  }
+  @media (max-width: 500px) {
+    .container { grid-template-columns: 1fr; }
+    .difficulty-container { flex-direction: column; width: 100%; max-width: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>BLIND DATE MIT DEM GEIST</h1>
+<div class="subtitle">Official Phasmophobia Contract & Wheel Tool</div>
+
+<!-- DIFFICULTY PRESET SCHALTER -->
+<div class="difficulty-container">
+  <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
+  <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
+  <button id="btnHardcore" class="diff-btn" onclick="setDifficulty('hardcore')">🔴 Hardcore</button>
+</div>
+
+<div class="rules-wrapper">
+  <div class="rules-header-title">
+    📜 Mission Details & Regeln
+  </div>
+  <div class="rules-content">
+    <div class="rules-grid">
+      <div class="rule-block">
+        <h3>1. Ausrüstungs-Protokoll</h3>
+        <ul>
+          <li><b>3x Beweis-Items:</b> Nur die genau 3 gelosten Gegenstände sind erlaubt.</li>
+          <li><b>Einfache Ausführung:</b> Jedes Beweis-Item darf exakt 1x ins Haus.</li>
+          <li><b>Räucherwerk-Regel:</b> Max. 4x Räucherwerk + 1x Feuerzeug (in der gezogenen Stufe).</li>
+          <li><b>Kerzen-Regel:</b> Kerzen sind nur erlaubt, wenn Taschenlampen erlaubt sind!</li>
+        </ul>
+      </div>
+
+      <div class="rule-block">
+        <h3>2. Modifikatoren & Chat</h3>
+        <ul>
+          <li><b>Sicht-Beschränkung:</b> Standard- / Kopflampen NUR bei Freigabe von Rad 5!</li>
+          <li><b>Start-Sanity:</b> Exakt auf das Ergebnis von Rad 3 einstellen.</li>
+          <li><b>Sicherungskasten:</b> Vorab laut Rad 4 einstellen (An / Aus / Defekt).</li>
+          <li><b>Handicap & Fluch:</b> MÜSSEN im Einsatz konsequent beachtet werden!</li>
+          <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmemodus (Video: Streamer wählt).</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="mainBtn" class="start-btn" onclick="startFullChallenge()">Einsatz Starten!</button>
+
+<!-- POPUP RÄDER MODAL -->
+<div id="wheelsModal" class="wheels-modal-overlay">
+  <div class="wheels-modal-header">ERMITTLUNGS-RAD DREHT SICH...</div>
+  
+  <div class="container">
+    <div class="wheel-box">
+      <h2>1. Ausrüstung (3x)</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="itemCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="itemResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box">
+      <h2>2. Räucherwerk</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="smudgeCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="smudgeResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box">
+      <h2>3. Start-Sanity</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="sanityCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="sanityResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box">
+      <h2>4. Breaker-Status</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="breakerCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="breakerResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box">
+      <h2>5. Lichtquellen</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="lightCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="lightResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box">
+      <h2>6. Einsatzort</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="mapCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="mapResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box special-box">
+      <h2>7. Fluch-Objekt</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="cursedCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="cursedResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box special-box">
+      <h2>8. Handicap / Modifier</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="modifierCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="modifierResult" class="result">Bereit...</div>
+    </div>
+
+    <div class="wheel-box community-box">
+      <h2>9. Community-Regel</h2>
+      <div class="wheel-wrapper">
+        <div class="pointer"></div>
+        <canvas id="communityCanvas" width="170" height="170"></canvas>
+      </div>
+      <div id="communityResult" class="result">Bereit...</div>
+    </div>
+  </div>
+</div>
+
+<div class="sticky-footer">
+  <div class="creator-info">
+    Ermittlungskonzept entworfen von <b>finarinler</b>. Freigegeben für alle ermittelnden Streamer & Creator!
+  </div>
+  <div class="social-links">
+    <a href="https://twitch.tv/finarinler" target="_blank">Twitch</a> |
+    <a href="https://youtube.com/@finarinler" target="_blank">YouTube</a> |
+    <a href="https://instagram.com/finarinler" target="_blank">Instagram</a> |
+    <a href="https://tiktok.com/@finarinler_" target="_blank">TikTok</a>
+  </div>
+</div>
+
+<!-- EINSATZBERICHT MODAL -->
+<div id="resultModal" class="result-modal-overlay">
+  <div class="modal-content">
+    <h2>EINSATZBERICHT</h2>
+    <div class="modal-list" id="modalText"></div>
+    <button class="close-btn" onclick="closeModal()">Sicherheitstür Öffnen</button>
+  </div>
+</div>
+
+<script>
+let itemsData = [], smudgeData = [], sanityData = [], breakerData = [], lightData = [], mapData = [], cursedData = [], modifierData = [], communityData = [];
+
+let currentDifficulty = 'normal';
+
+function setDifficulty(diff) {
+  currentDifficulty = diff;
+  document.getElementById("btnEasy").className = "diff-btn" + (diff === 'easy' ? " active-easy" : "");
+  document.getElementById("btnNormal").className = "diff-btn" + (diff === 'normal' ? " active-normal" : "");
+  document.getElementById("btnHardcore").className = "diff-btn" + (diff === 'hardcore' ? " active-hardcore" : "");
+}
+
+function resetPools() {
+  if (currentDifficulty === 'easy') {
+    // EINFACH: Hauptsächlich Tier 2/3, hohe Sanity, Breaker An, Taschenlampe An, kaum harte Handicaps
+    itemsData = [
+      "EMF T2","EMF T2","EMF T3","EMF T3",
+      "Thermometer T2","Thermometer T2","Thermometer T3","Thermometer T3",
+      "Geisterbox T2","Geisterbox T2","Geisterbox T3","Geisterbox T3",
+      "Geisterbuch T2","Geisterbuch T2","Geisterbuch T3","Geisterbuch T3",
+      "Videokamera T2","Videokamera T2","Videokamera T3","Videokamera T3",
+      "DOTS T2","DOTS T2","DOTS T3","DOTS T3",
+      "UV-Lampe T2","UV-Lampe T2","UV-Lampe T3","UV-Lampe T3"
+    ];
+    smudgeData = ["Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T3", "Räucherwerk T3"];
+    sanityData = ["75% Sanity", "75% Sanity", "100% Sanity", "100% Sanity", "100% Sanity"];
+    breakerData = ["Breaker AN", "Breaker AN", "Breaker AN", "Breaker AUS"];
+    lightData = ["Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AUS"];
+    modifierData = ["Kein Modifier", "Kein Modifier", "Kein Modifier", "Sprinten Verboten"];
+    cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwör उत्सुक", "Affenpfote", "Zufall", "Zufall"];
+
+  } else if (currentDifficulty === 'hardcore') {
+    // HARDCORE: Fast nur Tier 1, 0-25% Sanity, Breaker Aus/Defekt, Taschenlampe Aus, fiese Handicaps
+    itemsData = [
+      "EMF T1","EMF T1","EMF T1","EMF T2",
+      "Thermometer T1","Thermometer T1","Thermometer T1","Thermometer T2",
+      "Geisterbox T1","Geisterbox T1","Geisterbox T1","Geisterbox T2",
+      "Geisterbuch T1","Geisterbuch T1","Geisterbuch T1","Geisterbuch T2",
+      "Videokamera T1","Videokamera T1","Videokamera T1","Videokamera T2",
+      "DOTS T1","DOTS T1","DOTS T1","DOTS T2",
+      "UV-Lampe T1","UV-Lampe T1","UV-Lampe T1","UV-Lampe T2"
+    ];
+    smudgeData = ["Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T2"];
+    sanityData = ["0% Sanity", "0% Sanity", "0% Sanity", "25% Sanity", "25% Sanity"];
+    breakerData = ["Breaker AUS", "Breaker AUS", "Breaker DEFEKT", "Breaker DEFEKT"];
+    lightData = ["Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AN"];
+    modifierData = ["Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", "Keine Türen Zu"];
+    cursedData = ["Keines", "Keines", "Keines", "Zufall", "Zufall"];
+
+  } else {
+    // NORMAL: Der ausgewogene Standard-Pool
+    itemsData = [
+      "EMF T1","EMF T1","EMF T1","EMF T2","EMF T2","EMF T3",
+      "Thermometer T1","Thermometer T1","Thermometer T1","Thermometer T2","Thermometer T2","Thermometer T3",
+      "Geisterbox T1","Geisterbox T1","Geisterbox T1","Geisterbox T2","Geisterbox T2","Geisterbox T3",
+      "Geisterbuch T1","Geisterbuch T1","Geisterbuch T1","Geisterbuch T2","Geisterbuch T2","Geisterbuch T3",
+      "Videokamera T1","Videokamera T1","Videokamera T1","Videokamera T2","Videokamera T2","Videokamera T3",
+      "DOTS T1","DOTS T1","DOTS T1","DOTS T2","DOTS T2","DOTS T3",
+      "UV-Lampe T1","UV-Lampe T1","UV-Lampe T1","UV-Lampe T2","UV-Lampe T2","UV-Lampe T3"
+    ];
+    smudgeData = [
+      "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1", "Räucherwerk T1",
+      "Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T2", "Räucherwerk T2",
+      "Räucherwerk T3", "Räucherwerk T3", "Räucherwerk T3", "Räucherwerk T3"
+    ];
+    sanityData = [
+      "0% Sanity","0% Sanity",
+      "25% Sanity","25% Sanity","25% Sanity",
+      "50% Sanity","50% Sanity","50% Sanity","50% Sanity",
+      "75% Sanity","75% Sanity","75% Sanity",
+      "100% Sanity","100% Sanity"
+    ];
+    breakerData = [
+      "Breaker AN", "Breaker AN", "Breaker AN", "Breaker AN",
+      "Breaker AUS", "Breaker AUS", "Breaker AUS", "Breaker AUS",
+      "Breaker DEFEKT", "Breaker DEFEKT", "Breaker DEFEKT", "Breaker DEFEKT"
+    ];
+    lightData = [
+      "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN", "Taschenlampe AN",
+      "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS", "Taschenlampe AUS"
+    ];
+    modifierData = [
+      "Sprinten Verboten", 
+      "Keine Verstecke", 
+      "Nur Geduckt Gehen",  
+      "Keine Türen Zu", 
+      "Kein Modifier"
+    ];
+    cursedData = [
+      "Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", 
+      "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote",
+      "Zufall", "Zufall", "Zufall", "Keines", "Keines", "Keines"
+    ];
+  }
+
+  // Maps & Community bleiben bei allen Schwierigkeitsgraden gleich
+  mapData = [
+    "Tanglewood Drive", "Tanglewood Drive", "Tanglewood Drive",
+    "Edgefield Road", "Edgefield Road", "Edgefield Road",
+    "Ridgeview Court", "Ridgeview Court", "Ridgeview Court",
+    "Willow Street", "Willow Street", "Willow Street",
+    "Point Hope", "Point Hope",
+    "Camp Woodwind", "Camp Woodwind", 
+    "Maple Log Campside",
+    "Grafton Farmhouse", 
+    "Bleasdale Farmhouse",
+    "Point Hope (Restr.)", "Point Hope (Restr.)", "Sunny Meadows (Restr.)", "Prison (Restr)", "Brownstone High (Restr.)"
+  ];
+
+  communityData = [
+    "Chatabstimmung/Umfrage",
+    "Chatabstimmung/Umfrage",
+    "Chatabstimmung/Umfrage",
+    "Chat bestimmt 1 Zusatzitem (Nur T1!)",
+    "Ruhe im Chat: Nicht mitraten!",
+    "Ruhe im Chat: Nicht mitraten!",
+    "Ruhe im Chat: Nicht mitraten!"
+  ];
+
+  shuffle(itemsData);
+  shuffle(smudgeData);
+  shuffle(sanityData);
+  shuffle(breakerData);
+  shuffle(lightData);
+  shuffle(mapData);
+  shuffle(cursedData);
+  shuffle(modifierData);
+  shuffle(communityData);
+}
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+const colors = ["#2b2b2b", "#3d1e1e", "#1e303d", "#2e1e3d", "#3d381e", "#1e3d29"];
+const cursedColors = ["#8b0000", "#4a0000", "#5c0909", "#330000", "#a81313"];
+const communityColors = ["#4c1d95", "#5b21b6", "#6d28d9", "#7c3aed", "#3b0764"];
+
+function truncateText(text, maxLength = 16) {
+  return text.length > maxLength ? text.substring(0, maxLength - 3) + "..." : text;
+}
+
+function createWheel(canvasId, items, colorTheme = "normal") {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext("2d");
+  const numItems = items.length;
+  const sliceAngle = (2 * Math.PI) / numItems;
+  
+  let palette = colors;
+  if (colorTheme === "cursed") palette = cursedColors;
+  if (colorTheme === "community") palette = communityColors;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let i = 0; i < numItems; i++) {
+    const angle = i * sliceAngle;
+    ctx.beginPath();
+    ctx.fillStyle = palette[i % palette.length];
+    ctx.moveTo(85, 85);
+    ctx.arc(85, 85, 75, angle, angle + sliceAngle);
+    ctx.lineTo(85, 85);
+    ctx.fill();
+    ctx.strokeStyle = "#111";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.save();
+    ctx.translate(85, 85);
+    ctx.rotate(angle + sliceAngle / 2);
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#dddddd";
+    ctx.font = "bold 7px 'Special Elite', monospace";
+    ctx.fillText(truncateText(items[i]), 70, 3);
+    ctx.restore();
+  }
+}
+
+let angles = { item: 0, smudge: 0, sanity: 0, breaker: 0, light: 0, map: 0, cursed: 0, modifier: 0, community: 0 };
+
+function spinWheel(type) {
+  return new Promise((resolve) => {
+    const canvasId = type + "Canvas";
+    let items;
+    if (type === 'item') items = itemsData;
+    else if (type === 'smudge') items = smudgeData;
+    else if (type === 'sanity') items = sanityData;
+    else if (type === 'breaker') items = breakerData;
+    else if (type === 'light') items = lightData;
+    else if (type === 'map') items = mapData;
+    else if (type === 'cursed') items = cursedData;
+    else if (type === 'modifier') items = modifierData;
+    else items = communityData;
+
+    const spins = 4 + Math.floor(Math.random() * 3);
+    const extraDegrees = Math.floor(Math.random() * 360);
+    const totalRotation = spins * 360 + extraDegrees;
+    
+    angles[type] += totalRotation;
+
+    const canvas = document.getElementById(canvasId);
+    canvas.style.transition = "transform 3s cubic-bezier(0.15, 0.99, 0.35, 1)";
+    canvas.style.transform = `rotate(${angles[type]}deg)`;
+
+    setTimeout(() => {
+      const actualRotation = angles[type] % 360;
+      const sliceSize = 360 / items.length;
+      let winnerIndex = Math.floor((360 - (actualRotation % 360) + 270) % 360 / sliceSize);
+      resolve(items[winnerIndex]);
+    }, 3200);
+  });
+}
+
+async function startFullChallenge() {
+  document.getElementById("wheelsModal").style.display = "flex";
+  
+  resetPools();
+  
+  createWheel("itemCanvas", itemsData);
+  createWheel("smudgeCanvas", smudgeData);
+  createWheel("sanityCanvas", sanityData);
+  createWheel("breakerCanvas", breakerData);
+  createWheel("lightCanvas", lightData);
+  createWheel("mapCanvas", mapData);
+  createWheel("cursedCanvas", cursedData, "cursed");
+  createWheel("modifierCanvas", modifierData, "cursed");
+  createWheel("communityCanvas", communityData, "community");
+
+  document.getElementById("itemResult").innerHTML = "Ziehe Ausrüstung...";
+  document.getElementById("smudgeResult").innerText = "Aktivator...";
+  document.getElementById("sanityResult").innerText = "Gehirnaktivität...";
+  document.getElementById("breakerResult").innerText = "Stromnetz...";
+  document.getElementById("lightResult").innerText = "Sichtfeld...";
+  document.getElementById("mapResult").innerText = "Koordinaten...";
+  document.getElementById("cursedResult").innerText = "Beschwörung...";
+  document.getElementById("modifierResult").innerText = "Erschwerung...";
+  document.getElementById("communityResult").innerText = "Interaktion...";
+
+  let item1 = await spinWheel('item');
+  filterOutBaseItem(item1);
+  createWheel("itemCanvas", itemsData);
+  document.getElementById("itemResult").innerHTML = `1. ${item1}`;
+
+  let item2 = await spinWheel('item');
+  filterOutBaseItem(item2);
+  createWheel("itemCanvas", itemsData);
+  document.getElementById("itemResult").innerHTML = `1. ${item1}<br>2. ${item2}`;
+
+  let item3 = await spinWheel('item');
+  document.getElementById("itemResult").innerHTML = `1. ${item1}<br>2. ${item2}<br>3. ${item3}`;
+
+  let smudge = await spinWheel('smudge');
+  document.getElementById("smudgeResult").innerText = smudge;
+
+  let sanity = await spinWheel('sanity');
+  document.getElementById("sanityResult").innerText = sanity;
+
+  let breaker = await spinWheel('breaker');
+  document.getElementById("breakerResult").innerText = breaker;
+
+  let light = await spinWheel('light');
+  document.getElementById("lightResult").innerText = light;
+
+  let map = await spinWheel('map');
+  document.getElementById("mapResult").innerText = map;
+
+  let cursed = await spinWheel('cursed');
+  document.getElementById("cursedResult").innerText = cursed;
+
+  let modifier = await spinWheel('modifier');
+  document.getElementById("modifierResult").innerText = modifier;
+
+  let community = await spinWheel('community');
+  document.getElementById("communityResult").innerText = community;
+
+  setTimeout(() => {
+    document.getElementById("wheelsModal").style.display = "none";
+    showModal(item1, item2, item3, smudge, sanity, breaker, light, map, cursed, modifier, community);
+  }, 1000);
+}
+
+function filterOutBaseItem(selectedItem) {
+  let baseName = selectedItem.split(" T")[0];
+  itemsData = itemsData.filter(item => !item.startsWith(baseName));
+  shuffle(itemsData);
+}
+
+function showModal(i1, i2, i3, smudge, sanity, breaker, light, map, cursed, modifier, community) {
+  const modalText = document.getElementById("modalText");
+  
+  modalText.innerHTML = `
+    • <b>Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span><br>
+    • <b>Beweis-Items:</b> <span>${i1}, ${i2}, ${i3}</span><br>
+    • <b>Räucherwerk:</b> <span>${smudge}</span><br>
+    • <b>Start-Sanity:</b> <span>${sanity}</span><br>
+    • <b>Sicherung:</b> <span>${breaker}</span><br>
+    • <b>Taschenlampen:</b> <span>${light}</span><br>
+    • <b>Einsatzort:</b> <span>${map}</span><br>
+    • <b>Fluch-Objekt:</b> <span class="highlight-red">${cursed}</span><br>
+    • <b>Modifier:</b> <span class="highlight-red">${modifier}</span><br>
+    • <b>Community:</b> <span class="highlight-purple">${community}</span>
+  `;
+  document.getElementById("resultModal").style.display = "flex";
+}
+
+function closeModal() {
+  document.getElementById("resultModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
