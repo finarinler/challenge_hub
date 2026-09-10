@@ -21,6 +21,26 @@
     min-height: 100vh;
     box-sizing: border-box;
     position: relative;
+    overflow-x: hidden;
+  }
+
+  .beta-banner {
+    position: absolute;
+    top: 18px;
+    right: -42px;
+    background: #ff9900;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 2px;
+    padding: 4px 45px;
+    transform: rotate(45deg);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    z-index: 100;
+    text-transform: uppercase;
+    pointer-events: none;
+    text-align: center;
   }
 
   .back-btn {
@@ -40,6 +60,7 @@
     text-decoration: none;
     transition: all 0.2s ease-in-out;
     box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    z-index: 101;
   }
 
   .back-btn:hover {
@@ -284,7 +305,7 @@
     position: fixed !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(3) !important;
+    transform: translate(-50%, -50%) scale(2.2) !important;
     z-index: 9999 !important;
     opacity: 1 !important;
     border-color: #ff9900 !important;
@@ -400,6 +421,47 @@
   .special-box .result { color: #ff3333; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
   .community-box .result { color: #a855f7; text-shadow: 0 0 5px rgba(168, 85, 247, 0.5); }
 
+  .wheel-legend-box {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: calc(50% + 220px);
+    transform: translateY(-50%);
+    background: rgba(15, 15, 18, 0.98);
+    border: 2px solid #ff9900;
+    border-radius: 8px;
+    padding: 18px 22px;
+    z-index: 10000;
+    width: 310px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.9);
+    font-size: 16px;
+    line-height: 1.5;
+    color: #dedede;
+    box-sizing: border-box;
+  }
+  .wheel-legend-box.modifier-legend { border-color: #ff3333; }
+  .wheel-legend-box.community-legend { border-color: #a855f7; }
+
+  .wheel-legend-box h4 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 6px;
+    color: #ff9900;
+  }
+  .modifier-legend h4 { color: #ff3333; }
+  .community-legend h4 { color: #a855f7; }
+
+  .wheel-legend-box ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+  .wheel-legend-box li {
+    margin-bottom: 4px;
+  }
+
   .sticky-footer {
     position: fixed;
     bottom: 0;
@@ -499,6 +561,9 @@
     .wheels-grid-layout {
       grid-template-columns: repeat(2, 330px);
     }
+    .wheel-legend-box {
+      display: none !important;
+    }
   }
   @media (max-width: 700px) {
     .wheels-grid-layout {
@@ -509,6 +574,7 @@
 </head>
 <body>
 
+<div class="beta-banner">BETA</div>
 <a href="index.html" class="back-btn">❮ Zurück zum Hub</a>
 
 <h1>BLIND DATE MIT DEM GEIST</h1>
@@ -551,6 +617,7 @@
 <button id="mainBtn" class="start-btn" onclick="startFullChallenge()">Einsatz Starten!</button>
 
 <div id="wheelsModal" class="wheels-modal-overlay">
+  <div class="beta-banner">BETA</div>
   <div class="wheels-modal-header" id="modalHeaderTitle">ERMITTLUNGS-RAD DREHT SICH...</div>
   
   <div class="modal-control-bar">
@@ -561,6 +628,7 @@
   <div class="wheels-grid-layout">
     
     <!-- 1. REIHE -->
+    <!-- Beweismittel -->
     <div class="master-combo-box inactive-box" id="box-master-combo">
       <h2>1. Beweismittel & Stufe</h2>
       <div class="wheels-container-row">
@@ -671,6 +739,7 @@
       <div id="candleResult" class="result">Bereit...</div>
     </div>
 
+    <!-- Sanity -->
     <div class="master-combo-box inactive-box" id="box-sanity">
       <h2>6. Sanity</h2>
       <div class="wheels-container-row">
@@ -698,6 +767,7 @@
       <div id="breakerResult" class="result">Bereit...</div>
     </div>
 
+    <!-- Taschenlampe -->
     <div class="master-combo-box inactive-box" id="box-light">
       <h2>8. Taschenlampe</h2>
       <div class="wheels-container-row">
@@ -711,6 +781,7 @@
       <div id="lightResult" class="result">Bereit...</div>
     </div>
 
+    <!-- Map -->
     <div class="master-combo-box inactive-box" id="box-map">
       <h2>9. Einsatzort</h2>
       <div class="wheels-container-row">
@@ -725,6 +796,7 @@
     </div>
 
     <!-- 4. REIHE -->
+    <!-- Verfluchte Objekte -->
     <div class="master-combo-box special-box inactive-box" id="box-cursed">
       <h2>10. Fluch-Objekt</h2>
       <div class="wheels-container-row">
@@ -738,6 +810,7 @@
       <div id="cursedResult" class="result">Bereit...</div>
     </div>
 
+    <!-- Modifier -->
     <div class="master-combo-box special-box inactive-box" id="box-modifier">
       <h2>11. Modifier</h2>
       <div class="wheels-container-row">
@@ -751,6 +824,7 @@
       <div id="modifierResult" class="result">Bereit...</div>
     </div>
 
+    <!-- Community -->
     <div class="master-combo-box community-box inactive-box" id="box-community">
       <h2>12. Community</h2>
       <div class="wheels-container-row">
@@ -767,6 +841,35 @@
   </div>
 </div>
 
+<!-- Modifier Legende -->
+<div id="modifierLegend" class="wheel-legend-box modifier-legend">
+  <h4>Modifier-Legende (ID-Check)</h4>
+  <ul>
+    <li><b>MD0:</b> Kein Modifier</li>
+    <li><b>MD1:</b> Sprinten Verboten</li>
+    <li><b>MD2:</b> Keine Verstecke</li>
+    <li><b>MD3:</b> Nur Geduckt</li>
+    <li><b>MD4:</b> Keine Türen öffnen</li>
+    <li><b>MD5:</b> Keine Pillen</li>
+    <li><b>MD6:</b> Kein Item-Drop</li>
+    <li><b>MD7:</b> Ohne Licht</li>
+    <li><b>MD8:</b> Nur Vorwärts laufen</li>
+    <li><b>MD9:</b> Kein Journal</li>
+    <li><b>MD10:</b> Kein Item-Drop (Jagd)</li>
+  </ul>
+</div>
+
+<!-- Community Legende -->
+<div id="communityLegend" class="wheel-legend-box community-legend">
+  <h4>Community-Legende (ID-Check)</h4>
+  <ul>
+    <li><b>Chat1:</b> Chat errät den Geist</li>
+    <li><b>Chat2:</b> Zusatzitem (NUR T1!)</li>
+    <li><b>Chat3:</b> Chat darf nicht mitraten</li>
+  </ul>
+</div>
+<!-- RÄDER ENDE -->
+ 
 <div class="sticky-footer">
   <div class="creator-info">
     Ermittlungskonzept entworfen von <b>finarinler</b>. Freigegeben für alle ermittelnden Streamer & Creator!
@@ -781,9 +884,10 @@
 
 <div id="resultModal" class="result-modal-overlay">
   <div class="modal-content">
+    <div class="beta-banner">BETA</div>
     <h2>EINSATZBERICHT</h2>
     <div class="modal-list" id="modalText"></div>
-    <button class="close-btn" onclick="closeModal()">Sicherheitstür Öffnen</button>
+    <button class="close-btn" onclick="closeModal()">Einsatzbericht unwiderruflich schließen</button>
   </div>
 </div>
 
@@ -797,6 +901,54 @@ let sanityData = [];
 let breakerData = [];
 let lightData = [];
 let mapData = [], cursedData = [], modifierData = [], communityData = [];
+
+const mapNames = {
+  "TD": "Tanglewood Drive",
+  "ER": "Edgefield Road",
+  "RC": "Ridgeview Court",
+  "WS": "Willow Street",
+  "CW": "Camp Woodwind",
+  "PH": "Point Hope",
+  "PH (R)": "Point Hope (Restricted)",
+  "MLC": "Maple Log Campside",
+  "GF": "Grafton Farmhouse",
+  "BF": "Bleasdale Farmhouse",
+  "SM (R)": "Sunny Meadows (Restricted)",
+  "P (R)": "Prison (Restricted)",
+  "BH (R)": "Brownstone Highschool (Restricted)"
+};
+
+const cursedNames = {
+  "Brett": "Ouija-Brett",
+  "Karten": "Tarotkarten",
+  "Puppe": "Voodoo-Puppe",
+  "Spiegel": "Spiegel",
+  "Spieluhr": "Spieluhr",
+  "Kreis": "Beschwörungskreis",
+  "Pfote": "Affenpfote",
+  "Zufall": "Zufall",
+  "Keins": "Kein Fluch-Objekt"
+};
+
+const modifierNames = {
+  "MD0": "Kein Modifier",
+  "MD1": "Sprinten Verboten",
+  "MD2": "Keine Verstecke",
+  "MD3": "Nur Geduckt",
+  "MD4": "Keine Türen öffnen",
+  "MD5": "Keine Pillen",
+  "MD6": "Kein Item-Drop",
+  "MD7": "Ohne Licht",
+  "MD8": "Nur Vorwärts laufen",
+  "MD9": "Kein Journal",
+  "MD10": "Kein Item-Drop (Jagd)"
+};
+
+const communityNames = {
+  "Chat1": "Chat errät den Geist",
+  "Chat2": "Chat bestimmt Zusatzitem (NUR T1!)",
+  "Chat3": "Chat darf nicht mitraten"
+};
 
 let currentDifficulty = 'normal';
 let currentStepIndex = 0;
@@ -833,40 +985,11 @@ function resetPools() {
   breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
   lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
 
-  cursedData = ["Ouija-Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins", "Keins"];
-  modifierData = [
-    "Sprinten Verboten", 
-    "Keine Verstecke", 
-    "Nur Geduckt", 
-    "Keine Türen öffnen", 
-    "Keine Pillen", 
-    "Kein Item-Drop", 
-    "Ohne Licht", 
-    "Kein Modifier",
-    "Nur Vorwärts laufen"
-  ];
+  cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
   
-  mapData = [
-    "Tanglewood Drive",
-    "Edgefield Road",
-    "Ridgeview Court",
-    "Willow Street",
-    "Camp Woodwind",
-    "Point Hope", 
-    "Point Hope (Restr.)",
-    "Maple Log Campside", 
-    "Grafton Farmhouse", 
-    "Bleasdale Farmhouse", 
-    "Sunny Meadows (Restr.)",
-    "Prison (Restr.)",
-    "Brownstone Highschool (Restr.)"
-  ];
-
-  communityData = [
-    "Chat errät den Geist", "Chat errät den Geist",
-    "1 Zusatzitem (Nur T1!) vom Chat",
-    "Ruhe im Chat: Nicht mitraten!", "Ruhe im Chat: Nicht mitraten!",
-  ];
+  modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9", "MD10"];
+  mapData = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+  communityData = ["Chat1", "Chat1", "Chat2", "Chat3", "Chat3"];
 
   shuffle(itemTypesData); shuffle(itemTierData);
   shuffle(crucifixTierData); shuffle(crucifixCountData);
@@ -1067,7 +1190,6 @@ async function executeSingleStep() {
 
   boxEl.classList.remove("inactive-box");
   
-  // Dynamischen Platzhalter erzeugen, damit das Grid absolut stabil bleibt
   const placeholder = document.createElement('div');
   placeholder.className = 'grid-placeholder';
   placeholder.style.width = '330px';
@@ -1075,8 +1197,13 @@ async function executeSingleStep() {
   placeholder.style.visibility = 'hidden';
   boxEl.parentNode.insertBefore(placeholder, boxEl);
 
-  // Box in die Bildschirmmitte holen und skalieren
   boxEl.classList.add("active-spinning");
+
+  if (currentStepObj.id === 'box-modifier') {
+    document.getElementById("modifierLegend").style.display = "block";
+  } else if (currentStepObj.id === 'box-community') {
+    document.getElementById("communityLegend").style.display = "block";
+  }
   
   document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
 
@@ -1086,7 +1213,7 @@ async function executeSingleStep() {
   await new Promise(r => setTimeout(r, 1000));
 
   if (currentStepIndex === 0) {
-    document.getElementById("itemResult").innerText = "Ermittle 3 Beweismittel...";
+    document.getElementById("itemResult").innerText = "Ermittle 3 Beweise...";
     for (let round = 0; round < 3; round++) {
       let chosenItem = await spinIndependentWheel('item', itemTypesData);
       let chosenTier = await spinIndependentWheel('tier', itemTierData);
@@ -1172,32 +1299,37 @@ async function executeSingleStep() {
     resultsStore.light = fullText;
   } 
   else if (currentStepIndex === 8) {
-    let res = await spinSingleWheel('map', mapData);
-    document.getElementById("mapResult").innerText = res;
-    resultsStore.map = res;
+    let mapKey = await spinSingleWheel('map', mapData);
+    let fullMapName = mapNames[mapKey] || mapKey;
+    document.getElementById("mapResult").innerText = fullMapName;
+    resultsStore.map = fullMapName;
   } 
   else if (currentStepIndex === 9) {
-    let res = await spinSingleWheel('cursed', cursedData);
-    document.getElementById("cursedResult").innerText = res;
-    resultsStore.cursed = res;
+    let cursedKey = await spinSingleWheel('cursed', cursedData);
+    let fullCursedName = cursedNames[cursedKey] || cursedKey;
+    document.getElementById("cursedResult").innerText = fullCursedName;
+    resultsStore.cursed = fullCursedName;
   } 
   else if (currentStepIndex === 10) {
-    let res = await spinSingleWheel('modifier', modifierData);
-    document.getElementById("modifierResult").innerText = res;
-    resultsStore.modifier = res;
+    let modifierKey = await spinSingleWheel('modifier', modifierData);
+    let fullModifierName = modifierNames[modifierKey] || modifierKey;
+    document.getElementById("modifierResult").innerText = fullModifierName;
+    resultsStore.modifier = fullModifierName;
   } 
   else if (currentStepIndex === 11) {
-    let res = await spinSingleWheel('community', communityData);
-    document.getElementById("communityResult").innerText = res;
-    resultsStore.community = res;
+    let communityKey = await spinSingleWheel('community', communityData);
+    let fullCommunityName = communityNames[communityKey] || communityKey;
+    document.getElementById("communityResult").innerText = fullCommunityName;
+    resultsStore.community = fullCommunityName;
   }
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
   
-  // Hier wurde die Wartezeit auf 2000ms (2 Sekunden) erhöht, bevor das Rad kleiner wird
   await new Promise(r => setTimeout(r, 2000));
 
-  // Fixierte Klassen entfernen und Platzhalter wieder löschen
+  document.getElementById("modifierLegend").style.display = "none";
+  document.getElementById("communityLegend").style.display = "none";
+
   boxEl.classList.remove("active-spinning");
   placeholder.remove();
   
@@ -1220,7 +1352,7 @@ async function runAutoSequence() {
   
   const nextBtn = document.getElementById("nextStepBtn");
   nextBtn.disabled = false;
-  nextBtn.innerText = "Ergebnisbericht Senden";
+  nextBtn.innerText = "Einsatzbericht Senden";
   nextBtn.onclick = showFinalReportModal;
 }
 
