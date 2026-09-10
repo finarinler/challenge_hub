@@ -834,7 +834,16 @@ function resetPools() {
   lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
 
   cursedData = ["Ouija-Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins", "Keins"];
-  modifierData = ["Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", "Keine Türen Öffnen", "Kein Modifier"];
+  modifierData = [
+    "Sprinten Verboten", 
+    "Keine Verstecke", 
+    "Nur Geduckt", 
+    "Keine Türen", 
+    "Keine Pillen", 
+    "Kein Item-Drop", 
+    "Ohne Licht", 
+    "Kein Modifier"
+  ];
   
   mapData = [
     "Tanglewood Drive",
@@ -854,8 +863,8 @@ function resetPools() {
 
   communityData = [
     "Chat errät den Geist", "Chat errät den Geist",
-    "Chat bestimmt 1 Zusatzitem (Nur T1!)",
-    "Ruhe im Chat: Nicht mitraten!", "Ruhe im Chat: Nicht mitraten!"
+    "1 Zusatzitem (Nur T1!) vom Chat",
+    "Ruhe im Chat: Nicht mitraten!", "Ruhe im Chat: Nicht mitraten!",
   ];
 
   shuffle(itemTypesData); shuffle(itemTierData);
