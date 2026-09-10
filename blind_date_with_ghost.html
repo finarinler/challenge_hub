@@ -833,7 +833,7 @@ function resetPools() {
   breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
   lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
 
-  cursedData = ["Ouija-Brett", "Tarotkarten", "Voodoo-Puppe", "Spiegel", "Spieluhr", "Beschwörungskreis", "Affenpfote", "Zufall", "Zufall", "Kein Fluch-Objekt", "Kein Fluch-Objekt"];
+  cursedData = ["Ouija-Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins", "Keins"];
   modifierData = ["Sprinten Verboten", "Keine Verstecke", "Nur Geduckt Gehen", "Keine Türen Öffnen", "Kein Modifier"];
   
   mapData = [
@@ -1075,7 +1075,7 @@ async function executeSingleStep() {
   await new Promise(r => setTimeout(r, 1000));
 
   if (currentStepIndex === 0) {
-    document.getElementById("itemResult").innerText = "Ermittle 3 Beweise...";
+    document.getElementById("itemResult").innerText = "Ermittle 3 Beweismittel...";
     for (let round = 0; round < 3; round++) {
       let chosenItem = await spinIndependentWheel('item', itemTypesData);
       let chosenTier = await spinIndependentWheel('tier', itemTierData);
@@ -1182,7 +1182,9 @@ async function executeSingleStep() {
   }
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
-  await new Promise(r => setTimeout(r, 400));
+  
+  // Hier wurde die Wartezeit auf 2000ms (2 Sekunden) erhöht, bevor das Rad kleiner wird
+  await new Promise(r => setTimeout(r, 2000));
 
   // Fixierte Klassen entfernen und Platzhalter wieder löschen
   boxEl.classList.remove("active-spinning");
