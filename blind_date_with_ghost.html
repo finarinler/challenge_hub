@@ -744,7 +744,7 @@
           </div>
         </div>
         <div class="single-wheel-container">
-          <div class="wheel-label-sub">Typ/Stufe</div>
+          <div class="wheel-label-sub">Stufe</div>
           <div class="wheel-wrapper">
             <div class="pointer"></div>
             <canvas id="crucifixTierCanvas" width="220" height="220"></canvas>
@@ -1357,8 +1357,13 @@ async function executeSingleStep() {
   } 
   else if (currentStepIndex === 1) {
     let chosenCount = await spinIndependentWheel('crucifixCount', crucifixCountData);
-    let chosenTier = await spinIndependentWheel('crucifixTier', crucifixTierData);
-    let resText = `${chosenCount} Kruzifix ${chosenTier}`;
+    let resText = "";
+    if (chosenCount === "0x") {
+      resText = "Kein Kruzifix";
+    } else {
+      let chosenTier = await spinIndependentWheel('crucifixTier', crucifixTierData);
+      resText = `${chosenCount} Kruzifix ${chosenTier}`;
+    }
     document.getElementById("crucifixResult").innerText = resText;
     resultsStore.crucifix = resText;
   } 
@@ -1376,8 +1381,13 @@ async function executeSingleStep() {
   }
   else if (currentStepIndex === 3) {
     let chosenCount = await spinIndependentWheel('saltCount', saltCountData);
-    let chosenTier = await spinIndependentWheel('saltTier', saltTierData);
-    let resText = `${chosenCount} Salz ${chosenTier}`;
+    let resText = "";
+    if (chosenCount === "0x") {
+      resText = "Kein Salz";
+    }else{
+      let chosenTier = await spinIndependentWheel('saltTier', saltTierData);
+      resText = `${chosenCount} Salz ${chosenTier}`;
+    }
     document.getElementById("saltResult").innerText = resText;
     resultsStore.salt = resText;
   } 
