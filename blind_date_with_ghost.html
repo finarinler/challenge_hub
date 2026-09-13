@@ -137,6 +137,13 @@
     box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
   }
 
+  .diff-btn.active-ultra {
+    background: #050505;
+    color: #a3a3a3;
+    border-color: #262626;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.9), inset 0 0 6px rgba(255, 255, 255, 0.05);
+  }
+
   .rules-wrapper {
     max-width: 950px;
     width: 100%;
@@ -651,6 +658,7 @@
   <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
   <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
   <button id="btnHardcore" class="diff-btn" onclick="setDifficulty('hardcore')">🔴 Schwer</button>
+  <button id="btnUltra" class="diff-btn" onclick="setDifficulty('ultra')">⚫ Ultra</button>
 </div>
 
 <div class="rules-wrapper">
@@ -667,7 +675,7 @@
           <li><b>Einfache Ausführung:</b> Jedes Beweis-Item exakt 1x.</li>
           <li><b>Schutz-Items:</b> Anzahl & Stufe per Rad.</li>
           <li><b>Sanity-Pills:</b> Dürfen nur T1 genutzt werden, sofern sie nicht durch ein Rad verboten wurden.</li>
-          <li><b>FLuch-Objekte:</b> Muss während des Runs genutzt werden, sofern vorhanden!</li>
+          <li><b>Fluch-Objekte:</b> Muss während des Runs genutzt werden, sofern vorhanden!</li>
           <li><b>Belohnungsmultiplikator:</b> Mindestens auf 1,00x!</li>
         </ul>
       </div>
@@ -679,7 +687,7 @@
           <li><b>Beweise:</b> Stelle die Anzahl der Beweise auf 2 oder 3</li>          
           <li><b>Einstellungen:</b> Exakt auf Rad-Ergebnis einstellen.</li>
           <li><b>Sonstiges:</b> Alles was nicht durch das Rad bestimmt wird, darf frei gewählt werden.</li>
-          <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmodus.</li>
+          <li><b>Video-Ausnahme:</b> Community-Rad darf bei Videoaufnahmen (Off-Stream) ignoriert werden.</li>
         </ul>
       </div>
     </div>
@@ -966,12 +974,45 @@
   </div>
 </div>
 
+<div id="exportCardContainer" style="position: fixed; left: -9999px; top: 0; width: 600px; background: #0c0c0e; border: 3px solid #ff9900; border-radius: 12px; padding: 40px; font-family: 'Special Elite', monospace; color: #d1d1d1; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.9); z-index: 99999;">
+  <div style="text-align: center; border-bottom: 2px dashed #333; padding-bottom: 20px; margin-bottom: 25px;">
+    <div style="font-family: 'Creepster', cursive; color: #ff9900; font-size: 36px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,153,0,0.5);">BLIND DATE MIT DEM GEIST</div>
+    <div style="font-size: 14px; color: #777; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px;">Offizieller Phasmophobia Einsatzbericht</div>
+  </div>
+  
+  <div id="exportCardContent" style="font-size: 16px; line-height: 1.8;">
+  </div>
+
+  <div style="margin-top: 35px; border-top: 2px dashed #333; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #555;">
+    <span>ERMITTLUNGS-TOOL v1.0</span>
+    <span>powered by </span><span style="color: #ff9900;">finarinler</span>
+  </div>
+</div>
+
 <div id="resultModal" class="result-modal-overlay">
   <div class="modal-content">
     <div class="beta-banner">BETA</div>
     <h2>EINSATZBERICHT</h2>
     <div class="modal-list" id="modalText"></div>
-    <button class="close-btn" onclick="closeModal()">Einsatzbericht unwiderruflich schließen</button>
+    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+      <button class="close-btn" style="background: #3b82f6; color: #fff;" onclick="downloadReportCard()">📷 Als PNG speichern</button>
+      <button class="close-btn" onclick="closeModal()">Einsatzbericht unwiderruflich schließen</button>
+    </div>
+  </div>
+</div>
+
+<div id="closeConfirmModal" class="result-modal-overlay" style="display: none; z-index: 10002;">
+  <div class="modal-content" style="border-color: #ff9900; box-shadow: 0 0 35px rgba(255, 153, 0, 0.4);">
+    <div class="beta-banner">BETA</div>
+    <h2 style="color: #ff9900; font-size: 2.2rem;">SICHERHEITSHINWEIS</h2>
+    <div class="modal-list" style="text-align: center; font-size: 16px; color: #d1d1d1;">
+      Möchtest du den Einsatzbericht wirklich <span>unwiderruflich schließen</span>?<br><br>
+      Dieses Protokoll kann danach <b>nicht erneut geöffnet</b> werden!
+    </div>
+    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
+      <button class="close-btn" style="background: #333; color: #fff;" onclick="cancelCloseReport()">Abbrechen</button>
+      <button class="close-btn" style="background: #ff3333; color: #fff;" onclick="confirmCloseReport()">Trotzdem schließen</button>
+    </div>
   </div>
 </div>
 
@@ -1014,27 +1055,28 @@ const cursedNames = {
   "Spieluhr": "Spieluhr",
   "Kreis": "Beschwörungskreis",
   "Pfote": "Affenpfote",
-  "Zufall": "Zufall",
+  "Zufall": "1 Zufall Fluch-Objekt",
   "Keins": "Kein Fluch-Objekt"
 };
 
 const modifierNames = {
   "MD0": "Kein Modifier",
   "MD1": "Sprinten Verboten",
-  "MD2": "Keine Verstecke",
-  "MD3": "Nur Geduckt",
+  "MD2": "Keine offiziellen Verstecke",
+  "MD3": "Nur Geduckt bewegen",
   "MD4": "Keine Türen öffnen",
-  "MD5": "Keine Pillen",
+  "MD5": "Keine Sanity-Pillen",
   "MD6": "Kein Item-Drop (während Jagd)",
-  "MD7": "Ohne Licht",
+  "MD7": "Keine Lichtschalter benutzen",
   "MD8": "Nur Vorwärts laufen",
-  "MD9": "Kein Journal",
+  "MD9": "Kein Journal benutzen (Bis zum Eintragen)",
 };
 
 const communityNames = {
-  "Chat1": "Chat errät den Geist",
-  "Chat2": "Chat bestimmt 1 Zusatzitem!",
-  "Chat3": "Chat darf nicht mitraten"
+  "Chat1": "Chat errät den Geist - Keine Hinweise geben!",
+  "Chat2": "Chat bestimmt 1 Zusatzitem (T1)!",
+  "Chat3": "Chat darf nicht mitraten - kein BSG!",
+  "Chat4": "Chat darf Hinweise geben, aber den Geist nicht nennen!"
 };
 
 let currentDifficulty = 'normal';
@@ -1052,45 +1094,63 @@ function setDifficulty(diff) {
   document.getElementById("btnEasy").className = "diff-btn" + (diff === 'easy' ? " active-easy" : "");
   document.getElementById("btnNormal").className = "diff-btn" + (diff === 'normal' ? " active-normal" : "");
   document.getElementById("btnHardcore").className = "diff-btn" + (diff === 'hardcore' ? " active-hardcore" : "");
+  document.getElementById("btnUltra").className = "diff-btn" + (diff === 'ultra' ? " active-ultra" : "");
 }
 
 function resetPools() {
   itemTypesData = ["EMF", "Thermo", "Box", "Buch", "Video", "DOTS", "UV"];
 
   if (currentDifficulty === 'easy') {
-    itemTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
-    crucifixTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    itemTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
+    crucifixTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
     saltTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
-    smudgeTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
-    candleTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    smudgeTierData = ["T1", "T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
+    candleTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
     
-    crucifixCountData = ["1x", "1x", "1x", "2x", "2x", "2x"];
-    saltCountData = ["1x", "2x", "3x", "1x", "2x", "3x"];
+    crucifixCountData = ["1x", "1x", "1x", "1x", "2x", "2x", "2x", "2x", "2x"];
+    saltCountData = ["1x", "1x", "1x", "2x", "2x", "2x", "3x", "3x", "3x"];
+    smudgeCountData = ["2x", "2x", "3x", "3x", "3x", "4x", "4x", "4x", "4x"];
+    candleCountData = ["2x", "2x", "3x", "3x", "3x", "3x", "4x", "4x", "4x"];
 
-    smudgeCountData = ["2x", "3x", "3x", "3x", "4x", "4x"];
-    candleCountData = ["2x", "3x", "3x", "3x", "4x", "4x"];
+    lightData = ["AN", "AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS"];
+    sanityData = ["25%", "50%", "50%", "75%", "75%", "75%", "100%", "100%", "100%"];
+    breakerData = ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
 
-    sanityData = ["50%", "50%", "75%", "75%", "75%", "100%", "100%"];
-    breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS"];
-
-    let rawMaps = ["TD", "ER", "RC", "ND", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
-    mapData = rawMaps.filter(m => m !== "PH" && !m.includes("(R)"));
+    mapData = ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)"];
   } else if (currentDifficulty === 'hardcore') {
-    itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
-    crucifixTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
-    saltTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
-    smudgeTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
-    candleTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
+    itemTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    
+    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "1x", "1x"];
+    saltCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "2x"];
+    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x"];
+    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "2x"];
 
-    crucifixCountData = ["0x", "0x", "0x", "1x", "1x", "1x"];
-    saltCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
-    smudgeCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
-    candleCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x"];
+    lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS"];
+    sanityData = ["0%", "0%", "0%", "0%", "25%", "25%", "25%", "50%", "50%"];
+    breakerData = ["AN", "AN", "AUS", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
 
-    sanityData = ["0%", "25%", "50%", "0%", "25%", "50%"];
-    breakerData = ["AUS", "DEFEKT", "AUS", "DEFEKT", "AUS", "DEFEKT"];
+    mapData = ["PH", "GF", "BF", "MLC", "SM (R)", "P (R)", "BH (R)"];
+  } else if (currentDifficulty === 'ultra') {
+    itemTierData = ["T1", "T1", "T1", "T1", "T2","T1", "T1", "T2", "T2"];
+    crucifixTierData = ["T1", "T1", "T1", "T1", "T2", "T1", "T1", "T2", "T2"];
+    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
+    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
+    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
 
-    mapData = ["PH", "GF", "BF", "SM", "P", "BH"];
+    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
+    saltCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
+    smudgeCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x", "1x"];
+    candleCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
+
+    lightData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS", "AUS"];
+    sanityData = ["0%", "0%", "0%", "0%", "0%", "0%", "25%", "25%", "50%"];
+    breakerData = ["AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT"];
+
+    mapData = ["SM", "SM", "P", "P", "BH", "BH", "PH"];
   } else {
     itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
     crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
@@ -1098,22 +1158,21 @@ function resetPools() {
     smudgeTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
     candleTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
     
-    crucifixCountData = ["0x", "1x", "2x","0x", "1x", "2x"];
-    saltCountData = ["0x", "1x", "2x", "3x", "0x", "1x", "2x", "3x"];
-    smudgeCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
-    candleCountData = ["0x", "1x", "2x", "3x", "4x", "0x", "1x", "2x", "3x", "4x"];
-    
-    sanityData = ["0%", "25%", "50%", "75%", "100%", "0%", "25%", "50%", "75%", "100%"];
+    crucifixCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x"];
+    saltCountData = ["0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x", "3x"];
+    smudgeCountData = ["0x", "1x", "1x", "2x", "2x", "2x", "3x", "3x", "4x"];
+    candleCountData = ["0x", "1x", "1x", "2x", "2x", "3x", "3x", "4x", "4x"];
+
+    lightData = ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];    
+    sanityData = ["0%", "25%", "50%", "50%", "75%", "75%", "75%", "100%", "100%"];
     breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
 
-    mapData = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+    mapData = ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)", "GF", "BF"];
   }
   
-  lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
-
   cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
   modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9"];
-  communityData = ["Chat1", "Chat1", "Chat2", "Chat3", "Chat3"];
+  communityData = ["Chat1", "Chat1", "Chat2", "Chat3", "Chat3", "Chat4"];
 
   shuffle(itemTypesData); shuffle(itemTierData);
   shuffle(crucifixTierData); shuffle(crucifixCountData);
@@ -1208,38 +1267,38 @@ function calculateWinnerIndex(finalAngle, numItems) {
 function spinIndependentWheel(type, items) {
   return new Promise((resolve) => {
     const canvasEl = document.getElementById(type + "Canvas");
-    const spins = 4 + Math.floor(Math.random() * 3);
+    const spins = 3 + Math.floor(Math.random() * 2);
     const extraDeg = Math.floor(Math.random() * 360);
     
     angles[type] += spins * 360 + extraDeg;
 
-    canvasEl.style.transition = "transform 2.0s cubic-bezier(0.15, 0.99, 0.35, 1)";
+    canvasEl.style.transition = "transform 1.0s cubic-bezier(0.15, 0.99, 0.35, 1)";
     canvasEl.style.transform = `rotate(${angles[type]}deg)`;
 
     setTimeout(() => {
       let winnerIdx = calculateWinnerIndex(angles[type], items.length);
       let result = items[winnerIdx];
       resolve(result);
-    }, 2000);
+    }, 1000);
   });
 }
 
 function spinSingleWheel(type, items) {
   return new Promise((resolve) => {
     const canvasEl = document.getElementById(type + "Canvas");
-    const spins = 4 + Math.floor(Math.random() * 3);
+    const spins = 3 + Math.floor(Math.random() * 2);
     const extraDeg = Math.floor(Math.random() * 360);
 
     angles[type] += spins * 360 + extraDeg;
 
-    canvasEl.style.transition = "transform 2.0s cubic-bezier(0.15, 0.99, 0.35, 1)";
+    canvasEl.style.transition = "transform 1.0s cubic-bezier(0.15, 0.99, 0.35, 1)";
     canvasEl.style.transform = `rotate(${angles[type]}deg)`;
 
     setTimeout(() => {
       let winnerIdx = calculateWinnerIndex(angles[type], items.length);
       let res = items[winnerIdx];
       resolve(res);
-    }, 2000);
+    }, 1000);
   });
 }
 
@@ -1303,7 +1362,7 @@ async function startFullChallenge() {
   nextBtn.disabled = true;
   nextBtn.innerText = "Räder laufen...";
 
-  await new Promise(r => setTimeout(r, 2000));
+  await new Promise(r => setTimeout(r, 1000));
 
   runAutoSequence();
 }
@@ -1331,10 +1390,10 @@ async function executeSingleStep() {
   
   document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
 
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 500));
 
   document.getElementById("modalHeaderTitle").innerText = `DREHE: ${currentStepObj.title}`;
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 500));
 
   if (currentStepIndex === 0) {
     document.getElementById("itemResult").innerText = "Ermittle 3 BeweisItems...";
@@ -1350,7 +1409,7 @@ async function executeSingleStep() {
       createWheel("itemCanvas", itemTypesData);
       updateItemUI();
 
-      if (round < 2) await new Promise(r => setTimeout(r, 200));
+      if (round < 2) await new Promise(r => setTimeout(r, 100));
     }
     resultsStore.item1 = `${currentItemsPicked[0]} (${currentTiersPicked[0]})`;
     resultsStore.item2 = `${currentItemsPicked[1]} (${currentTiersPicked[1]})`;
@@ -1469,7 +1528,7 @@ async function executeSingleStep() {
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
   
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 500));
 
   document.getElementById("modifierLegend").style.display = "none";
   document.getElementById("communityLegend").style.display = "none";
@@ -1477,7 +1536,7 @@ async function executeSingleStep() {
   boxEl.classList.remove("active-spinning");
   placeholder.remove();
   
-  await new Promise(r => setTimeout(r, 1000));
+  await new Promise(r => setTimeout(r, 300));
   
   currentStepIndex++;
 }
@@ -1502,7 +1561,7 @@ async function runAutoSequence() {
     document.getElementById("stepCounterText").innerText = `Schritt ${currentStepIndex + 1} von ${stepsList.length}`;
     await executeSingleStep();
     if (currentStepIndex < stepsList.length) {
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 300));
     }
   }
 
@@ -1537,7 +1596,68 @@ function showFinalReportModal() {
   document.getElementById("resultModal").style.display = "flex";
 }
 
+function loadHtml2Canvas(callback) {
+  if (window.html2canvas) {
+    callback();
+    return;
+  }
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+  script.onload = callback;
+  document.head.appendChild(script);
+}
+
+function downloadReportCard() {
+  loadHtml2Canvas(() => {
+    const exportContent = document.getElementById("exportCardContent");
+    
+    exportContent.innerHTML = `
+      <div style="margin-bottom: 12px;"><b>• Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Beweis-Items:</b> <span style="color:#ff9900;">${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Kruzifix:</b> <span style="color:#ff9900;">${resultsStore.crucifix}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Räucherwerk:</b> <span style="color:#ff9900;">${resultsStore.smudge}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Salz:</b> <span style="color:#ff9900;">${resultsStore.salt}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Kerzen:</b> <span style="color:#ff9900;">${resultsStore.candle}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Start-Sanity:</b> <span style="color:#ff9900;">${resultsStore.sanity}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Sicherung:</b> <span style="color:#ff9900;">${resultsStore.breaker}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Taschenlampen:</b> <span style="color:#ff9900;">${resultsStore.light}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Einsatzort:</b> <span style="color:#ff9900;">${resultsStore.map}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Fluch-Objekt:</b> <span style="color:#ff3333;">${resultsStore.cursed}</span></div>
+      <div style="margin-bottom: 12px;"><b>• Modifier:</b> <span style="color:#ff3333;">${resultsStore.modifier}</span></div>
+      <div><b>• Community:</b> <span style="color:#a855f7;">${resultsStore.community}</span></div>
+    `;
+
+    const card = document.getElementById("exportCardContainer");
+    card.style.display = "block";
+
+    html2canvas(card, {
+      backgroundColor: '#0c0c0e',
+      scale: 2,
+      useCORS: true
+    }).then(canvas => {
+      card.style.display = "none";
+      const link = document.createElement('a');
+      link.download = `phasmo-einsatzbericht-${currentDifficulty}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }).catch(err => {
+      card.style.display = "none";
+      console.error("Fehler beim PNG-Export:", err);
+      alert("Fehler beim Erstellen des Bildes.");
+    });
+  });
+}
+
 function closeModal() {
+  document.getElementById("closeConfirmModal").style.display = "flex";
+}
+
+function cancelCloseReport() {
+  document.getElementById("closeConfirmModal").style.display = "none";
+}
+
+function confirmCloseReport() {
+  document.getElementById("closeConfirmModal").style.display = "none";
   document.getElementById("resultModal").style.display = "none";
 }
 </script>
