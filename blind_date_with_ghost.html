@@ -666,13 +666,15 @@
           <li><b>Hilfsmittel:</b> Keine weiteren Items erlaubt! Es sei denn das Glück ist auf deiner Seite!</li>
           <li><b>Einfache Ausführung:</b> Jedes Beweis-Item exakt 1x.</li>
           <li><b>Schutz-Items:</b> Anzahl & Stufe per Rad.</li>
+          <li><b>Sanity-Pills:</b> Dürfen nur T1 genutzt werden, sofern sie nicht durch ein Rad verboten wurden.</li>
         </ul>
       </div>
 
       <div class="rule-block">
         <h3>2. Modifikatoren & Chat</h3>
         <ul>
-          <li><b>Beweise:</b> Stelle die Anzahl der Beweise nicht auf 2 oder 3</li>          
+          <li><b>Beweise müssen gesucht und der Geisterraum Identifiziert werden!</b></li>
+          <li><b>Beweise:</b> Stelle die Anzahl der Beweise auf 2 oder 3</li>          
           <li><b>Einstellungen:</b> Exakt auf Rad-Ergebnis einstellen.</li>
           <li><b>Sonstiges:</b> Alles was nicht durch das Rad bestimmt wird, darf frei gewählt werden.</li>
           <li><b>Video-Ausnahme:</b> Live-Chat-Regeln verfallen im Aufnahmodus.</li>
@@ -986,6 +988,7 @@ const mapNames = {
   "TD": "Tanglewood Drive",
   "ER": "Edgefield Road",
   "RC": "Ridgeview Court",
+  "ND": "Nell's Diner",
   "WS": "Willow Street",
   "CW": "Camp Woodwind",
   "PH": "Point Hope",
@@ -993,8 +996,11 @@ const mapNames = {
   "MLC": "Maple Lodge Campside",
   "GF": "Grafton Farmhouse",
   "BF": "Bleasdale Farmhouse",
+  "SM": "Sunny Meadows",
   "SM (R)": "Sunny Meadows (Restricted)",
+  "P" : "Prison",
   "P (R)": "Prison (Restricted)",
+  "BH" : "Brownstone Highschool",
   "BH (R)": "Brownstone Highschool (Restricted)"
 };
 
@@ -1066,7 +1072,7 @@ function resetPools() {
     sanityData = ["50%", "50%", "75%", "75%", "75%", "100%", "100%"];
     breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS"];
 
-    let rawMaps = ["TD", "ER", "RC", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+    let rawMaps = ["TD", "ER", "RC", "ND", "WS", "CW", "PH", "PH (R)", "MLC", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
     mapData = rawMaps.filter(m => m !== "PH" && !m.includes("(R)"));
   } else if (currentDifficulty === 'hardcore') {
     itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2"];
@@ -1083,7 +1089,7 @@ function resetPools() {
     sanityData = ["0%", "25%", "50%", "0%", "25%", "50%"];
     breakerData = ["AUS", "DEFEKT", "AUS", "DEFEKT", "AUS", "DEFEKT"];
 
-    mapData = ["PH", "PH (R)", "GF", "BF", "SM (R)", "P (R)", "BH (R)"];
+    mapData = ["PH", "GF", "BF", "SM", "P", "BH"];
   } else {
     itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
     crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
