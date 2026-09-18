@@ -658,7 +658,7 @@
   <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
   <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
   <button id="btnHardcore" class="diff-btn" onclick="setDifficulty('hardcore')">🔴 Schwer</button>
-  <button id="btnUltra" class="diff-btn" onclick="setDifficulty('ultra')">⚫ Ultra</button>
+  <button id="btnUltra" class="diff-btn" onclick="setDifficulty('ultra')">⚫ Ultra (MP ONLY!)</button>
 </div>
 
 <div class="rules-wrapper">
@@ -675,7 +675,7 @@
           <li><b>Einfache Ausführung:</b> Jedes Beweis-Item exakt 1x.</li>
           <li><b>Schutz-Items:</b> Anzahl & Stufe per Rad.</li>
           <li><b>Sanity-Pills:</b> Dürfen nur T1 genutzt werden, sofern sie nicht durch ein Rad verboten wurden.</li>
-          <li><b>Fluch-Objekte:</b> Muss während des Runs genutzt werden, sofern vorhanden!</li>
+          <li><b>Fluch-Objekte:</b> Darf <i>sehr gerne</i> genutzt werden, wenn vorhanden!</li>
           <li><b>Belohnungsmultiplikator:</b> Mindestens auf 1,00x!</li>
         </ul>
       </div>
@@ -959,6 +959,7 @@
     <li><b>Chat2:</b> Chat bestimmt 1 Zusatzitem (T1)!</li>
     <li><b>Chat3:</b> Chat darf nicht mitraten - kein BSG!</li>
     <li><b>Chat4:</b> Chat darf Hinweise geben, aber den Geist nicht nennen!</li>
+    <li><b>Chat5:</b> Chat darf 1 Beweisitem gegen 1 Zusätzliches Kruzifix oder Räucherwerk tauschen!</li>
   </ul>
 </div>
 <!-- RÄDER ENDE -->
@@ -1077,7 +1078,8 @@ const communityNames = {
   "Chat1": "Chat errät den Geist - Keine Hinweise geben!",
   "Chat2": "Chat bestimmt 1 Zusatzitem (T1)!",
   "Chat3": "Chat darf nicht mitraten - kein BSG!",
-  "Chat4": "Chat darf Hinweise geben, aber den Geist nicht nennen!"
+  "Chat4": "Chat darf Hinweise geben, aber den Geist nicht nennen!",
+  "Chat5": "Chat darf 1 Beweisitem gegen 1 Zusätzliches Kruzifix oder Räucherwerk tauschen!"
 };
 
 let currentDifficulty = 'normal';
@@ -1119,16 +1121,16 @@ function resetPools() {
 
     mapData = ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)"];
   } else if (currentDifficulty === 'hardcore') {
-    itemTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
-    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
-    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
-    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
-    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T2"];
+    itemTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
+    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
+    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
+    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
+    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
     
-    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "1x", "1x"];
-    saltCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "2x"];
-    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x"];
-    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "2x"];
+    crucifixCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "2x"];
+    saltCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x"];
+    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "3x"];
+    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"];
 
     lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS"];
     sanityData = ["0%", "0%", "0%", "0%", "25%", "25%", "25%", "50%", "50%"];
@@ -1136,16 +1138,16 @@ function resetPools() {
 
     mapData = ["PH", "GF", "BF", "MLC", "SM (R)", "P (R)", "BH (R)"];
   } else if (currentDifficulty === 'ultra') {
-    itemTierData = ["T1", "T1", "T1", "T1", "T2","T1", "T1", "T2", "T2"];
-    crucifixTierData = ["T1", "T1", "T1", "T1", "T2", "T1", "T1", "T2", "T2"];
-    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
-    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
-    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2"];
+    itemTierData = ["T1", "T1", "T1", "T1", "T1","T1", "T2", "T2", "T3"];
+    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
+    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
+    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
+    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
 
-    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
-    saltCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
-    smudgeCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x", "1x"];
-    candleCountData = ["0x", "0x", "0x", "0x", "0x", "0x", "0x", "1x", "1x"];
+    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "2x"];
+    saltCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"];
+    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x", "4x"];
+    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x", "4x"];
 
     lightData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS", "AUS"];
     sanityData = ["0%", "0%", "0%", "0%", "0%", "0%", "25%", "25%", "50%"];
@@ -1173,7 +1175,7 @@ function resetPools() {
   
   cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
   modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9"];
-  communityData = ["Chat1", "Chat1", "Chat2", "Chat3", "Chat3", "Chat4"];
+  communityData = ["Chat1", "Chat1", "Chat2", "Chat2", "Chat3", "Chat3", "Chat4", "Chat4", "Chat5", "Chat5"];
 
   shuffle(itemTypesData); shuffle(itemTierData);
   shuffle(crucifixTierData); shuffle(crucifixCountData);
