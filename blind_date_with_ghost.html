@@ -2,9 +2,23 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blind Date mit dem Geist – Phasmo Challenge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Montserrat:wght@700&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&family=Montserrat:wght@700&display=swap');
+  :root {
+    --color-orange: #ff9900;
+    --color-orange-rgb: 255, 153, 0;
+    --color-red: #ff3333;
+    --color-red-rgb: 255, 51, 51;
+    --color-purple: #a855f7;
+    --color-purple-rgb: 168, 85, 247;
+    --color-blue: #3b82f6;
+    --color-blue-rgb: 59, 130, 246;
+    --color-blue-light: #60a5fa;
+  }
 
   body {
     background-color: #080808;
@@ -16,7 +30,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 30px 20px 100px 20px;
+    padding: 40px 20px 140px 20px;
     margin: 0;
     min-height: 100vh;
     box-sizing: border-box;
@@ -28,7 +42,7 @@
     position: absolute;
     top: 18px;
     right: -42px;
-    background: #ff9900;
+    background: var(--color-orange);
     color: #000;
     font-family: 'Montserrat', sans-serif;
     font-weight: 700;
@@ -64,41 +78,47 @@
   }
 
   .back-btn:hover {
-    color: #ff9900;
-    border-color: #ff9900;
+    color: var(--color-orange);
+    border-color: var(--color-orange);
     background: #181512;
     transform: translateX(-3px);
-    box-shadow: 0 0 10px rgba(255, 153, 0, 0.3);
+    box-shadow: 0 0 10px rgba(var(--color-orange-rgb), 0.3);
   }
 
   h1 {
     font-family: 'Creepster', cursive, sans-serif;
-    color: #ff9900;
+    color: var(--color-orange);
     font-size: 3.8rem;
     letter-spacing: 3px;
-    margin: 10px 0 0 0;
-    text-shadow: 0 0 10px rgba(255, 153, 0, 0.6), 0 0 20px rgba(255, 0, 0, 0.4);
+    margin: 15px 0 0 0;
+    text-shadow: 0 0 10px rgba(var(--color-orange-rgb), 0.6), 0 0 20px rgba(255, 0, 0, 0.4);
     text-align: center;
   }
   .subtitle {
     color: #777;
     font-size: 16px;
-    margin-bottom: 25px;
+    margin: 10px 0 35px 0;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 2px;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #222;
+    padding: 8px 0;
+    width: 100%;
+    max-width: 600px;
   }
 
   .difficulty-container {
     display: flex;
     justify-content: center;
     gap: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     background: #111113;
-    padding: 12px 20px;
+    padding: 15px 25px;
     border: 1px solid #2a2a2e;
+    border-top: 3px solid var(--color-orange);
     border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.8);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.8);
   }
 
   .diff-btn {
@@ -147,73 +167,120 @@
   .rules-wrapper {
     max-width: 950px;
     width: 100%;
-    margin-bottom: 35px;
+    margin-bottom: 45px;
   }
 
-  .rules-header-title {
+  details.rules-dropdown {
     background: #181512;
-    border: 2px solid #ff9900;
-    border-bottom: none;
-    color: #ff9900;
-    padding: 16px 25px;
+    border: 2px solid var(--color-orange);
+    border-top: 4px solid var(--color-orange);
+    border-radius: 6px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.8);
+    transition: all 0.3s ease;
+  }
+
+  details.rules-dropdown[open] {
+    box-shadow: 0 12px 35px rgba(var(--color-orange-rgb), 0.15);
+  }
+
+  summary.rules-header-title {
+    background: #181512;
+    color: var(--color-orange);
+    padding: 18px 25px;
     font-family: 'Special Elite', monospace;
     font-size: 20px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.2s;
+  }
+
+  summary.rules-header-title::-webkit-details-marker {
+    display: none;
+  }
+
+  summary.rules-header-title:hover {
+    background: #221c17;
+    color: #ffb733;
+  }
+
+  summary.rules-header-title::after {
+    content: "▼";
+    font-size: 14px;
+    transition: transform 0.3s ease;
+  }
+
+  details.rules-dropdown[open] summary.rules-header-title::after {
+    transform: rotate(180deg);
+  }
+
+  details.rules-dropdown[open] summary.rules-header-title {
+    border-bottom: 2px dashed #443322;
     border-radius: 6px 6px 0 0;
-    box-shadow: 0 0 15px rgba(255, 153, 0, 0.2);
   }
 
   .rules-content {
     background: #181512;
-    border: 2px solid #ff9900;
     border-radius: 0 0 6px 6px;
     padding: 30px 35px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.9);
     box-sizing: border-box;
   }
 
-  .rules-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 35px;
-  }
-  .rule-block h3 {
-    color: #ff3333;
-    margin-top: 0;
+  .challenge-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
     margin-bottom: 15px;
-    font-size: 18px;
+  }
+  .challenge-table th, .challenge-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    vertical-align: top;
+  }
+  .challenge-table th {
+    color: var(--color-orange);
+    border-bottom: 2px solid var(--color-orange);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
+  .challenge-table tr:hover {
+    background: rgba(var(--color-orange-rgb), 0.03);
+  }
+  .table-section-header {
+    background: rgba(var(--color-orange-rgb), 0.08);
+    color: var(--color-orange);
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    border-bottom: 1px dashed #443322;
-    padding-bottom: 6px;
-  }
-  .rule-block ul {
-    margin: 0;
-    padding-left: 20px;
-    color: #d8d8d8;
-    line-height: 1.8;
-    font-size: 15px;
-  }
-  .rule-block li {
-    margin-bottom: 8px;
+    font-size: 13px;
+    border-top: 1px solid rgba(var(--color-orange-rgb), 0.2);
   }
 
   .start-btn {
-    padding: 22px 60px;
+    padding: 24px 65px;
     font-family: 'Special Elite', monospace;
     font-size: 28px;
     font-weight: bold;
     color: #fff;
     background: linear-gradient(180deg, #8b0000 0%, #4a0000 100%);
-    border: 2px solid #ff3333;
+    border: 2px solid var(--color-red);
+    border-top: 4px solid #ff6666;
     border-radius: 6px;
     cursor: pointer;
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.6), inset 0 0 10px rgba(0,0,0,0.8);
     text-transform: uppercase;
     letter-spacing: 2px;
     transition: all 0.2s ease-in-out;
+    margin-top: 10px;
   }
   .start-btn:hover {
     background: linear-gradient(180deg, #a30000 0%, #660000 100%);
@@ -232,25 +299,29 @@
     align-items: center;
     justify-content: space-between;
     overflow-y: auto;
-    padding: 20px;
+    padding: 25px;
     box-sizing: border-box;
   }
 
   .wheels-modal-header {
     font-family: 'Creepster', cursive;
-    color: #ff9900;
-    font-size: 2.2rem;
-    margin: 10px 0;
-    text-shadow: 0 0 10px rgba(255, 153, 0, 0.5);
+    color: var(--color-orange);
+    font-size: 2.4rem;
+    margin: 15px 0;
+    text-shadow: 0 0 10px rgba(var(--color-orange-rgb), 0.5);
     text-align: center;
+    border-bottom: 2px solid var(--color-orange);
+    padding-bottom: 10px;
+    width: 100%;
+    max-width: 800px;
   }
 
   .modal-control-bar {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
-    margin: 15px 0;
+    gap: 25px;
+    margin: 20px 0;
     width: 100%;
     flex-wrap: wrap;
   }
@@ -261,11 +332,12 @@
     font-size: 18px;
     font-weight: bold;
     color: #000;
-    background: #ff9900;
+    background: var(--color-orange);
     border: none;
+    border-top: 2px solid #ffcc66;
     border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 153, 0, 0.5);
+    box-shadow: 0 0 15px rgba(var(--color-orange-rgb), 0.5);
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.2s ease-in-out;
@@ -281,6 +353,7 @@
     cursor: not-allowed;
     box-shadow: none;
     transform: none;
+    border-top: none;
   }
 
   .step-counter {
@@ -294,11 +367,11 @@
     display: grid;
     grid-template-columns: repeat(4, 280px);
     justify-content: center;
-    gap: 15px;
-    max-width: 1220px;
+    gap: 20px;
+    max-width: 1240px;
     width: 100%;
     margin: auto 0;
-    padding: 20px 0;
+    padding: 25px 0;
   }
 
   .wheel-box, .master-combo-box {
@@ -306,13 +379,14 @@
     flex-direction: column;
     align-items: center;
     background: #111113;
-    padding: 12px;
-    border: 2px solid #ff9900;
+    padding: 15px;
+    border: 2px solid var(--color-orange);
+    border-top: 4px solid var(--color-orange);
     border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(255, 153, 0, 0.25);
+    box-shadow: 0 10px 30px rgba(var(--color-orange-rgb), 0.25);
     box-sizing: border-box;
     width: 280px;
-    height: 220px;
+    height: 230px;
     transition: opacity 0.3s ease;
     z-index: 1;
   }
@@ -329,66 +403,73 @@
     transform: translate(-50%, -50%) scale(3) !important;
     z-index: 9999 !important;
     opacity: 1 !important;
-    border-color: #ff9900 !important;
-    box-shadow: 0 0 60px rgba(255, 153, 0, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+    border-color: var(--color-orange) !important;
+    border-top-color: var(--color-orange) !important;
+    box-shadow: 0 0 60px rgba(var(--color-orange-rgb), 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
     background: #121216 !important;
   }
 
   .master-combo-box.special-box.active-spinning, .wheel-box.special-box.active-spinning {
-    border-color: #ff3333 !important;
-    box-shadow: 0 0 60px rgba(255, 51, 51, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+    border-color: var(--color-red) !important;
+    border-top-color: var(--color-red) !important;
+    box-shadow: 0 0 60px rgba(var(--color-red-rgb), 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
   }
 
   .master-combo-box.community-box.active-spinning, .wheel-box.community-box.active-spinning {
-    border-color: #a855f7 !important;
-    box-shadow: 0 0 60px rgba(168, 85, 247, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+    border-color: var(--color-purple) !important;
+    border-top-color: var(--color-purple) !important;
+    box-shadow: 0 0 60px rgba(var(--color-purple-rgb), 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
   }
 
   .master-combo-box.map-box {
-    border: 2px solid #3b82f6;
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.25);
+    border: 2px solid var(--color-blue);
+    border-top: 4px solid var(--color-blue);
+    box-shadow: 0 0 15px rgba(var(--color-blue-rgb), 0.25);
   }
   .master-combo-box.map-box h2 {
-    color: #60a5fa;
+    color: var(--color-blue-light);
   }
   .master-combo-box.map-box.active-spinning {
-    border-color: #3b82f6 !important;
-    box-shadow: 0 0 60px rgba(59, 130, 246, 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
+    border-color: var(--color-blue) !important;
+    border-top-color: var(--color-blue) !important;
+    box-shadow: 0 0 60px rgba(var(--color-blue-rgb), 0.8), 0 0 120px rgba(0,0,0,0.9) !important;
   }
   .map-box .result {
-    color: #60a5fa;
+    color: var(--color-blue-light);
     text-shadow: 0 0 5px rgba(96, 165, 250, 0.5);
   }
 
   .master-combo-box.special-box, .wheel-box.special-box {
-    border: 2px solid #ff3333;
+    border: 2px solid var(--color-red);
+    border-top: 4px solid var(--color-red);
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.25);
   }
 
   .wheel-box.community-box, .master-combo-box.community-box {
-    border: 2px solid #a855f7;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+    border: 2px solid var(--color-purple);
+    border-top: 4px solid var(--color-purple);
+    box-shadow: 0 0 15px rgba(var(--color-purple-rgb), 0.25);
   }
 
   .master-combo-box h2, .wheel-box h2 {
     font-size: 12px;
-    color: #ff9900;
+    color: var(--color-orange);
     margin-top: 0;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     text-transform: uppercase;
     border-bottom: 1px dashed #444;
     width: 100%;
     text-align: center;
-    padding-bottom: 4px;
+    padding-bottom: 6px;
     letter-spacing: 0.5px;
   }
-  .wheel-box.special-box h2, .master-combo-box.special-box h2 { color: #ff3333; }
-  .wheel-box.community-box h2, .master-combo-box.community-box h2 { color: #a855f7; }
+  .wheel-box.special-box h2, .master-combo-box.special-box h2 { color: var(--color-red); }
+  .wheel-box.community-box h2, .master-combo-box.community-box h2 { color: var(--color-purple); }
 
   .wheels-container-row {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     width: 100%;
   }
 
@@ -402,7 +483,7 @@
   .wheel-label-sub {
     font-size: 9px;
     color: #aaa;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -437,7 +518,7 @@
   }
 
   .result {
-    margin-top: 6px;
+    margin-top: 8px;
     font-size: 11px;
     font-weight: bold;
     min-height: 34px;
@@ -448,15 +529,16 @@
     width: 100%;
     background: #08080a;
     border: 1px solid #222;
-    padding: 4px;
+    border-top: 2px solid #333;
+    padding: 5px;
     border-radius: 4px;
     box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .special-box .result { color: #ff3333; text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
-  .community-box .result { color: #a855f7; text-shadow: 0 0 5px rgba(168, 85, 247, 0.5); }
+  .special-box .result { color: var(--color-red); text-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  .community-box .result { color: var(--color-purple); text-shadow: 0 0 5px rgba(var(--color-purple-rgb), 0.5); }
 
   #chatItemSelectionContainer {
     display: none;
@@ -465,10 +547,11 @@
     text-align: center;
     max-width: 700px;
     background: #111116;
-    border: 2px solid #a855f7;
+    border: 2px solid var(--color-purple);
+    border-top: 4px solid var(--color-purple);
     padding: 15px;
     border-radius: 8px;
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 30px rgba(var(--color-purple-rgb), 0.5);
     z-index: 10005;
   }
   .chat-item-grid {
@@ -481,6 +564,7 @@
     background: #1e1b4b;
     color: #ffffff;
     border: 1px solid #7e22ce;
+    border-top: 2px solid var(--color-purple);
     padding: 14px 10px;
     font-family: 'Special Elite', monospace;
     font-size: 24px;
@@ -492,48 +576,49 @@
   .chat-item-btn:hover {
     background: #7e22ce;
     color: #ffffff;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.8);
+    box-shadow: 0 0 15px rgba(var(--color-purple-rgb), 0.8);
   }
 
   .wheel-legend-box {
     display: none;
     position: fixed;
     top: 50%;
-    left: calc(50% + 220px);
+    left: calc(50% + 230px);
     transform: translateY(-50%);
     background: rgba(15, 15, 18, 0.98);
-    border: 2px solid #ff9900;
+    border: 2px solid var(--color-orange);
+    border-top: 4px solid var(--color-orange);
     border-radius: 8px;
-    padding: 18px 22px;
+    padding: 20px 24px;
     z-index: 10000;
-    width: 310px;
+    width: 320px;
     box-shadow: 0 0 30px rgba(0,0,0,0.9);
     font-size: 16px;
     line-height: 1.5;
     color: #dedede;
     box-sizing: border-box;
   }
-  .wheel-legend-box.modifier-legend { border-color: #ff3333; }
-  .wheel-legend-box.community-legend { border-color: #a855f7; }
+  .wheel-legend-box.modifier-legend { border-color: var(--color-red); border-top-color: var(--color-red); }
+  .wheel-legend-box.community-legend { border-color: var(--color-purple); border-top-color: var(--color-purple); }
 
   .wheel-legend-box h4 {
-    margin: 0 0 10px 0;
+    margin: 0 0 12px 0;
     font-size: 14px;
     text-transform: uppercase;
     text-align: center;
     border-bottom: 1px dashed #444;
     padding-bottom: 6px;
-    color: #ff9900;
+    color: var(--color-orange);
   }
-  .modifier-legend h4 { color: #ff3333; }
-  .community-legend h4 { color: #a855f7; }
+  .modifier-legend h4 { color: var(--color-red); }
+  .community-legend h4 { color: var(--color-purple); }
 
   .wheel-legend-box ul {
     margin: 0;
     padding-left: 18px;
   }
   .wheel-legend-box li {
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
 
   .sticky-footer {
@@ -541,11 +626,10 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(12, 12, 14, 0.95);
-    border-top: 2px solid #ff9900;
+    background: rgba(12, 12, 14, 0.96);
+    border-top: 3px solid var(--color-orange);
     backdrop-filter: blur(5px);
     text-align: center;
-    color: #aaa;
     font-size: 13px;
     padding: 12px 20px;
     box-shadow: 0 -5px 20px rgba(0,0,0,0.9);
@@ -554,22 +638,58 @@
   }
   .sticky-footer .creator-info {
     color: #ddd;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
   }
   .sticky-footer .social-links {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
   }
   .sticky-footer .social-links a {
-    color: #ff9900;
+    color: var(--color-orange);
     text-decoration: none;
     font-weight: bold;
     transition: all 0.2s;
   }
   .sticky-footer .social-links a:hover {
     color: #fff;
-    text-shadow: 0 0 8px #ff9900;
+    text-shadow: 0 0 8px var(--color-orange);
+  }
+  .sticky-footer .social-links .separator {
+    color: #555;
+    margin: 0 2px;
+  }
+
+  .sticky-footer .social-divider {
+    width: 100%;
+    max-width: 450px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #444, transparent);
+    margin: 0 auto 10px auto;
+  }
+
+  .sticky-footer .thanks-section {
+    display: inline-block;
+    background: #141218;
+    border: 1px dashed #3a324a;
+    border-radius: 4px;
+    padding: 4px 14px;
+    color: #b0a4c2;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+  .sticky-footer .thanks-section a {
+    color: #c084fc;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.2s;
+  }
+  .sticky-footer .thanks-section a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px var(--color-purple);
   }
 
   .result-modal-overlay {
@@ -585,8 +705,9 @@
   .modal-content {
     background: #111;
     border: 2px solid #ff0000;
+    border-top: 5px solid #ff0000;
     border-radius: 6px;
-    padding: 35px;
+    padding: 40px;
     max-width: 680px;
     width: 90%;
     box-shadow: 0 0 35px rgba(255, 0, 0, 0.5);
@@ -605,19 +726,21 @@
     text-align: left;
     background: #080808;
     border: 1px solid #333;
-    padding: 22px 28px;
-    margin: 22px 0;
+    border-top: 2px solid #444;
+    padding: 25px 30px;
+    margin: 25px 0;
     font-size: 17px;
-    line-height: 1.9;
+    line-height: 2.0;
   }
-  .modal-list span { color: #ff9900; font-weight: bold; }
-  .modal-list span.highlight-red { color: #ff3333; font-weight: bold; }
-  .modal-list span.highlight-purple { color: #a855f7; font-weight: bold; }
+  .modal-list span { color: var(--color-orange); font-weight: bold; }
+  .modal-list span.highlight-red { color: var(--color-red); font-weight: bold; }
+  .modal-list span.highlight-purple { color: var(--color-purple); font-weight: bold; }
   
   .close-btn {
-    background: #ff9900;
+    background: var(--color-orange);
     color: #000;
     border: none;
+    border-top: 2px solid #ffcc66;
     padding: 14px 35px;
     font-family: 'Special Elite', monospace;
     font-size: 18px;
@@ -655,48 +778,136 @@
 <div class="subtitle">Official Phasmophobia Contract & Wheel Tool</div>
 
 <div class="difficulty-container">
-  <button id="btnEasy" class="diff-btn" onclick="setDifficulty('easy')">🟢 Einfach</button>
-  <button id="btnNormal" class="diff-btn active-normal" onclick="setDifficulty('normal')">🟠 Normal</button>
-  <button id="btnHardcore" class="diff-btn" onclick="setDifficulty('hardcore')">🔴 Schwer</button>
-  <button id="btnUltra" class="diff-btn" onclick="setDifficulty('ultra')">⚫ Ultra (MP ONLY!)</button>
+  <button id="btnEasy" class="diff-btn" aria-pressed="false" onclick="setDifficulty('easy')">🟢 Einfach</button>
+  <button id="btnNormal" class="diff-btn active-normal" aria-pressed="true" onclick="setDifficulty('normal')">🟠 Normal</button>
+  <button id="btnHardcore" class="diff-btn" aria-pressed="false" onclick="setDifficulty('hardcore')">🔴 Schwer</button>
+  <button id="btnUltra" class="diff-btn" aria-pressed="false" onclick="setDifficulty('ultra')">⚫ Ultra (MP ONLY!)</button>
 </div>
 
 <div class="rules-wrapper">
-  <div class="rules-header-title">
-    📜 Mission Details & Regeln
-  </div>
-  <div class="rules-content">
-    <div class="rules-grid">
-      <div class="rule-block">
-        <h3>1. Ausrüstungs-Protokoll</h3>
-        <ul>
-          <li><b>Items:</b> Es dürfen nur die gelosten Items genutzt werden!</li>
-          <li><b>Hilfsmittel:</b> Keine weiteren Items erlaubt! Es sei denn das Glück ist auf deiner Seite!</li>
-          <li><b>Einfache Ausführung:</b> Jedes Beweis-Item exakt 1x.</li>
-          <li><b>Schutz-Items:</b> Anzahl & Stufe per Rad.</li>
-          <li><b>Sanity-Pills:</b> Dürfen nur T1 genutzt werden, sofern sie nicht durch ein Rad verboten wurden.</li>
-          <li><b>Fluch-Objekte:</b> Darf <i>sehr gerne</i> genutzt werden, wenn vorhanden!</li>
-          <li><b>Belohnungsmultiplikator:</b> Mindestens auf 1,00x!</li>
-        </ul>
-      </div>
-
-      <div class="rule-block">
-        <h3>2. Modifikatoren & Chat</h3>
-        <ul>
-          <li><b>Beweise müssen gesucht und der Geisterraum Identifiziert werden!</b></li>
-          <li><b>Beweise:</b> Stelle die Anzahl der Beweise auf 2 oder 3</li>          
-          <li><b>Einstellungen:</b> Exakt auf Rad-Ergebnis einstellen.</li>
-          <li><b>Sonstiges:</b> Alles was nicht durch das Rad bestimmt wird, darf frei gewählt werden.</li>
-          <li><b>Video-Ausnahme:</b> Community-Rad darf bei Videoaufnahmen (Off-Stream) ignoriert werden.</li>
-        </ul>
-      </div>
+  
+  <details class="rules-dropdown" open>
+    <summary class="rules-header-title">📜 1. Mission Regeln</summary>
+    <div class="rules-content">
+      <table class="challenge-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Kategorie</th>
+            <th style="width: 70%;">Regel & Beschreibung</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><b>Ziel & Beweise</b></td>
+            <td>Beweise müssen gesucht und der Geisterraum identifiziert werden!</td>
+          </tr>
+          <tr>
+            <td><b>Zusatz-Items</b></td>
+            <td>1 Fotoapparat (T1) und 1 Tonaufnahmegerät (T1)</td>
+          </tr>
+          <tr>
+            <td><b>Einschränkungen</b></td>
+            <td>Jedes Beweis-Item nur 1x!<br> Kopfausrüstung verboten.<br> Keine weiteren Items, es sei denn das Glück ist auf deiner Seite!</td>
+          </tr>
+          <tr>
+            <td><b>Sanity & Pillen</b></td>
+            <td>Sanity-Pills dürfen nur T1 genutzt werden, sofern nicht durch Modifier verboten!</td>
+          </tr>
+          <tr>
+            <td><b>Fluch-Objekte</b></td>
+            <td>Dürfen <i>sehr gerne</i> genutzt werden, wenn vorhanden!</td>
+          </tr>
+          <tr>
+            <td><b>Medien-Pflicht</b></td>
+            <td>Geistervideo (falls Cam verfügbar), Beweisfotos (Geist & Knochen) und mindestens eine Tonaufnahme sind Pflicht.</td>
+          </tr>
+          <tr>
+            <td><b>Todesfall-Regel (MP)</b></td>
+            <td>Verstorbene Spieler dürfen keine Infos mehr an die Lebenden weitergeben ("Tote reden nicht").</td>
+          </tr>
+          <tr>
+            <td><b>Ausnahme</b></td>
+            <td>Das Community-Rad darf bei reinen Videoaufnahmen (Off-Stream) ignoriert werden.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+  </details>
+
+  <details class="rules-dropdown">
+    <summary class="rules-header-title">⚙️ 2. Spiel-Einstellungen</summary>
+    <div class="rules-content">
+      <table class="challenge-table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Bereich</th>
+            <th style="width: 70%;">Einstellung / Wert</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-section-header">
+            <td colspan="2">Spieler</td>
+          </tr>
+          <tr>
+            <td><b>Sanity & Taschenlampe</b></td>
+            <td>Laut Rad-Ergebnis</td>
+          </tr>
+          <tr>
+            <td><b>Abnahmerate</b></td>
+            <td>200%</td>
+          </tr>
+          <tr>
+            <td><b>Sprinten & Tempo</b></td>
+            <td>An (außer per Modifier verboten) <br> Geschwindigkeit: 100%</td>
+          </tr>
+          <tr>
+            <td><b>Ausrüstungsverlust</b></td>
+            <td>An</td>
+          </tr>
+          <tr class="table-section-header">
+            <td colspan="2">Geist</td>
+          </tr>
+          <tr>
+            <td><b>Typ & Geschwindigkeit</b></td>
+            <td>Zufall <br> Geschwindigkeit: 100%</td>
+          </tr>
+          <tr>
+            <td><b>Verhalten</b></td>
+            <td>Herumwandern: Hoch <br> Raumwechsel: Hoch <br> Interaktionen: Niedrig <br> Geisterereignisse: Niedrig</td>
+          </tr>
+          <tr>
+            <td><b>Jagd & Schonfrist</b></td>
+            <td>Freundlicher Geist: Aus <br>Jagd-Dauer: Mittel<br>Jagd-Verlängerung: Niedrig<br><br>Schonfrist: <br>- Einfach: 5s <br>- Normal: 3s <br>- Schwer: 1s <br>- Ultra: 0s</td>
+          </tr>
+          <tr>
+            <td><b>Beweise & Abdrücke</b></td>
+            <td>Beweise: <br>- Einfach: 3<br>- Normal: 2<br>- Schwer: 2<br>- Ultra: 2<br><br>Fingerabdrücke:<br> 50% Chance <br> 30s Dauer</td>
+          </tr>
+          <tr class="table-section-header">
+            <td colspan="2">Auftrag</td>
+          </tr>
+          <tr>
+            <td><b>Aufbau & Umwelt</b></td>
+            <td>Aufbauzeit:<br>- Einfach: 120s <br>- Normal: 60s <br>- Schwer: 0s <br>- Ultra: 0s <br><br>Wetter: Zufall <br>Offene Türen: Hoch</td>
+          </tr>
+          <tr>
+            <td><b>Verstecke & Monitore</b></td>
+            <td>Verstecke: <br>- Einfach: Hoch<br>- Normal: Mittel<br>- Schwer: Niedrig<br>- Ultra: Keine<br><br> Sanity-Monitor:<br>- Einfach: An<br>- Normal: An<br>- Schwer: Aus<br>- Ultra: Aus<br><br>Aktivitätsmonitor: Aus</td>
+          </tr>
+          <tr>
+            <td><b>Sicherung & Fluch</b></td>
+            <td>Sicherungskasten & Verfluchte Objekte: Laut Rad-Ergebnis</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
 </div>
 
 <button id="mainBtn" class="start-btn" onclick="startFullChallenge()">Einsatz Starten!</button>
 
-<div id="wheelsModal" class="wheels-modal-overlay">
+<div id="wheelsModal" class="wheels-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalHeaderTitle">
   <div class="beta-banner">BETA</div>
   <div class="wheels-modal-header" id="modalHeaderTitle">ERMITTLUNGS-RAD DREHT SICH...</div>
   
@@ -709,276 +920,49 @@
     <p style="color: #c084fc; font-size: 13px; font-weight: bold; margin: 0 0 5px 0; text-transform: uppercase;">Chat2 aktiv: Welches T1-Item wählt der Chat?</p>
     <div class="chat-item-grid">
       <button class="chat-item-btn" onclick="selectChatItem('Stativ')">Stativ</button>
-      <button class="chat-item-btn" onclick="selectChatItem('Fotoapparat')">Fotoapparat</button>
       <button class="chat-item-btn" onclick="selectChatItem('Bewegungssensor')">Bewegungssensor</button>
-      <button class="chat-item-btn" onclick="selectChatItem('Tonrekorder')">Tonrekorder</button>
       <button class="chat-item-btn" onclick="selectChatItem('Parabolmikrofon')">Parabolmikrofon</button>
-      <button class="chat-item-btn" onclick="selectChatItem('Schallsensor')">Schallsensor</button>
     </div>
   </div>
 
-  <div class="wheels-grid-layout">
-    
-    <!-- REIHE 1 -->
-    <!-- 1. Beweismittel & Stufe -->
-    <div class="master-combo-box inactive-box" id="box-master-combo">
-      <h2>1. BeweisItem & Stufe</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">BeweisItem</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="itemCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Stufe</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="tierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="itemResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 2. Kruzifix -->
-    <div class="master-combo-box inactive-box" id="box-crucifix-combo">
-      <h2>2. Kruzifix</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Anzahl</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="crucifixCountCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Stufe</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="crucifixTierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="crucifixResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 3. Räucherwerk -->
-    <div class="master-combo-box inactive-box" id="box-smudge-combo">
-      <h2>3. Räucherwerk</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Anzahl</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="smudgeCountCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Stufe</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="smudgeTierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="smudgeResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 4. Salz -->
-    <div class="master-combo-box inactive-box" id="box-salt-combo">
-      <h2>4. Salz</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Anzahl</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="saltCountCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Stufe</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="saltTierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="saltResult" class="result">Bereit...</div>
-    </div>
-
-
-    <!-- REIHE 2 -->
-    <!-- 5. Kerzen -->
-    <div class="master-combo-box inactive-box" id="box-candle-combo">
-      <h2>5. Kerzen</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Anzahl</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="candleCountCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-        <div class="single-wheel-container">
-          <div class="wheel-label-sub">Stufe</div>
-          <div class="wheel-wrapper">
-            <div class="pointer"></div>
-            <canvas id="candleTierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="candleResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 6. Sanity -->
-    <div class="master-combo-box inactive-box" id="box-sanity">
-      <h2>6. Sanity</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="sanityCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="sanityResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 7. Breaker -->
-    <div class="master-combo-box inactive-box" id="box-breaker">
-      <h2>7. Breaker</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="breakerCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="breakerResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 8. Taschenlampe -->
-    <div class="master-combo-box inactive-box" id="box-light">
-      <h2>8. Taschenlampe</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="lightCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="lightResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- REIHE 3 -->
-    <!-- 9. Einsatzort -->
-    <div class="master-combo-box map-box inactive-box" id="box-map">
-      <h2>9. Einsatzort</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="mapCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="mapResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 10. Fluch-Objekt -->
-    <div class="master-combo-box special-box inactive-box" id="box-cursed">
-      <h2>10. Fluch-Objekt</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="cursedCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="cursedResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 11. Modifier -->
-    <div class="master-combo-box special-box inactive-box" id="box-modifier">
-      <h2>11. Modifier</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="modifierCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="modifierResult" class="result">Bereit...</div>
-    </div>
-
-    <!-- 12. Community -->
-    <div class="master-combo-box community-box inactive-box" id="box-community">
-      <h2>12. Community</h2>
-      <div class="wheels-container-row">
-        <div class="single-wheel-container" style="width: 100%;">
-          <div class="wheel-wrapper" style="margin: 0 auto;">
-            <div class="pointer"></div>
-            <canvas id="communityCanvas" width="220" height="220"></canvas>
-          </div>
-        </div>
-      </div>
-      <div id="communityResult" class="result">Bereit...</div>
-    </div>
-
-  </div>
+  <div class="wheels-grid-layout" id="wheelsGridLayout"></div>
 </div>
 
-<!-- Modifier Legende -->
 <div id="modifierLegend" class="wheel-legend-box modifier-legend">
   <h4>Modifier-Legende (ID-Check)</h4>
-  <ul>
-    <li><b>MD0:</b> Kein Modifier</li>
-    <li><b>MD1:</b> Sprinten Verboten</li>
-    <li><b>MD2:</b> Keine (offiziellen) Verstecke</li>
-    <li><b>MD3:</b> Nur Geduckt laufen</li>
-    <li><b>MD4:</b> Keine Türen öffnen (Ausnahme: Eingangstür)</li>
-    <li><b>MD5:</b> Keine Sanitypillen</li>
-    <li><b>MD6:</b> Kein Item-Drop (Jagd)</li>
-    <li><b>MD7:</b> Keine Lichtschalter benutzen!</li>
-    <li><b>MD8:</b> Nur Vorwärts laufen</li>
-    <li><b>MD9:</b> Kein Journal bis zur Abfahrt!</li>
-  </ul>
+  <ul id="modifierLegendList"></ul>
 </div>
 
-<!-- Community Legende -->
 <div id="communityLegend" class="wheel-legend-box community-legend">
   <h4>Community-Legende (ID-Check)</h4>
-  <ul>
-    <li><b>Chat1:</b> Chat errät den Geist - Keine Hinweise an den Chat!</li>
-    <li><b>Chat2:</b> Chat bestimmt 1 Zusatzitem (T1)!</li>
-    <li><b>Chat3:</b> Chat darf nicht mitraten - kein BSG!</li>
-    <li><b>Chat4:</b> Chat darf falsche Hinweise geben und Verwirrung Stiften!</li>
-    <li><b>Chat5:</b> Chat darf 1 Beweisitem gegen 1 Zusätzliches Kruzifix oder Räucherwerk tauschen!</li>
-  </ul>
+  <ul id="communityLegendList"></ul>
 </div>
-<!-- RÄDER ENDE -->
  
 <div class="sticky-footer">
   <div class="creator-info">
     Ermittlungskonzept entworfen von <b>finarinler</b>. Freigegeben für alle ermittelnden Streamer & Creator!
   </div>
+  
   <div class="social-links">
-    <a href="https://twitch.tv/finarinler" target="_blank">Twitch</a> |
-    <a href="https://youtube.com/@finarinler" target="_blank">YouTube</a> |
-    <a href="https://instagram.com/finarinler" target="_blank">Instagram</a> |
+    <a href="https://twitch.tv/finarinler" target="_blank">Twitch</a>
+    <span class="separator">|</span>
+    <a href="https://youtube.com/@finarinler" target="_blank">YouTube</a>
+    <span class="separator">|</span>
+    <a href="https://instagram.com/finarinler" target="_blank">Instagram</a>
+    <span class="separator">|</span>
     <a href="https://tiktok.com/@finarinler_" target="_blank">TikTok</a>
+  </div>
+
+  <div class="social-divider"></div>
+
+  <div class="thanks-section">
+    Mit bestem Dank an <a href="https://twitch.tv/gruselecke" target="_blank">Gruselecke</a> und <a href="https://twitch.tv/HuwJeffner" target="_blank">HuwJeffner</a>!
   </div>
 </div>
 
-<div id="exportCardContainer" style="position: fixed; left: -9999px; top: 0; width: 600px; background: #0c0c0e; border: 3px solid #ff9900; border-radius: 12px; padding: 40px; font-family: 'Special Elite', monospace; color: #d1d1d1; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.9); z-index: 99999;">
+<div id="exportCardContainer" style="position: fixed; left: -9999px; top: 0; width: 600px; background: #0c0c0e; border: 3px solid var(--color-orange); border-top: 6px solid var(--color-orange); border-radius: 12px; padding: 40px; font-family: 'Special Elite', monospace; color: #d1d1d1; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.9); z-index: 99999;">
   <div style="text-align: center; border-bottom: 2px dashed #333; padding-bottom: 20px; margin-bottom: 25px;">
-    <div style="font-family: 'Creepster', cursive; color: #ff9900; font-size: 36px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(255,153,0,0.5);">BLIND DATE MIT DEM GEIST</div>
+    <div style="font-family: 'Creepster', cursive; color: var(--color-orange); font-size: 36px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(var(--color-orange-rgb), 0.5);">BLIND DATE MIT DEM GEIST</div>
     <div style="font-size: 14px; color: #777; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px;">Offizieller Phasmophobia Einsatzbericht</div>
   </div>
   
@@ -987,44 +971,94 @@
 
   <div style="margin-top: 35px; border-top: 2px dashed #333; padding-top: 15px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: #555;">
     <span>ERMITTLUNGS-TOOL v1.0</span>
-    <span style="color: #ff9900;">powered by <b>finarinler</b></span>
+    <span style="color: var(--color-orange);">powered by <b>finarinler</b></span>
+    <span style="color: var(--color-orange);">special Thanks to <br><b>Gruselecke</b> and <b>HuwJeffner</b></span>
   </div>
 </div>
 
-<div id="resultModal" class="result-modal-overlay">
+<div id="resultModal" class="result-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
   <div class="modal-content">
     <div class="beta-banner">BETA</div>
-    <h2>EINSATZBERICHT</h2>
+    <h2 id="resultModalTitle">EINSATZBERICHT</h2>
     <div class="modal-list" id="modalText"></div>
     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
-      <button class="close-btn" style="background: #3b82f6; color: #fff;" onclick="downloadReportCard()">📷 Als PNG speichern</button>
+      <button class="close-btn" style="background: var(--color-blue); color: #fff; border-top-color: var(--color-blue-light);" onclick="downloadReportCard()">📷 Als PNG speichern</button>
       <button class="close-btn" onclick="closeModal()">Einsatzbericht unwiderruflich schließen</button>
     </div>
   </div>
 </div>
 
-<div id="closeConfirmModal" class="result-modal-overlay" style="display: none; z-index: 10002;">
-  <div class="modal-content" style="border-color: #ff9900; box-shadow: 0 0 35px rgba(255, 153, 0, 0.4);">
+<div id="closeConfirmModal" class="result-modal-overlay" style="display: none; z-index: 10002;" role="dialog" aria-modal="true" aria-labelledby="closeConfirmTitle">
+  <div class="modal-content" style="border-color: var(--color-orange); border-top-color: var(--color-orange); box-shadow: 0 0 35px rgba(var(--color-orange-rgb), 0.4);">
     <div class="beta-banner">BETA</div>
-    <h2 style="color: #ff9900; font-size: 2.2rem;">SICHERHEITSHINWEIS</h2>
+    <h2 id="closeConfirmTitle" style="color: var(--color-orange); font-size: 2.2rem;">SICHERHEITSHINWEIS</h2>
     <div class="modal-list" style="text-align: center; font-size: 16px; color: #d1d1d1;">
       Möchtest du den Einsatzbericht wirklich <span>unwiderruflich schließen</span>?<br><br>
       Dieses Protokoll kann danach <b>nicht erneut geöffnet</b> werden!
     </div>
     <div style="display: flex; gap: 15px; justify-content: center; margin-top: 20px;">
-      <button class="close-btn" style="background: #333; color: #fff;" onclick="cancelCloseReport()">Abbrechen</button>
-      <button class="close-btn" style="background: #ff3333; color: #fff;" onclick="confirmCloseReport()">Trotzdem schließen</button>
+      <button class="close-btn" style="background: #333; color: #fff; border-top-color: #555;" onclick="cancelCloseReport()">Abbrechen</button>
+      <button class="close-btn" style="background: var(--color-red); color: #fff; border-top-color: #ff6666;" onclick="confirmCloseReport()">Trotzdem schließen</button>
     </div>
   </div>
 </div>
 
 <script>
+const WHEEL_BOXES = [
+  { id: 'box-master-combo', num: 1, heading: 'BeweisItem & Stufe', stepTitle: '1. BeweisItem & Stufe (3x)', resultId: 'itemResult',
+    wheels: [{ canvas: 'itemCanvas', label: 'BeweisItem', aria: 'Glücksrad für Beweis-Item' }, { canvas: 'tierCanvas', label: 'Stufe', aria: 'Glücksrad für Item-Stufe' }] },
+  { id: 'box-crucifix-combo', num: 2, heading: 'Kruzifix', stepTitle: '2. Kruzifix (Anzahl & Stufe)', resultId: 'crucifixResult',
+    wheels: [{ canvas: 'crucifixCountCanvas', label: 'Anzahl', aria: 'Glücksrad für Kruzifix-Anzahl' }, { canvas: 'crucifixTierCanvas', label: 'Stufe', aria: 'Glücksrad für Kruzifix-Stufe' }] },
+  { id: 'box-smudge-combo', num: 3, heading: 'Räucherwerk', stepTitle: '3. Räucherwerk (Anzahl & Stufe)', resultId: 'smudgeResult',
+    wheels: [{ canvas: 'smudgeCountCanvas', label: 'Anzahl', aria: 'Glücksrad für Räucherwerk-Anzahl' }, { canvas: 'smudgeTierCanvas', label: 'Stufe', aria: 'Glücksrad für Räucherwerk-Stufe' }] },
+  { id: 'box-salt-combo', num: 4, heading: 'Salz', stepTitle: '4. Salz (Anzahl & Stufe)', resultId: 'saltResult',
+    wheels: [{ canvas: 'saltCountCanvas', label: 'Anzahl', aria: 'Glücksrad für Salz-Anzahl' }, { canvas: 'saltTierCanvas', label: 'Stufe', aria: 'Glücksrad für Salz-Stufe' }] },
+  { id: 'box-candle-combo', num: 5, heading: 'Kerzen', stepTitle: '5. Kerzen (Anzahl & Stufe)', resultId: 'candleResult',
+    wheels: [{ canvas: 'candleCountCanvas', label: 'Anzahl', aria: 'Glücksrad für Kerzen-Anzahl' }, { canvas: 'candleTierCanvas', label: 'Stufe', aria: 'Glücksrad für Kerzen-Stufe' }] },
+  { id: 'box-sanity-combo', num: 6, heading: 'Sanity', stepTitle: '6. Sanity (Start & Regen)', resultId: 'sanityResult',
+    wheels: [{ canvas: 'sanityStartCanvas', label: 'Start', aria: 'Glücksrad für Sanity-Start' }, { canvas: 'sanityRegenCanvas', label: 'Regen', aria: 'Glücksrad für Sanity-Wiederherstellung' }] },
+  { id: 'box-breaker', num: 7, heading: 'Breaker', stepTitle: '7. Breaker-Status', resultId: 'breakerResult',
+    wheels: [{ canvas: 'breakerCanvas', aria: 'Glücksrad für Sicherungskasten-Status' }] },
+  { id: 'box-light', num: 8, heading: 'Taschenlampe', stepTitle: '8. Taschenlampe', resultId: 'lightResult',
+    wheels: [{ canvas: 'lightCanvas', aria: 'Glücksrad für Taschenlampen-Status' }] },
+  { id: 'box-map', num: 9, heading: 'Einsatzort', stepTitle: '9. Einsatzort', resultId: 'mapResult', boxClass: 'map-box',
+    wheels: [{ canvas: 'mapCanvas', aria: 'Glücksrad für Einsatzort' }] },
+  { id: 'box-cursed', num: 10, heading: 'Fluch-Objekt', stepTitle: '10. Fluch-Objekt', resultId: 'cursedResult', boxClass: 'special-box',
+    wheels: [{ canvas: 'cursedCanvas', aria: 'Glücksrad für Fluch-Objekt' }] },
+  { id: 'box-modifier', num: 11, heading: 'Modifier', stepTitle: '11. Modifier', resultId: 'modifierResult', boxClass: 'special-box',
+    wheels: [{ canvas: 'modifierCanvas', aria: 'Glücksrad für Modifier' }] },
+  { id: 'box-community', num: 12, heading: 'Community', stepTitle: '12. Community', resultId: 'communityResult', boxClass: 'community-box',
+    wheels: [{ canvas: 'communityCanvas', aria: 'Glücksrad für Community-Regel' }] }
+];
+
+function buildWheelBoxes() {
+  const grid = document.getElementById('wheelsGridLayout');
+  grid.innerHTML = WHEEL_BOXES.map(box => {
+    const wheelsHtml = box.wheels.map(w => `
+        <div class="single-wheel-container"${box.wheels.length === 1 ? ' style="width: 100%;"' : ''}>
+          ${w.label ? `<div class="wheel-label-sub">${w.label}</div>` : ''}
+          <div class="wheel-wrapper"${box.wheels.length === 1 ? ' style="margin: 0 auto;"' : ''}>
+            <div class="pointer"></div>
+            <canvas id="${w.canvas}" width="220" height="220">${w.aria}</canvas>
+          </div>
+        </div>`).join('');
+    return `
+    <div class="master-combo-box${box.boxClass ? ' ' + box.boxClass : ''} inactive-box" id="${box.id}">
+      <h2>${box.num}. ${box.heading}</h2>
+      <div class="wheels-container-row">${wheelsHtml}
+      </div>
+      <div id="${box.resultId}" class="result">Bereit...</div>
+    </div>`;
+  }).join('');
+}
+buildWheelBoxes();
+
 let itemTypesData = [], itemTierData = [];
 let crucifixTierData = [], crucifixCountData = [];
 let saltTierData = [], saltCountData = [];
 let smudgeTierData = [], smudgeCountData = [];
 let candleTierData = [], candleCountData = [];
-let sanityData = [];
+let sanityStartData = [], sanityRegenData = [];
 let breakerData = [];
 let lightData = [];
 let mapData = [], cursedData = [], modifierData = [], communityData = [];
@@ -1056,22 +1090,22 @@ const cursedNames = {
   "Spiegel": "Spiegel",
   "Spieluhr": "Spieluhr",
   "Kreis": "Beschwörungskreis",
-  "Pfote": "Affenpfote",
   "Zufall": "1 Zufall Fluch-Objekt",
   "Keins": "Kein Fluch-Objekt"
 };
 
 const modifierNames = {
-  "MD0": "Kein Modifier",
+  "MD0": "Betrittst du des Geistes heilige Heim, sprich ab sofort nur noch im Reim.",
   "MD1": "Sprinten Verboten",
-  "MD2": "Keine offiziellen Verstecke",
+  "MD2": "Keine offiziellen Verstecke nutzen",
   "MD3": "Nur Geduckt bewegen",
-  "MD4": "Keine Türen öffnen",
-  "MD5": "Keine Sanity-Pillen",
-  "MD6": "Kein Item-Drop (während Jagd)",
-  "MD7": "Keine Lichtschalter benutzen",
-  "MD8": "Nur Vorwärts laufen",
-  "MD9": "Kein Journal benutzen (Bis zum Eintragen)",
+  "MD4": "Keine Sanity-Pillen",
+  "MD5": "Kein Item-Drop (während Jagd)",
+  "MD6": "Keine Lichtschalter benutzen",
+  "MD7": "Nur Vorwärts laufen - Nicht links, rechts oder Rückwärts!",
+  "MD8": "Kein Journal benutzen (Bis zum Eintragen)",
+  "MD9": "Haus darf bis zur Abfahrt nicht verlassen werden! Items dürfen direkt an der Tür (innen) abgelegt werden.",
+  "MD10": "Wir sind nicht in der U-Bahn! Schließe alle Türen durch die du hindurch gehst."
 };
 
 const communityNames = {
@@ -1079,8 +1113,15 @@ const communityNames = {
   "Chat2": "Chat bestimmt 1 Zusatzitem (T1)!",
   "Chat3": "Chat darf nicht mitraten - kein BSG!",
   "Chat4": "Chat darf falsche Hinweise geben und Verwirrung Stiften!",
-  "Chat5": "Chat darf 1 Beweisitem gegen 1 Zusätzliches Kruzifix oder Räucherwerk tauschen!"
+  "Chat5": "Chat darf 1 Beweisitem gegen 1 Zusätzliches Salz, Kruzifix oder Räucherwerk tauschen!"
 };
+
+function buildLegend(listElId, namesObj) {
+  document.getElementById(listElId).innerHTML = Object.entries(namesObj)
+    .map(([key, text]) => `<li><b>${key}:</b> ${text}</li>`).join('');
+}
+buildLegend('modifierLegendList', modifierNames);
+buildLegend('communityLegendList', communityNames);
 
 let currentDifficulty = 'normal';
 let currentStepIndex = 0;
@@ -1088,93 +1129,118 @@ let currentStepIndex = 0;
 let resultsStore = {
   item1: '', item2: '', item3: '',
   crucifix: '', salt: '', smudge: '', candle: '',
-  sanity: '', breaker: '', light: '',
+  sanityStart: '', sanityRegen: '', breaker: '', light: '',
   map: '', cursed: '', modifier: '', community: ''
+};
+
+const difficultyButtons = {
+  easy: { el: () => document.getElementById("btnEasy"), activeClass: "active-easy" },
+  normal: { el: () => document.getElementById("btnNormal"), activeClass: "active-normal" },
+  hardcore: { el: () => document.getElementById("btnHardcore"), activeClass: "active-hardcore" },
+  ultra: { el: () => document.getElementById("btnUltra"), activeClass: "active-ultra" }
 };
 
 function setDifficulty(diff) {
   currentDifficulty = diff;
-  document.getElementById("btnEasy").className = "diff-btn" + (diff === 'easy' ? " active-easy" : "");
-  document.getElementById("btnNormal").className = "diff-btn" + (diff === 'normal' ? " active-normal" : "");
-  document.getElementById("btnHardcore").className = "diff-btn" + (diff === 'hardcore' ? " active-hardcore" : "");
-  document.getElementById("btnUltra").className = "diff-btn" + (diff === 'ultra' ? " active-ultra" : "");
+  Object.entries(difficultyButtons).forEach(([key, btn]) => {
+    const el = btn.el();
+    el.classList.toggle(btn.activeClass, key === diff);
+    el.setAttribute("aria-pressed", key === diff ? "true" : "false");
+  });
 }
+
+const difficultyConfigs = {
+  easy: {
+    itemTier: ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"],
+    crucifixTier: ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"],
+    saltTier: ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"],
+    smudgeTier: ["T1", "T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"],
+    candleTier: ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"],
+    crucifixCount: ["1x", "1x", "1x", "1x", "2x", "2x", "2x", "2x", "2x"],
+    saltCount: ["1x", "1x", "1x", "2x", "2x", "3x", "3x", "3x", "3x"],
+    smudgeCount: ["2x", "2x", "3x", "3x", "3x", "4x", "4x", "4x", "4x"],
+    candleCount: ["2x", "2x", "3x", "3x", "3x", "3x", "4x", "4x", "4x"],
+    light: ["AN", "AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS"],
+    sanityStart: ["50%", "75%", "75%", "75%", "100%", "100%", "100%"],
+    sanityRegen: ["30%", "30%", "35%", "35%", "40%", "40%", "40%", "45%", "45%"],
+    breaker: ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"],
+    map: ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)"]
+  },
+  normal: {
+    itemTier: ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"],
+    crucifixTier: ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"],
+    saltTier: ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"],
+    smudgeTier: ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"],
+    candleTier: ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"],
+    crucifixCount: ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x"],
+    saltCount: ["0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x", "3x"],
+    smudgeCount: ["0x", "1x", "1x", "2x", "2x", "2x", "3x", "3x", "4x"],
+    candleCount: ["0x", "1x", "1x", "2x", "2x", "3x", "3x", "4x", "4x"],
+    light: ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"],
+    sanityStart: ["0%", "25%", "50%", "50%", "75%", "75%", "100%"],
+    sanityRegen: ["5%", "10%", "15%", "20%", "25%", "30%", "35%", "40%", "45%"],
+    breaker: ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"],
+    map: ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)", "GF", "BF"]
+  },
+  hardcore: {
+    itemTier: ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"],
+    crucifixTier: ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"],
+    saltTier: ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"],
+    smudgeTier: ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"],
+    candleTier: ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"],
+    crucifixCount: ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "2x"],
+    saltCount: ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x"],
+    smudgeCount: ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "3x"],
+    candleCount: ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "3x"],
+    light: ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS"],
+    sanityStart: ["0%", "0%", "0%", "25%", "25%", "50%", "50%"],
+    sanityRegen: ["10%", "10%", "15%", "15%", "20%", "20%", "20%", "25%", "25%"],
+    breaker: ["AN", "AN", "AUS", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"],
+    map: ["PH", "GF", "BF", "MLC", "SM (R)", "P (R)", "BH (R)"]
+  },
+  ultra: {
+    itemTier: ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"],
+    crucifixTier: ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"],
+    saltTier: ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"],
+    smudgeTier: ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"],
+    candleTier: ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"],
+    crucifixCount: ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "2x"],
+    saltCount: ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"],
+    smudgeCount: ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"],
+    candleCount: ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"],
+    light: ["AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS", "AUS"],
+    sanityStart: ["0%", "0%", "0%", "0%", "0%", "25%", "25%"],
+    sanityRegen: ["0%", "5%", "5%", "10%", "10%", "15%", "15%", "20%", "20%"],
+    breaker: ["AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT"],
+    map: ["SM", "SM", "P", "P", "BH", "BH", "PH"]
+  }
+};
 
 function resetPools() {
   itemTypesData = ["EMF", "Thermo", "Box", "Buch", "Video", "DOTS", "UV"];
 
-  if (currentDifficulty === 'easy') {
-    itemTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
-    crucifixTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
-    saltTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
-    smudgeTierData = ["T1", "T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3"];
-    candleTierData = ["T2", "T2", "T2", "T2", "T3", "T3", "T3", "T3", "T3"];
-    
-    crucifixCountData = ["1x", "1x", "1x", "1x", "2x", "2x", "2x", "2x", "2x"];
-    saltCountData = ["1x", "1x", "1x", "2x", "2x", "2x", "3x", "3x", "3x"];
-    smudgeCountData = ["2x", "2x", "3x", "3x", "3x", "4x", "4x", "4x", "4x"];
-    candleCountData = ["2x", "2x", "3x", "3x", "3x", "3x", "4x", "4x", "4x"];
+  const cfg = difficultyConfigs[currentDifficulty] || difficultyConfigs.normal;
 
-    lightData = ["AN", "AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS"];
-    sanityData = ["25%", "50%", "50%", "75%", "75%", "75%", "100%", "100%", "100%"];
-    breakerData = ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];
+  itemTierData = [...cfg.itemTier];
+  crucifixTierData = [...cfg.crucifixTier];
+  saltTierData = [...cfg.saltTier];
+  smudgeTierData = [...cfg.smudgeTier];
+  candleTierData = [...cfg.candleTier];
 
-    mapData = ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)"];
-  } else if (currentDifficulty === 'hardcore') {
-    itemTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
-    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
-    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
-    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
-    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T2", "T2", "T2", "T3"];
-    
-    crucifixCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "2x"];
-    saltCountData = ["0x", "0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x"];
-    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "1x", "2x", "3x"];
-    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"];
+  crucifixCountData = [...cfg.crucifixCount];
+  saltCountData = [...cfg.saltCount];
+  smudgeCountData = [...cfg.smudgeCount];
+  candleCountData = [...cfg.candleCount];
 
-    lightData = ["AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS"];
-    sanityData = ["0%", "0%", "0%", "0%", "25%", "25%", "25%", "50%", "50%"];
-    breakerData = ["AN", "AN", "AUS", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
+  lightData = [...cfg.light];
+  sanityStartData = [...cfg.sanityStart];
+  sanityRegenData = [...cfg.sanityRegen];
+  breakerData = [...cfg.breaker];
 
-    mapData = ["PH", "GF", "BF", "MLC", "SM (R)", "P (R)", "BH (R)"];
-  } else if (currentDifficulty === 'ultra') {
-    itemTierData = ["T1", "T1", "T1", "T1", "T1","T1", "T2", "T2", "T3"];
-    crucifixTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
-    saltTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
-    smudgeTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
-    candleTierData = ["T1", "T1", "T1", "T1", "T1", "T1", "T2", "T2", "T3"];
+  mapData = [...cfg.map];
 
-    crucifixCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "2x"];
-    saltCountData = ["0x", "0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x"];
-    smudgeCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x", "4x"];
-    candleCountData = ["0x", "0x", "0x", "0x", "1x", "1x", "2x", "3x", "4x"];
-
-    lightData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS", "AUS", "AUS"];
-    sanityData = ["0%", "0%", "0%", "0%", "0%", "0%", "25%", "25%", "50%"];
-    breakerData = ["AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT", "DEFEKT"];
-
-    mapData = ["SM", "SM", "P", "P", "BH", "BH", "PH"];
-  } else {
-    itemTierData = ["T1", "T1", "T1", "T2", "T2", "T2", "T3", "T3", "T3"];
-    crucifixTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-    saltTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-    smudgeTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-    candleTierData = ["T1", "T2", "T3", "T1", "T2", "T3", "T1", "T2", "T3"];
-    
-    crucifixCountData = ["0x", "1x", "2x", "0x", "1x", "2x", "0x", "1x", "2x"];
-    saltCountData = ["0x", "0x", "1x", "1x", "1x", "2x", "2x", "3x", "3x"];
-    smudgeCountData = ["0x", "1x", "1x", "2x", "2x", "2x", "3x", "3x", "4x"];
-    candleCountData = ["0x", "1x", "1x", "2x", "2x", "3x", "3x", "4x", "4x"];
-
-    lightData = ["AN", "AN", "AN", "AN", "AN", "AUS", "AUS", "AUS", "AUS"];    
-    sanityData = ["0%", "25%", "50%", "50%", "75%", "75%", "75%", "100%", "100%"];
-    breakerData = ["AN", "AN", "AN", "AUS", "AUS", "AUS", "DEFEKT", "DEFEKT", "DEFEKT"];
-
-    mapData = ["TD", "ER", "RC", "ND", "WS", "CW", "PH (R)", "GF", "BF"];
-  }
-  
-  cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Pfote", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
-  modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9"];
+  cursedData = ["Brett", "Karten", "Puppe", "Spiegel", "Spieluhr", "Kreis", "Zufall", "Zufall", "Zufall", "Keins", "Keins", "Keins"];
+  modifierData = ["MD0", "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9", "MD10"];
   communityData = ["Chat1", "Chat1", "Chat2", "Chat2", "Chat3", "Chat3", "Chat4", "Chat4", "Chat5", "Chat5"];
 
   shuffle(itemTypesData); shuffle(itemTierData);
@@ -1182,7 +1248,7 @@ function resetPools() {
   shuffle(saltTierData); shuffle(saltCountData);
   shuffle(smudgeTierData); shuffle(smudgeCountData);
   shuffle(candleTierData); shuffle(candleCountData);
-  shuffle(sanityData); shuffle(breakerData); shuffle(lightData);
+  shuffle(sanityStartData); shuffle(sanityRegenData); shuffle(breakerData); shuffle(lightData);
   shuffle(mapData); shuffle(cursedData); shuffle(modifierData); shuffle(communityData);
 }
 
@@ -1202,13 +1268,17 @@ function truncateText(text, maxLength = 8) {
   return text.length > maxLength ? text.substring(0, maxLength - 1) + "…" : text;
 }
 
+const WHEEL_DISPLAY_SIZE = 95;
+const WHEEL_CENTER = WHEEL_DISPLAY_SIZE / 2;
+const WHEEL_RADIUS = WHEEL_CENTER - 6.5;
+
 function createWheel(canvasId, items, colorTheme = "normal") {
   const canvas = document.getElementById(canvasId);
   const ctx = canvas.getContext("2d");
   
   const scale = 2;
-  canvas.width = 95 * scale;
-  canvas.height = 95 * scale;
+  canvas.width = WHEEL_DISPLAY_SIZE * scale;
+  canvas.height = WHEEL_DISPLAY_SIZE * scale;
   ctx.scale(scale, scale);
 
   const numItems = items.length;
@@ -1219,22 +1289,22 @@ function createWheel(canvasId, items, colorTheme = "normal") {
   if (colorTheme === "cursed") palette = cursedColors;
   if (colorTheme === "community") palette = communityColors;
 
-  ctx.clearRect(0, 0, 95, 95);
+  ctx.clearRect(0, 0, WHEEL_DISPLAY_SIZE, WHEEL_DISPLAY_SIZE);
 
   for (let i = 0; i < numItems; i++) {
     const angle = i * sliceAngle;
     ctx.beginPath();
     ctx.fillStyle = palette[i % palette.length];
-    ctx.moveTo(47.5, 47.5);
-    ctx.arc(47.5, 47.5, 41, angle, angle + sliceAngle);
-    ctx.lineTo(47.5, 47.5);
+    ctx.moveTo(WHEEL_CENTER, WHEEL_CENTER);
+    ctx.arc(WHEEL_CENTER, WHEEL_CENTER, WHEEL_RADIUS, angle, angle + sliceAngle);
+    ctx.lineTo(WHEEL_CENTER, WHEEL_CENTER);
     ctx.fill();
     ctx.strokeStyle = "#111";
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.save();
-    ctx.translate(47.5, 47.5);
+    ctx.translate(WHEEL_CENTER, WHEEL_CENTER);
     ctx.rotate(angle + sliceAngle / 2);
     ctx.textAlign = "right";
     ctx.fillStyle = "#ffffff";
@@ -1250,7 +1320,7 @@ let angles = {
   saltTier: 0, saltCount: 0, 
   smudgeTier: 0, smudgeCount: 0, 
   candleTier: 0, candleCount: 0, 
-  sanity: 0, breaker: 0, light: 0, map: 0, cursed: 0, modifier: 0, community: 0 
+  sanityStart: 0, sanityRegen: 0, breaker: 0, light: 0, map: 0, cursed: 0, modifier: 0, community: 0 
 };
 
 let currentItemsPicked = [];
@@ -1286,39 +1356,7 @@ function spinIndependentWheel(type, items) {
   });
 }
 
-function spinSingleWheel(type, items) {
-  return new Promise((resolve) => {
-    const canvasEl = document.getElementById(type + "Canvas");
-    const spins = 3 + Math.floor(Math.random() * 2);
-    const extraDeg = Math.floor(Math.random() * 360);
-
-    angles[type] += spins * 360 + extraDeg;
-
-    canvasEl.style.transition = "transform 1.0s cubic-bezier(0.15, 0.99, 0.35, 1)";
-    canvasEl.style.transform = `rotate(${angles[type]}deg)`;
-
-    setTimeout(() => {
-      let winnerIdx = calculateWinnerIndex(angles[type], items.length);
-      let res = items[winnerIdx];
-      resolve(res);
-    }, 1000);
-  });
-}
-
-const stepsList = [
-  { id: 'box-master-combo', title: '1. BeweisItem & Stufe (3x)' },
-  { id: 'box-crucifix-combo', title: '2. Kruzifix (Anzahl & Stufe)' },
-  { id: 'box-smudge-combo', title: '3. Räucherwerk (Anzahl & Stufe)' },
-  { id: 'box-salt-combo', title: '4. Salz (Anzahl & Stufe)' },
-  { id: 'box-candle-combo', title: '5. Kerzen (Anzahl & Stufe)' },
-  { id: 'box-sanity', title: '6. Start-Sanity' },
-  { id: 'box-breaker', title: '7. Breaker-Status' },
-  { id: 'box-light', title: '8. Taschenlampe' },
-  { id: 'box-map', title: '9. Einsatzort' },
-  { id: 'box-cursed', title: '10. Fluch-Objekt' },
-  { id: 'box-modifier', title: '11. Modifier' },
-  { id: 'box-community', title: '12. Community' }
-];
+const stepsList = WHEEL_BOXES.map(box => ({ id: box.id, title: box.stepTitle }));
 
 async function startFullChallenge() {
   document.getElementById("wheelsModal").style.display = "flex";
@@ -1342,7 +1380,9 @@ async function startFullChallenge() {
   createWheel("candleCountCanvas", candleCountData);
   createWheel("candleTierCanvas", candleTierData, "tier");
   
-  createWheel("sanityCanvas", sanityData);
+  createWheel("sanityStartCanvas", sanityStartData);
+  createWheel("sanityRegenCanvas", sanityRegenData, "tier");
+
   createWheel("breakerCanvas", breakerData);
   createWheel("lightCanvas", lightData);
   createWheel("mapCanvas", mapData);
@@ -1370,35 +1410,22 @@ async function startFullChallenge() {
   runAutoSequence();
 }
 
-async function executeSingleStep() {
-  const currentStepObj = stepsList[currentStepIndex];
-  const boxEl = document.getElementById(currentStepObj.id);
-
-  boxEl.classList.remove("inactive-box");
-  
-  const placeholder = document.createElement('div');
-  placeholder.className = 'grid-placeholder';
-  placeholder.style.width = '280px';
-  placeholder.style.height = '220px';
-  placeholder.style.visibility = 'hidden';
-  boxEl.parentNode.insertBefore(placeholder, boxEl);
-
-  boxEl.classList.add("active-spinning");
-
-  if (currentStepObj.id === 'box-modifier') {
-    document.getElementById("modifierLegend").style.display = "block";
-  } else if (currentStepObj.id === 'box-community') {
-    document.getElementById("communityLegend").style.display = "block";
+async function spinCountAndTier(type, countData, tierData, label, zeroLabel, resultElId, resultsStoreKey) {
+  let chosenCount = await spinIndependentWheel(type + 'Count', countData);
+  let resText;
+  if (chosenCount === "0x") {
+    resText = zeroLabel;
+  } else {
+    let chosenTier = await spinIndependentWheel(type + 'Tier', tierData);
+    resText = `${chosenCount} ${label} ${chosenTier}`;
   }
-  
-  document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
+  document.getElementById(resultElId).innerText = resText;
+  resultsStore[resultsStoreKey] = resText;
+}
 
-  await new Promise(r => setTimeout(r, 500));
-
-  document.getElementById("modalHeaderTitle").innerText = `DREHE: ${currentStepObj.title}`;
-  await new Promise(r => setTimeout(r, 500));
-
-  if (currentStepIndex === 0) {
+const stepHandlers = [
+  // 0: BeweisItems
+  async function runItemStep() {
     document.getElementById("itemResult").innerText = "Ermittle 3 BeweisItems...";
     for (let round = 0; round < 3; round++) {
       let chosenItem = await spinIndependentWheel('item', itemTypesData);
@@ -1417,110 +1444,80 @@ async function executeSingleStep() {
     resultsStore.item1 = `${currentItemsPicked[0]} (${currentTiersPicked[0]})`;
     resultsStore.item2 = `${currentItemsPicked[1]} (${currentTiersPicked[1]})`;
     resultsStore.item3 = `${currentItemsPicked[2]} (${currentTiersPicked[2]})`;
-  } 
-  else if (currentStepIndex === 1) {
-    let chosenCount = await spinIndependentWheel('crucifixCount', crucifixCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Kein Kruzifix";
-    } else {
-      let chosenTier = await spinIndependentWheel('crucifixTier', crucifixTierData);
-      resText = `${chosenCount} Kruzifix ${chosenTier}`;
-    }
-    document.getElementById("crucifixResult").innerText = resText;
-    resultsStore.crucifix = resText;
-  } 
-  else if (currentStepIndex === 2) {
-    let chosenCount = await spinIndependentWheel('smudgeCount', smudgeCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Kein Räucherwerk";
-    } else {
-      let chosenTier = await spinIndependentWheel('smudgeTier', smudgeTierData);
-      resText = `${chosenCount} Räucherwerk ${chosenTier}`;
-    }
-    document.getElementById("smudgeResult").innerText = resText;
-    resultsStore.smudge = resText;
-  }
-  else if (currentStepIndex === 3) {
-    let chosenCount = await spinIndependentWheel('saltCount', saltCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Kein Salz";
-    }else{
-      let chosenTier = await spinIndependentWheel('saltTier', saltTierData);
-      resText = `${chosenCount} Salz ${chosenTier}`;
-    }
-    document.getElementById("saltResult").innerText = resText;
-    resultsStore.salt = resText;
-  } 
-  else if (currentStepIndex === 4) {
-    let chosenCount = await spinIndependentWheel('candleCount', candleCountData);
-    let resText = "";
-    if (chosenCount === "0x") {
-      resText = "Keine Kerzen";
-    } else {
-      let chosenTier = await spinIndependentWheel('candleTier', candleTierData);
-      resText = `${chosenCount} Kerzen ${chosenTier}`;
-    }
-    document.getElementById("candleResult").innerText = resText;
-    resultsStore.candle = resText;
-  } 
-  else if (currentStepIndex === 5) {
-    let rawVal = await spinSingleWheel('sanity', sanityData);
-    let fullText = rawVal + " Sanity";
-    document.getElementById("sanityResult").innerText = fullText;
-    resultsStore.sanity = fullText;
-  } 
-  else if (currentStepIndex === 6) {
-    let rawVal = await spinSingleWheel('breaker', breakerData);
+  },
+  // 1: Kruzifix
+  () => spinCountAndTier('crucifix', crucifixCountData, crucifixTierData, 'Kruzifix', 'Kein Kruzifix', 'crucifixResult', 'crucifix'),
+  // 2: Räucherwerk
+  () => spinCountAndTier('smudge', smudgeCountData, smudgeTierData, 'Räucherwerk', 'Kein Räucherwerk', 'smudgeResult', 'smudge'),
+  // 3: Salz
+  () => spinCountAndTier('salt', saltCountData, saltTierData, 'Salz', 'Kein Salz', 'saltResult', 'salt'),
+  // 4: Kerzen
+  () => spinCountAndTier('candle', candleCountData, candleTierData, 'Kerzen', 'Keine Kerzen', 'candleResult', 'candle'),
+  // 5: Sanity
+  async function runSanityStep() {
+    let startVal = await spinIndependentWheel('sanityStart', sanityStartData);
+    let regenVal = await spinIndependentWheel('sanityRegen', sanityRegenData);
+
+    let resText = `Start: ${startVal} | Regen: ${regenVal}`;
+    document.getElementById("sanityResult").innerText = resText;
+    resultsStore.sanityStart = startVal;
+    resultsStore.sanityRegen = regenVal;
+  },
+  // 6: Breaker
+  async function runBreakerStep() {
+    let rawVal = await spinIndependentWheel('breaker', breakerData);
     let fullText = "Breaker " + rawVal;
     document.getElementById("breakerResult").innerText = fullText;
     resultsStore.breaker = fullText;
-  } 
-  else if (currentStepIndex === 7) {
-    let rawVal = await spinSingleWheel('light', lightData);
+  },
+  // 7: Taschenlampe
+  async function runLightStep() {
+    let rawVal = await spinIndependentWheel('light', lightData);
     let fullText = "Taschenlampe " + rawVal;
     document.getElementById("lightResult").innerText = fullText;
     resultsStore.light = fullText;
-  } 
-  else if (currentStepIndex === 8) {
-    let mapKey = await spinSingleWheel('map', mapData);
+  },
+  // 8: Einsatzort
+  async function runMapStep() {
+    let mapKey = await spinIndependentWheel('map', mapData);
     let fullMapName = mapNames[mapKey] || mapKey;
     document.getElementById("mapResult").innerText = fullMapName;
     resultsStore.map = fullMapName;
-  } 
-  else if (currentStepIndex === 9) {
-    let cursedKey = await spinSingleWheel('cursed', cursedData);
+  },
+  // 9: Fluch-Objekt
+  async function runCursedStep() {
+    let cursedKey = await spinIndependentWheel('cursed', cursedData);
     let fullCursedName = cursedNames[cursedKey] || cursedKey;
     document.getElementById("cursedResult").innerText = fullCursedName;
     resultsStore.cursed = fullCursedName;
-  } 
-  else if (currentStepIndex === 10) {
-    let modifierKey = await spinSingleWheel('modifier', modifierData);
+  },
+  // 10: Modifier
+  async function runModifierStep() {
+    let modifierKey = await spinIndependentWheel('modifier', modifierData);
     let fullModifierName = modifierNames[modifierKey] || modifierKey;
     document.getElementById("modifierResult").innerText = fullModifierName;
     resultsStore.modifier = fullModifierName;
-  } 
-  else if (currentStepIndex === 11) {
-    let communityKey = await spinSingleWheel('community', communityData);
-    
+  },
+  // 11: Community
+  async function runCommunityStep() {
+    let communityKey = await spinIndependentWheel('community', communityData);
+
     if (communityKey === "Chat2") {
       document.getElementById("modalHeaderTitle").innerText = "CHAT2: COMMUNITY WÄHLT ITEM!";
       document.getElementById("communityResult").innerText = "Warte auf Item-Wahl...";
-      
+
       const nextBtn = document.getElementById("nextStepBtn");
       nextBtn.disabled = true;
       nextBtn.innerText = "Warte auf Chat...";
-      
+
       document.getElementById("chatItemSelectionContainer").style.display = "block";
-      
+
       let chosenItem = await window.waitForChatItemSelection;
-      
+
       let fullCommunityName = `Chat bestimmt 1 Zusatzitem! (${chosenItem} T1)`;
       document.getElementById("communityResult").innerText = fullCommunityName;
       resultsStore.community = fullCommunityName;
-      
+
       document.getElementById("chatItemSelectionContainer").style.display = "none";
     } else {
       let fullCommunityName = communityNames[communityKey] || communityKey;
@@ -1528,6 +1525,37 @@ async function executeSingleStep() {
       resultsStore.community = fullCommunityName;
     }
   }
+];
+
+async function executeSingleStep() {
+  const currentStepObj = stepsList[currentStepIndex];
+  const boxEl = document.getElementById(currentStepObj.id);
+
+  boxEl.classList.remove("inactive-box");
+  
+  const placeholder = document.createElement('div');
+  placeholder.className = 'grid-placeholder';
+  placeholder.style.width = '280px';
+  placeholder.style.height = '230px';
+  placeholder.style.visibility = 'hidden';
+  boxEl.parentNode.insertBefore(placeholder, boxEl);
+
+  boxEl.classList.add("active-spinning");
+
+  if (currentStepObj.id === 'box-modifier') {
+    document.getElementById("modifierLegend").style.display = "block";
+  } else if (currentStepObj.id === 'box-community') {
+    document.getElementById("communityLegend").style.display = "block";
+  }
+  
+  document.getElementById("modalHeaderTitle").innerText = `BEREIT: ${currentStepObj.title}`;
+
+  await new Promise(r => setTimeout(r, 500));
+
+  document.getElementById("modalHeaderTitle").innerText = `DREHE: ${currentStepObj.title}`;
+  await new Promise(r => setTimeout(r, 500));
+
+  await stepHandlers[currentStepIndex]();
 
   document.getElementById("modalHeaderTitle").innerText = `ERGEBNIS ERMITTELT!`;
   
@@ -1588,7 +1616,8 @@ function showFinalReportModal() {
     • <b>Räucherwerk:</b> <span>${resultsStore.smudge}</span><br>
     • <b>Salz:</b> <span>${resultsStore.salt}</span><br>
     • <b>Kerzen:</b> <span>${resultsStore.candle}</span><br>
-    • <b>Start-Sanity:</b> <span>${resultsStore.sanity}</span><br>
+    • <b>Sanity-Start:</b> <span>${resultsStore.sanityStart}</span><br>
+    • <b>Sanity-Wiederherstellung:</b> <span>${resultsStore.sanityRegen}</span><br>
     • <b>Sicherung:</b> <span>${resultsStore.breaker}</span><br>
     • <b>Taschenlampen:</b> <span>${resultsStore.light}</span><br>
     • <b>Einsatzort:</b> <span>${resultsStore.map}</span><br>
@@ -1599,15 +1628,26 @@ function showFinalReportModal() {
   document.getElementById("resultModal").style.display = "flex";
 }
 
+let html2canvasLoadingPromise = null;
+
 function loadHtml2Canvas(callback) {
   if (window.html2canvas) {
     callback();
     return;
   }
-  const script = document.createElement('script');
-  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-  script.onload = callback;
-  document.head.appendChild(script);
+  if (!html2canvasLoadingPromise) {
+    html2canvasLoadingPromise = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  html2canvasLoadingPromise.then(callback).catch(() => {
+    alert("html2canvas konnte nicht geladen werden. Bitte Internetverbindung prüfen.");
+    html2canvasLoadingPromise = null;
+  });
 }
 
 function downloadReportCard() {
@@ -1615,19 +1655,20 @@ function downloadReportCard() {
     const exportContent = document.getElementById("exportCardContent");
     
     exportContent.innerHTML = `
-      <div style="margin-bottom: 12px;"><b>• Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Beweis-Items:</b> <span style="color:#ff9900;">${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Kruzifix:</b> <span style="color:#ff9900;">${resultsStore.crucifix}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Räucherwerk:</b> <span style="color:#ff9900;">${resultsStore.smudge}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Salz:</b> <span style="color:#ff9900;">${resultsStore.salt}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Kerzen:</b> <span style="color:#ff9900;">${resultsStore.candle}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Start-Sanity:</b> <span style="color:#ff9900;">${resultsStore.sanity}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Sicherung:</b> <span style="color:#ff9900;">${resultsStore.breaker}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Taschenlampen:</b> <span style="color:#ff9900;">${resultsStore.light}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Einsatzort:</b> <span style="color:#ff9900;">${resultsStore.map}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Fluch-Objekt:</b> <span style="color:#ff3333;">${resultsStore.cursed}</span></div>
-      <div style="margin-bottom: 12px;"><b>• Modifier:</b> <span style="color:#ff3333;">${resultsStore.modifier}</span></div>
-      <div><b>• Community:</b> <span style="color:#a855f7;">${resultsStore.community}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Beweis-Items:</b> <span style="color:var(--color-orange);">${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Kruzifix:</b> <span style="color:var(--color-orange);">${resultsStore.crucifix}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Räucherwerk:</b> <span style="color:var(--color-orange);">${resultsStore.smudge}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Salz:</b> <span style="color:var(--color-orange);">${resultsStore.salt}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Kerzen:</b> <span style="color:var(--color-orange);">${resultsStore.candle}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Sanity-Start:</b> <span style="color:var(--color-orange);">${resultsStore.sanityStart}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Sanity-Wiederherstellung:</b> <span style="color:var(--color-orange);">${resultsStore.sanityRegen}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Sicherung:</b> <span style="color:var(--color-orange);">${resultsStore.breaker}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Taschenlampen:</b> <span style="color:var(--color-orange);">${resultsStore.light}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Einsatzort:</b> <span style="color:var(--color-orange);">${resultsStore.map}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Fluch-Objekt:</b> <span style="color:var(--color-red);">${resultsStore.cursed}</span></div>
+      <div style="margin-bottom: 14px;"><b>• Modifier:</b> <span style="color:var(--color-red);">${resultsStore.modifier}</span></div>
+      <div><b>• Community:</b> <span style="color:var(--color-purple);">${resultsStore.community}</span></div>
     `;
 
     const card = document.getElementById("exportCardContainer");
@@ -1663,6 +1704,15 @@ function confirmCloseReport() {
   document.getElementById("closeConfirmModal").style.display = "none";
   document.getElementById("resultModal").style.display = "none";
 }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (document.getElementById('closeConfirmModal').style.display === 'flex') {
+    cancelCloseReport();
+  } else if (document.getElementById('resultModal').style.display === 'flex') {
+    closeModal();
+  }
+});
 </script>
 </body>
 </html>
