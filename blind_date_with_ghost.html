@@ -710,9 +710,14 @@
     padding: 40px;
     max-width: 680px;
     width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 0 35px rgba(255, 0, 0, 0.5);
     text-align: center;
     position: relative;
+  }
+  .modal-content.modal-content--wide {
+    max-width: 1200px;
   }
   .modal-content h2 {
     color: #ff0000;
@@ -720,6 +725,62 @@
     font-family: 'Creepster', cursive;
     font-size: 2.8rem;
     letter-spacing: 2px;
+  }
+
+  .modal-report-grid {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+    text-align: left;
+  }
+  .modal-report-grid > .modal-list {
+    flex: 1 1 0;
+    margin: 25px 0;
+    min-width: 0;
+  }
+  .modal-report-grid > .modal-list--settings {
+    flex: 1.6 1 0;
+  }
+  .modal-list--settings {
+    border-color: var(--color-orange);
+    border-top-color: var(--color-orange);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .modal-list--settings h3 {
+    margin: 0 0 12px 0;
+    color: var(--color-orange);
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 8px;
+  }
+  .settings-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0 18px;
+  }
+  .settings-column-title {
+    color: var(--color-orange);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 4px;
+  }
+  @media (max-width: 900px) {
+    .settings-columns { grid-template-columns: repeat(2, 1fr); gap: 14px 18px; }
+  }
+  @media (max-width: 550px) {
+    .settings-columns { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .modal-report-grid {
+      flex-direction: column;
+    }
   }
 
   .modal-list {
@@ -960,7 +1021,7 @@
   </div>
 </div>
 
-<div id="exportCardContainer" style="position: fixed; left: -9999px; top: 0; width: 600px; background: #0c0c0e; border: 3px solid var(--color-orange); border-top: 6px solid var(--color-orange); border-radius: 12px; padding: 40px; font-family: 'Special Elite', monospace; color: #d1d1d1; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.9); z-index: 99999;">
+<div id="exportCardContainer" style="position: fixed; left: -9999px; top: 0; width: 820px; background: #0c0c0e; border: 3px solid var(--color-orange); border-top: 6px solid var(--color-orange); border-radius: 12px; padding: 40px; font-family: 'Special Elite', monospace; color: #d1d1d1; box-sizing: border-box; box-shadow: 0 0 50px rgba(0,0,0,0.9); z-index: 99999;">
   <div style="text-align: center; border-bottom: 2px dashed #333; padding-bottom: 20px; margin-bottom: 25px;">
     <div style="font-family: 'Creepster', cursive; color: var(--color-orange); font-size: 36px; letter-spacing: 2px; text-shadow: 0 0 10px rgba(var(--color-orange-rgb), 0.5);">BLIND DATE MIT DEM GEIST</div>
     <div style="font-size: 14px; color: #777; text-transform: uppercase; letter-spacing: 2px; margin-top: 5px;">Offizieller Phasmophobia Einsatzbericht</div>
@@ -977,10 +1038,13 @@
 </div>
 
 <div id="resultModal" class="result-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle">
-  <div class="modal-content">
+  <div class="modal-content modal-content--wide">
     <div class="beta-banner">BETA</div>
     <h2 id="resultModalTitle">EINSATZBERICHT</h2>
-    <div class="modal-list" id="modalText"></div>
+    <div class="modal-report-grid">
+      <div class="modal-list" id="modalText"></div>
+      <div class="modal-list modal-list--settings" id="modalSettings"></div>
+    </div>
     <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
       <button class="close-btn" style="background: var(--color-blue); color: #fff; border-top-color: var(--color-blue-light);" onclick="downloadReportCard()">📷 Als PNG speichern</button>
       <button class="close-btn" onclick="closeModal()">Einsatzbericht unwiderruflich schließen</button>
@@ -1147,6 +1211,61 @@ function setDifficulty(diff) {
     el.classList.toggle(btn.activeClass, key === diff);
     el.setAttribute("aria-pressed", key === diff ? "true" : "false");
   });
+}
+
+const difficultyLabels = { easy: "Einfach", normal: "Normal", hardcore: "Schwer", ultra: "Ultra" };
+
+const huntGracePeriodByDiff = { easy: "5s", normal: "3s", hardcore: "1s", ultra: "0s" };
+const evidenceCountByDiff = { easy: "3", normal: "2", hardcore: "2", ultra: "2" };
+const setupTimeByDiff = { easy: "120s", normal: "60s", hardcore: "0s", ultra: "0s" };
+const hidingSpotsByDiff = { easy: "Hoch", normal: "Mittel", hardcore: "Niedrig", ultra: "Keine" };
+const sanityMonitorByDiff = { easy: "An", normal: "An", hardcore: "Aus", ultra: "Aus" };
+
+const GAME_SETTINGS_ROWS = [
+  { category: "Spieler", label: "Sanity-Start", value: () => resultsStore.sanityStart },
+  { category: "Spieler", label: "Sanity-Regen", value: () => resultsStore.sanityRegen },
+  { category: "Spieler", label: "Taschenlampe", value: () => resultsStore.light },
+  { category: "Spieler", label: "Abnahmerate", value: () => "200%" },
+  { category: "Spieler", label: "Sprinten", value: () => "An (außer per Modifier verboten)" },
+  { category: "Spieler", label: "Tempo", value: () => "100%" },
+  { category: "Spieler", label: "Ausrüstungsverlust", value: () => "An" },
+  { category: "Geist", label: "Typ", value: () => "Zufall" },
+  { category: "Geist", label: "Geschwindigkeit", value: () => "100%" },
+  { category: "Geist", label: "Herumwandern", value: () => "Hoch" },
+  { category: "Geist", label: "Raumwechsel", value: () => "Hoch" },
+  { category: "Geist", label: "Interaktionen", value: () => "Niedrig" },
+  { category: "Geist", label: "Geisterereignisse", value: () => "Niedrig" },
+  { category: "Geist", label: "Freundlicher Geist", value: () => "Aus" },
+  { category: "Geist", label: "Jagd-Dauer", value: () => "Mittel" },
+  { category: "Geist", label: "Jagd-Verlängerung", value: () => "Niedrig" },
+  { category: "Geist", label: "Schonfrist", value: (d) => huntGracePeriodByDiff[d] },
+  { category: "Geist", label: "Beweise", value: (d) => evidenceCountByDiff[d] },
+  { category: "Geist", label: "Fingerabdruck-Chance", value: () => "50%" },
+  { category: "Geist", label: "Fingerabdruck-Dauer", value: () => "30s" },
+  { category: "Auftrag", label: "Aufbauzeit", value: (d) => setupTimeByDiff[d] },
+  { category: "Auftrag", label: "Wetter", value: () => "Zufall" },
+  { category: "Auftrag", label: "Offene Türen", value: () => "Hoch" },
+  { category: "Auftrag", label: "Verstecke", value: (d) => hidingSpotsByDiff[d] },
+  { category: "Auftrag", label: "Sanity-Monitor", value: (d) => sanityMonitorByDiff[d] },
+  { category: "Auftrag", label: "Aktivitätsmonitor", value: () => "Aus" },
+  { category: "Auftrag", label: "Sicherungskasten", value: () => resultsStore.breaker },
+  { category: "Auftrag", label: "Fluch-Objekt", value: () => resultsStore.cursed }
+];
+
+function renderGameSettingsHtml(diff) {
+  const byCategory = new Map();
+  GAME_SETTINGS_ROWS.forEach(row => {
+    if (!byCategory.has(row.category)) byCategory.set(row.category, []);
+    byCategory.get(row.category).push(row);
+  });
+
+  const columns = [...byCategory.entries()].map(([category, rows]) => `
+    <div class="settings-column">
+      <div class="settings-column-title">${category}</div>
+      ${rows.map(row => `<div style="margin-bottom: 8px;"><b style="color: var(--color-orange);">${row.label}:</b><br>${row.value(diff)}</div>`).join('')}
+    </div>`).join('');
+
+  return `<div class="settings-columns">${columns}</div>`;
 }
 
 const difficultyConfigs = {
@@ -1625,6 +1744,12 @@ function showFinalReportModal() {
     • <b>Modifier:</b> <span class="highlight-red">${resultsStore.modifier}</span><br>
     • <b>Community:</b> <span class="highlight-purple">${resultsStore.community}</span>
   `;
+
+  document.getElementById("modalSettings").innerHTML = `
+    <h3>Einstellungen: ${difficultyLabels[currentDifficulty]}</h3>
+    ${renderGameSettingsHtml(currentDifficulty)}
+  `;
+
   document.getElementById("resultModal").style.display = "flex";
 }
 
@@ -1650,26 +1775,33 @@ function loadHtml2Canvas(callback) {
   });
 }
 
+function buildExportCardContent() {
+  const exportContent = document.getElementById("exportCardContent");
+  exportContent.innerHTML = `
+    <div style="margin-bottom: 14px;"><b>• Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Beweis-Items:</b> <span style="color:var(--color-orange);">${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Kruzifix:</b> <span style="color:var(--color-orange);">${resultsStore.crucifix}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Räucherwerk:</b> <span style="color:var(--color-orange);">${resultsStore.smudge}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Salz:</b> <span style="color:var(--color-orange);">${resultsStore.salt}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Kerzen:</b> <span style="color:var(--color-orange);">${resultsStore.candle}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Sanity-Start:</b> <span style="color:var(--color-orange);">${resultsStore.sanityStart}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Sanity-Wiederherstellung:</b> <span style="color:var(--color-orange);">${resultsStore.sanityRegen}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Sicherung:</b> <span style="color:var(--color-orange);">${resultsStore.breaker}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Taschenlampen:</b> <span style="color:var(--color-orange);">${resultsStore.light}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Einsatzort:</b> <span style="color:var(--color-orange);">${resultsStore.map}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Fluch-Objekt:</b> <span style="color:var(--color-red);">${resultsStore.cursed}</span></div>
+    <div style="margin-bottom: 14px;"><b>• Modifier:</b> <span style="color:var(--color-red);">${resultsStore.modifier}</span></div>
+    <div style="margin-bottom: 25px;"><b>• Community:</b> <span style="color:var(--color-purple);">${resultsStore.community}</span></div>
+    <div style="border-top: 2px dashed #333; padding-top: 18px;">
+      <div style="font-family: 'Creepster', cursive; color: var(--color-orange); font-size: 22px; letter-spacing: 1px; margin-bottom: 12px; text-align: center;">EMPFOHLENE EINSTELLUNGEN (${difficultyLabels[currentDifficulty].toUpperCase()})</div>
+      <div style="font-size: 14px; line-height: 1.5;">${renderGameSettingsHtml(currentDifficulty)}</div>
+    </div>
+  `;
+}
+
 function downloadReportCard() {
   loadHtml2Canvas(() => {
-    const exportContent = document.getElementById("exportCardContent");
-    
-    exportContent.innerHTML = `
-      <div style="margin-bottom: 14px;"><b>• Modus:</b> <span style="text-transform:uppercase; color:#00ffcc">${currentDifficulty}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Beweis-Items:</b> <span style="color:var(--color-orange);">${resultsStore.item1}, ${resultsStore.item2}, ${resultsStore.item3}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Kruzifix:</b> <span style="color:var(--color-orange);">${resultsStore.crucifix}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Räucherwerk:</b> <span style="color:var(--color-orange);">${resultsStore.smudge}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Salz:</b> <span style="color:var(--color-orange);">${resultsStore.salt}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Kerzen:</b> <span style="color:var(--color-orange);">${resultsStore.candle}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Sanity-Start:</b> <span style="color:var(--color-orange);">${resultsStore.sanityStart}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Sanity-Wiederherstellung:</b> <span style="color:var(--color-orange);">${resultsStore.sanityRegen}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Sicherung:</b> <span style="color:var(--color-orange);">${resultsStore.breaker}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Taschenlampen:</b> <span style="color:var(--color-orange);">${resultsStore.light}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Einsatzort:</b> <span style="color:var(--color-orange);">${resultsStore.map}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Fluch-Objekt:</b> <span style="color:var(--color-red);">${resultsStore.cursed}</span></div>
-      <div style="margin-bottom: 14px;"><b>• Modifier:</b> <span style="color:var(--color-red);">${resultsStore.modifier}</span></div>
-      <div><b>• Community:</b> <span style="color:var(--color-purple);">${resultsStore.community}</span></div>
-    `;
+    buildExportCardContent();
 
     const card = document.getElementById("exportCardContainer");
     card.style.display = "block";
